@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 801147210994898454}
   - component: {fileID: 7394198450055834478}
   - component: {fileID: 7567096578316311574}
+  - component: {fileID: -6580479098730299932}
   m_Layer: 0
   m_Name: TileStraight
   m_TagString: Untagged
@@ -92,8 +93,22 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7434009604181900485}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 10, y: 0.01, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-6580479098730299932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7434009604181900485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc15cb3d32f39c4aa14026694ffa131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CableSides: 01000000000000000100000000000000
+  debugLineColour: {r: 0, g: 0, b: 0, a: 1}

@@ -9,7 +9,7 @@ public class TileGrid : MonoBehaviour
     public Vector2 GridMaxBounds = new Vector2(8f, 8f);
     public GameObject[] TilePrefabs;
 
-    private GameObject[,] Board;
+    public GameObject[,] Board;
 
     void Start()
     {
@@ -41,12 +41,15 @@ public class TileGrid : MonoBehaviour
         {
             for (int j = 0; j < GridDimension; j++)
             {
-                //Instantiate a new tile, move to current tile position and scale to tile size
-                GameObject tile = Instantiate(TilePrefabs[0], transform.position, transform.rotation);
+                //Instantiate a new random tile, move to current tile position and scale to tile size
+                int prefabIndex = Random.Range(0, 4);
+                GameObject tile = Instantiate(TilePrefabs[prefabIndex], transform.position, transform.rotation, transform);
                 tile.transform.Translate(currentTileX, 0f, currentTileZ);
-                tile.transform.localScale = new Vector3(0.1f * tileLengthX * 0.9f, transform.localScale.y, 0.1f * tileLengthZ * 0.9f);
+                tile.transform.localScale = new Vector3(0.1f * tileLengthX * 0.95f, transform.localScale.y, 0.1f * tileLengthZ * 0.95f);
 
                 //Add tile to the board
+                tile.GetComponent<Tile>().TileGrid = this;
+                tile.GetComponent<Tile>().GridPosition = new int[2] { i, j };
                 Board[i, j] = tile;
 
                 //Increment current tile z-position
@@ -57,5 +60,20 @@ public class TileGrid : MonoBehaviour
             currentTileX += tileLengthX;
             currentTileZ = GridMinBounds[1] + tileCentreZ;
         }
+
+        //Re-iterate over all tiles and initialise connected cables
+        for (int i = 0; i < GridDimension; i++)
+        {
+            for (int j = 0; j < GridDimension; j++)
+            {
+                Board[i, j].GetComponent<Tile>().CheckConnectedSides();
+            }
+        }
+    }
+
+    //Check whether input grid position lies within the grid dimensions
+    public bool GridPositionInBounds(int[] gridPosition)
+    {
+        return (gridPosition[0] >= 0 && gridPosition[0] < GridDimension) && (gridPosition[1] >= 0 && gridPosition[1] < GridDimension);
     }
 }
