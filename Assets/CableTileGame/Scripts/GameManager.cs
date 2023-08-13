@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -9,6 +10,10 @@ public class GameManager : MonoBehaviour {
 
     //Reference Variables
     public Camera MainCamera;
+    public GameObject TileGrid;
+
+    [Header("HUD")]
+    public GameObject CompleteHUD;
 
     // Awake Checks - Singleton setup
     private void Awake() {
@@ -29,11 +34,15 @@ public class GameManager : MonoBehaviour {
     {
         //Detect player input events
         if (Input.GetMouseButtonDown(0))
-            OnLeftMouseButtonDown();
+            LeftMouseButtonDown();
+        if (Input.GetKeyDown("space"))
+            SpaceBarDown();
+        if (Input.GetKeyDown("r"))
+            RKeyDown();
     }
 
-    //Left Mouse Button Down Event
-    private void OnLeftMouseButtonDown()
+    //Left mouse button down event
+    private void LeftMouseButtonDown()
     {
         //Raycast from camera to mouse position to detect click on object
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -47,5 +56,18 @@ public class GameManager : MonoBehaviour {
             if (hitObject.GetComponent<Tile>())
                 hitObject.GetComponent<Tile>().ClockwiseRotate();
         }
+    }
+
+    //Space bar down event
+    private void SpaceBarDown()
+    {
+        if (TileGrid.GetComponent<TileGrid>().DetectCompleteCircuit())
+            CompleteHUD.SetActive(true);
+    }
+
+    //'R' key down event
+    private void RKeyDown()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

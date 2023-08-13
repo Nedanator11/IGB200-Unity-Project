@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Tile : MonoBehaviour
 {
@@ -189,83 +190,6 @@ public class Tile : MonoBehaviour
             if (left)
                 left.ConnectedSides[3] = 0; //Disconnect adjacent tile's connected cable (if connected)
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        ////Check for new connections
-        //if (CableSides[0] == 1 && Top()) //Top
-        //{
-        //    Tile topTile = Top();
-        //    if (topTile.CableSides[2] == 1)
-        //    {
-        //        ConnectedSides[0] = 1;
-        //        topTile.ConnectedSides[2] = 1;
-        //    }
-        //}
-        //if (CableSides[1] == 1 && Right()) //Right
-        //{
-        //    Tile rightTile = Right();
-        //    if (rightTile.CableSides[3] == 1)
-        //    {
-        //        ConnectedSides[1] = 1;
-        //        rightTile.ConnectedSides[3] = 1;
-        //    }
-        //}
-        //if (CableSides[2] == 1 && Bottom()) //Bottom
-        //{
-        //    Tile bottomTile = Bottom();
-        //    if (bottomTile.CableSides[0] == 1)
-        //    {
-        //        ConnectedSides[2] = 1;
-        //        bottomTile.ConnectedSides[0] = 1;
-        //    }
-        //}
-        //if (CableSides[3] == 1 && Left()) //Left
-        //{
-        //    Tile leftTile = Left();
-        //    if (leftTile.CableSides[1] == 1)
-        //    {
-        //        ConnectedSides[3] = 1;
-        //        leftTile.ConnectedSides[1] = 1;
-        //    }
-        //}
-
-        ////Check for disconnections
-        //if (CableSides[0] == 0 && ConnectedSides[0] == 1) //Top
-        //{
-        //    Tile topTile = Top();
-        //    ConnectedSides[0] = 1;
-        //    topTile.ConnectedSides[2] = 1;
-        //}
-        //if (CableSides[1] == 0 && ConnectedSides[1] == 1) //Right
-        //{
-        //    Tile rightTile = Right();
-        //    ConnectedSides[1] = 1;
-        //    rightTile.ConnectedSides[3] = 1;
-        //}
-        //if (CableSides[2] == 0 && ConnectedSides[2] == 1) //Bottom
-        //{
-        //    Tile bottomTile = Bottom();
-        //    ConnectedSides[2] = 1;
-        //    bottomTile.ConnectedSides[0] = 1;
-        //}
-        //if (CableSides[3] == 0 && ConnectedSides[3] == 1) //Left
-        //{
-        //    Tile leftTile = Left();
-        //    ConnectedSides[3] = 1;
-        //    leftTile.ConnectedSides[1] = 1;
-        //}
     }
 
     #region Adjacent Tile Retrievers
@@ -274,7 +198,7 @@ public class Tile : MonoBehaviour
     private Tile Top()
     {
         int[] adjacentGridPosition = new int[2] { GridPosition[0], GridPosition[1] + 1 };
-        if (TileGrid.GridPositionInBounds(adjacentGridPosition))
+        if (TileGrid.TileExists(adjacentGridPosition))
             return TileGrid.Board[adjacentGridPosition[0], adjacentGridPosition[1]].GetComponent<Tile>();
         return null;
     }
@@ -283,7 +207,7 @@ public class Tile : MonoBehaviour
     private Tile Right()
     {
         int[] adjacentGridPosition = new int[2] { GridPosition[0] + 1, GridPosition[1] };
-        if (TileGrid.GridPositionInBounds(adjacentGridPosition))
+        if (TileGrid.TileExists(adjacentGridPosition))
             return TileGrid.Board[adjacentGridPosition[0], adjacentGridPosition[1]].GetComponent<Tile>();
         return null;
     }
@@ -292,7 +216,7 @@ public class Tile : MonoBehaviour
     private Tile Bottom()
     {
         int[] adjacentGridPosition = new int[2] { GridPosition[0], GridPosition[1] - 1 };
-        if (TileGrid.GridPositionInBounds(adjacentGridPosition))
+        if (TileGrid.TileExists(adjacentGridPosition))
             return TileGrid.Board[adjacentGridPosition[0], adjacentGridPosition[1]].GetComponent<Tile>();
         return null;
     }
@@ -301,9 +225,27 @@ public class Tile : MonoBehaviour
     private Tile Left()
     {
         int[] adjacentGridPosition = new int[2] { GridPosition[0] - 1, GridPosition[1] };
-        if (TileGrid.GridPositionInBounds(adjacentGridPosition))
+        if (TileGrid.TileExists(adjacentGridPosition))
             return TileGrid.Board[adjacentGridPosition[0], adjacentGridPosition[1]].GetComponent<Tile>();
         return null;
+    }
+
+    //Returns the list of adjacent tiles that this tile has connected cables with
+    public List<Tile> GetConnectedTiles()
+    {
+        List<Tile> tiles = new List<Tile>();
+
+        //Test sides for connected cable, add adjacent tile if connected
+        if (ConnectedSides[0] == 1)
+            tiles.Add(Top());
+        if (ConnectedSides[1] == 1)
+            tiles.Add(Right());
+        if (ConnectedSides[2] == 1)
+            tiles.Add(Bottom());
+        if (ConnectedSides[3] == 1)
+            tiles.Add(Left());
+
+        return tiles;
     }
 
     #endregion
