@@ -96,7 +96,7 @@ public class Tile : MonoBehaviour
                 {
                     //Connect cables
                     ConnectedSides[0] = 1;
-                    top.ConnectedSides[2] = 1;
+                    //top.ConnectedSides[2] = 1;
                 }
             }
         }
@@ -106,8 +106,8 @@ public class Tile : MonoBehaviour
             ConnectedSides[0] = 0;
 
             //If there is an adjacent tile, ...
-            if (top)
-                top.ConnectedSides[2] = 0; //Disconnect adjacent tile's connected cable (if connected)
+            //if (top)
+                //top.ConnectedSides[2] = 0; //Disconnect adjacent tile's connected cable (if connected)
         }
 
         //If there is a right cable, ...
@@ -123,7 +123,7 @@ public class Tile : MonoBehaviour
                 {
                     //Connect cables
                     ConnectedSides[1] = 1;
-                    right.ConnectedSides[3] = 1;
+                    //right.ConnectedSides[3] = 1;
                 }
             }
         }
@@ -133,8 +133,8 @@ public class Tile : MonoBehaviour
             ConnectedSides[1] = 0;
 
             //If there is an adjacent tile, ...
-            if (right)
-                right.ConnectedSides[3] = 0; //Disconnect adjacent tile's connected cable (if connected)
+            //if (right)
+                //right.ConnectedSides[3] = 0; //Disconnect adjacent tile's connected cable (if connected)
         }
 
         //If there is a bottom cable, ...
@@ -150,7 +150,7 @@ public class Tile : MonoBehaviour
                 {
                     //Connect cables
                     ConnectedSides[2] = 1;
-                    bottom.ConnectedSides[0] = 1;
+                    //bottom.ConnectedSides[0] = 1;
                 }
             }
         }
@@ -160,8 +160,8 @@ public class Tile : MonoBehaviour
             ConnectedSides[2] = 0;
 
             //If there is an adjacent tile, ...
-            if (bottom)
-                bottom.ConnectedSides[2] = 0; //Disconnect adjacent tile's connected cable (if connected)
+            //if (bottom)
+                //bottom.ConnectedSides[2] = 0; //Disconnect adjacent tile's connected cable (if connected)
         }
 
         //If there is a left cable, ...
@@ -177,7 +177,7 @@ public class Tile : MonoBehaviour
                 {
                     //Connect cables
                     ConnectedSides[3] = 1;
-                    left.ConnectedSides[1] = 1;
+                    //left.ConnectedSides[1] = 1;
                 }
             }
         }
@@ -187,8 +187,8 @@ public class Tile : MonoBehaviour
             ConnectedSides[3] = 0;
 
             //If there is an adjacent tile, ...
-            if (left)
-                left.ConnectedSides[3] = 0; //Disconnect adjacent tile's connected cable (if connected)
+            //if (left)
+                //left.ConnectedSides[3] = 0; //Disconnect adjacent tile's connected cable (if connected)
         }
     }
 

@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 0
+    path: Assets/CableTileGame/CableTileGame.unity
+    guid: 5c04789cd9ec4ad41b909df5632c7dcd
+  - enabled: 1
+    path: Assets/LightningSafetyGame/LightningSafetyGame.unity
+    guid: 81e61d78c394fbc4ca073dec98fe61a1
   m_configObjects: {}

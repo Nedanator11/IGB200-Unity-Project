@@ -26,17 +26,8 @@ public class TileGrid : MonoBehaviour
     public GameObject CrossSplitTile;
     public float CrossSplitWeight;
 
-    void Start()
-    {
-        //Instantiate Variables
-        Board = new GameObject[GridDimension + 2, GridDimension + 2];
-
-        //Generate a new board of tiles
-        GenerateBoard();
-    }
-
     //Generate a new board of tiles
-    private void GenerateBoard()
+    public void GenerateBoard()
     {
         //Grid geometry calculations
         float gridLengthX = GridMaxBounds[0] - GridMinBounds[0];
@@ -57,6 +48,9 @@ public class TileGrid : MonoBehaviour
         float startTileZ = GridMinBounds[1] - tileCentreZ + (tileLengthZ * StartTilePosZ);
         float endTileX = GridMaxBounds[0] + tileCentreX;
         float endTileZ = GridMinBounds[1] - tileCentreZ + (tileLengthZ * EndTilePosZ);
+
+        //Instantiate the board
+        Board = new GameObject[GridDimension + 2, GridDimension + 2];
 
         //Instantiate tiles
         GameObject startTile = Instantiate(StartTile, transform.position, transform.rotation, transform);
@@ -133,6 +127,16 @@ public class TileGrid : MonoBehaviour
                 tile.CheckConnectedSides();
             }
         }
+    }
+
+    //Destroys all board tiles
+    public void DestroyBoard()
+    {
+        //Loop over all board elements, and destroy each object found
+        for (int i = 0; i < Board.GetLength(0); i++)
+            for (int j = 0; j < Board.GetLength(1); j++)
+                if (Board[i, j])
+                    Destroy(Board[i, j]);
     }
 
     public bool DetectCompleteCircuit()
