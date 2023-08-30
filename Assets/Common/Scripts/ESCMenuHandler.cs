@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ESCMenuHandler : MonoBehaviour
 {
@@ -9,6 +10,13 @@ public class ESCMenuHandler : MonoBehaviour
 
     public GameObject menu;
 
+    SceneHandler sceneHandler;
+
+
+    private void Start()
+    {
+        sceneHandler = GetComponent<SceneHandler>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -18,5 +26,10 @@ public class ESCMenuHandler : MonoBehaviour
             active = !active;
             menu.SetActive(active);
         }
+    }
+
+    public void QuitToMenu(int targetScene)
+    {
+        sceneHandler.FadeToLevel(targetScene);
     }
 }
