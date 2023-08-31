@@ -16,6 +16,10 @@ public class Tile : MonoBehaviour
 
     private void Update()
     {
+        //Don't process if game is paused
+        if (GameManager.instance.Paused)
+            return;
+
         CheckConnectedSides();
 
         //========= TEMPORARY CODE: Placeholder for tile image assets ==========

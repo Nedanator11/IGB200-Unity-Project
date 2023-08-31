@@ -22,10 +22,15 @@ public class ESCMenuHandler : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            active = !active;
-            menu.SetActive(active);
-        }
+            TogglePause();
+    }
+
+    public void TogglePause()
+    {
+        active = !active;
+        menu.SetActive(active);
+
+        GameManager.instance.Paused = active;
     }
 
     public void QuitToMenu(int targetScene)

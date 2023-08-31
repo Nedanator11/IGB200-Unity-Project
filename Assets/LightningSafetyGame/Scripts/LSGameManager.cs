@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LSGameManager : MonoBehaviour {
-
-    //Singleton Setup
-    public static LSGameManager instance = null;
+public class LSGameManager : GameManager {
 
     [Header("HUD References")]
     public GameObject GameStartHUD;
@@ -67,20 +64,21 @@ public class LSGameManager : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown("escape"))
-            Application.Quit();
+        if (Input.GetKeyDown("space"))
+            if (!GameStarted)
+                StartGame();
+
+        //Don't process further if game is paused
+        if (GameManager.instance.Paused)
+            return;
 
         //Detect player input events
         if (Input.GetMouseButtonDown(0))
             if (GameStarted && !RoundOver)
-                LeftMouseButtonDown();
+                ClickObject();
         if (Input.GetKeyDown("space"))
         {
-            if (!GameStarted)
-            {
-                StartGame();
-            }
-            else if (GameOver)
+            if (GameOver)
                 RestartGame();
             else if (RoundOver)
                 NextRound();
@@ -198,8 +196,8 @@ public class LSGameManager : MonoBehaviour {
         RoundHUD.GetComponent<RoundHUDController>().SetTimerText(RoundTimer);
     }
 
-    //Left mouse button down event
-    private void LeftMouseButtonDown()
+    //Raycast from camera to determine if an object is clicked
+    private void ClickObject()
     {
         //Raycast from camera to mouse position to detect click on object
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

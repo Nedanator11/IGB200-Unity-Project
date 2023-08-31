@@ -5,10 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class CTGameManager : MonoBehaviour {
-
-    //Singleton Setup
-    public static CTGameManager instance = null;
+public class CTGameManager : GameManager {
 
     private bool GameStarted;
     private bool GameOver;
@@ -57,15 +54,18 @@ public class CTGameManager : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown("escape"))
-            Application.Quit();
-
         if (!GameStarted)
-        {
             if (Input.GetKeyDown("space"))
+            {
                 StartGame();
-        }
-        else if (GameStarted && !RoundOver)
+                return;
+            }
+
+        //Don't process further if game is paused
+        if (GameManager.instance.Paused)
+            return;
+
+        if (GameStarted && !RoundOver)
         {
             ElapseRoundTimer();
 
@@ -92,9 +92,10 @@ public class CTGameManager : MonoBehaviour {
     private void StartGame()
     {
         GameStartHUD.SetActive(false);
-        GameStarted = true;
         Score = 0;
         StartRound();
+
+        GameStarted = true;
     }
 
     //Starts a new round
@@ -174,7 +175,7 @@ public class CTGameManager : MonoBehaviour {
         if (RoundTimer < 0f)
         {
             RoundTimer = 0f;
-            EndRoundBad();
+            TestCircuit();
         }
         RoundHUD.GetComponent<RoundHUDController>().SetTimerText(RoundTimer);
     }
