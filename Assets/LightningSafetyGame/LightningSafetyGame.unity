@@ -2033,7 +2033,9 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 7767052954490673877, guid: 754515dc393a74e49afdbbed1017353a, type: 3}
   CloudPrefab: {fileID: 3285910293236084853, guid: 9f256f2bdc270964e92d638eba5867a1, type: 3}
   ScorePerRound: 10
-  RoundTimerDuration: 10
+  InitialTimerDuration: 10
+  TimerDurationDecrease: 1
+  CycleLength: 3
 --- !u!1 &859828897
 GameObject:
   m_ObjectHideFlags: 0
