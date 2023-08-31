@@ -32,6 +32,13 @@ public class LSGameManager : GameManager {
     public float ScorePerRound;
     private float Score;
 
+    //Cycle variables
+    public float InitialTimerDuration;
+    public float TimerDurationDecrease;
+    private int Cycle = 0;
+    public int CycleLength;
+    private int RoundCount = 0;
+
     //Round variables
     private GameObject Environment;
     private GameObject[] Options;
@@ -39,7 +46,7 @@ public class LSGameManager : GameManager {
     private GameObject Cloud;
     private bool RoundOver;
     private float RoundTimer;
-    public float RoundTimerDuration = 10f;
+    private float RoundTimerDuration;
 
     // Awake Checks - Singleton setup
     private void Awake() {
@@ -101,6 +108,13 @@ public class LSGameManager : GameManager {
     //Starts a new round
     private void StartRound()
     {
+        //Increment RoundCount
+        RoundCount++;
+
+        //Cycle Check
+        Cycle = (RoundCount + CycleLength - 1) / CycleLength;
+        RoundTimerDuration = Mathf.Max(InitialTimerDuration - (TimerDurationDecrease * (Cycle - 1)), 1);
+        
         //Start new round
         RoundOver = false;
         RoundHUD.SetActive(true);
