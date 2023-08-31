@@ -19,27 +19,28 @@ public class MenuInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentScene != 3) //!Arcade Menu
+
+        if (currentScene != 0)
         {
             if (Input.GetMouseButton(0))
             {
                 animator.SetTrigger("KeyPress");
                 if (currentScene == 4) //Cable Tile
                 {
-                    sceneHandler.FadeToLevel(0);
+                    sceneHandler.FadeToLevel(1);
                 }
                 if (currentScene == 5) // Lightning Safety
                 {
-                    sceneHandler.FadeToLevel(1);
+                    sceneHandler.FadeToLevel(2);
                 }
             }
             if (Input.GetMouseButton(1))
             {
-                sceneHandler.FadeToLevel(2);
+                sceneHandler.FadeToLevel(3);
             }
         }
 
-        if (currentScene == 3) //Arcade Menu
+        if (currentScene == 0)
         {
             if (Input.GetMouseButtonDown(1))
             {
@@ -61,7 +62,7 @@ public class MenuInput : MonoBehaviour
 
             if (Input.GetMouseButton(0) && Input.GetMouseButton(1))
             {
-                sceneHandler.FadeToLevel(2);
+                sceneHandler.FadeToLevel(3);
             }
         }
     }

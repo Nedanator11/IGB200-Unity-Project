@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Common/Menus_UI/MenuScenes/ArcadeMenu.unity
+    guid: ab8aaff44a9e5ec4e88ba47e3806aed0
+  - enabled: 1
     path: Assets/CableTileGame/CableTileGame.unity
     guid: 5c04789cd9ec4ad41b909df5632c7dcd
   - enabled: 1
@@ -14,9 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Arcade/Arcade.unity
     guid: 7d1209db0a41ec948acaa9119d7fcc97
-  - enabled: 1
-    path: Assets/Common/Menus_UI/MenuScenes/ArcadeMenu.unity
-    guid: ab8aaff44a9e5ec4e88ba47e3806aed0
   - enabled: 1
     path: Assets/Common/Menus_UI/MenuScenes/CableTileMenu.unity
     guid: b3115a4c827d9fb4bb762908ea68ed88
