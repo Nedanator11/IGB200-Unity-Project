@@ -63,6 +63,7 @@ public class MenuInput : MonoBehaviour
             if (Input.GetMouseButton(0) && Input.GetMouseButton(1))
             {
                 sceneHandler.FadeToLevel(3);
+                animator.SetTrigger("CircleBloom");
             }
         }
     }
