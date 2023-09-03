@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 538550319}
   - component: {fileID: 538550318}
   m_Layer: 5
-  m_Name: LightningSafety
+  m_Name: ZapNDash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1045,7 +1045,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cable Tile
+  m_text: 'Cable Conundrum
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1274,7 +1276,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lightning Safety
+  m_text: 'Zap N'' Dash
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2525,7 +2529,7 @@ GameObject:
   - component: {fileID: 1670007596}
   - component: {fileID: 1670007595}
   m_Layer: 5
-  m_Name: CableTile
+  m_Name: CableConundrum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3757,7 +3761,7 @@ RectTransform:
   m_GameObject: {fileID: 1965777086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -88.5}
-  m_LocalScale: {x: 12.003699, y: 6.1214, z: 1.4749999}
+  m_LocalScale: {x: 50.9485, y: 25.98167, z: 6.2604895}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1872910039}
@@ -3833,7 +3837,7 @@ RectTransform:
   m_GameObject: {fileID: 2062142197}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8.088, y: 4.1001, z: 1}
+  m_LocalScale: {x: 50.764336, y: 25.73428, z: 6.2765}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1944981963}
