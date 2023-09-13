@@ -71,12 +71,12 @@ public class MenuInput : MonoBehaviour
     public void StartCableTileGame()
     {
         animator.SetTrigger("KeyPress");
-        sceneHandler.FadeToLevel(0);
+        sceneHandler.FadeToLevel(1);
     }
 
     public void StartLightningSafetyGame()
     {
         animator.SetTrigger("KeyPress");
-        sceneHandler.FadeToLevel(1);
+        sceneHandler.FadeToLevel(2);
     }
 }
