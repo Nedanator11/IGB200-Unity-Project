@@ -197,7 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileGrid: {fileID: 0}
   GridPosition: 
-  CableSides: 00000000000000000000000001000000
+  CableSides: 00000001
   ConnectedSides: 00000000000000000000000000000000
   ConnectedColour: {r: 0, g: 0.14901961, b: 1, a: 1}
   DisconnectedColour: {r: 1, g: 0, b: 0, a: 1}

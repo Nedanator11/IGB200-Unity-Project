@@ -7,24 +7,39 @@ public class TileGrid : MonoBehaviour
 {
     public GameObject[,] Board;
 
+    //Path-Finding
+    private GameObject StartTile;
+    private GameObject EndTile;
+    private Dictionary<Tile, Tile> CameFrom = new Dictionary<Tile, Tile>(); // <To, From>
+    private List<Tile> OpenList = new List<Tile>();
+    private List<Tile> ClosedList = new List<Tile>();
+    private List<Tile> GeneratedPath = new List<Tile>();
+    private List<Tile> DetectedPath = new List<Tile>();
+    public Color DetectedPathColor = Color.green;
+
     [Header("Grid Geometry")]
     public int GridDimension = 4;
     public Vector2 GridMinBounds = new Vector2(-8f, -8f);
     public Vector2 GridMaxBounds = new Vector2(8f, 8f);
 
     [Header("Tiles")]
-    public GameObject StartTile;
+    public GameObject StartTilePrefab;
     public int StartTilePosZ;
-    public GameObject EndTile;
+    public GameObject EndTilePrefab;
     public int EndTilePosZ;
-    public GameObject Turn90Tile;
+    public GameObject Turn90TilePrefab;
     public float Turn90Weight;
-    public GameObject StraightTile;
+    public GameObject StraightTilePrefab;
     public float StraightWeight;
-    public GameObject TSplitTile;
+    public GameObject TSplitTilePrefab;
     public float TSplitWeight;
-    public GameObject CrossSplitTile;
+    public GameObject CrossSplitTilePrefab;
     public float CrossSplitWeight;
+
+    private void Update()
+    {
+        if (DetectedPath != null && DetectedPath.Count > 0) DebugDrawDetectedPath();
+    }
 
     //Generate a new board of tiles
     public void GenerateBoard()
@@ -53,24 +68,24 @@ public class TileGrid : MonoBehaviour
         Board = new GameObject[GridDimension + 2, GridDimension + 2];
 
         //Instantiate tiles
-        GameObject startTile = Instantiate(StartTile, transform.position, transform.rotation, transform);
-        GameObject endTile = Instantiate(EndTile, transform.position, transform.rotation, transform);
+        StartTile = Instantiate(StartTilePrefab, transform.position, transform.rotation, transform);
+        EndTile = Instantiate(EndTilePrefab, transform.position, transform.rotation, transform);
 
         //Move tiles to world position & scale
-        startTile.transform.Translate(startTileX, 0f, startTileZ);
-        startTile.transform.localScale = new Vector3(0.1f * tileLengthX, transform.localScale.y, 0.1f * tileLengthZ);
-        endTile.transform.Translate(endTileX, 0f, endTileZ);
-        endTile.transform.localScale = new Vector3(0.1f * tileLengthX, transform.localScale.y, 0.1f * tileLengthZ);
+        StartTile.transform.Translate(startTileX, 0f, startTileZ);
+        StartTile.transform.localScale = new Vector3(0.1f * tileLengthX, transform.localScale.y, 0.1f * tileLengthZ);
+        EndTile.transform.Translate(endTileX, 0f, endTileZ);
+        EndTile.transform.localScale = new Vector3(0.1f * tileLengthX, transform.localScale.y, 0.1f * tileLengthZ);
 
         //Set tile variables
-        startTile.GetComponent<Tile>().TileGrid = this;
-        startTile.GetComponent<Tile>().GridPosition = new int[2] { 0, StartTilePosZ };
-        endTile.GetComponent<Tile>().TileGrid = this;
-        endTile.GetComponent<Tile>().GridPosition = new int[2] { GridDimension + 1, EndTilePosZ };
+        StartTile.GetComponent<Tile>().TileGrid = this;
+        StartTile.GetComponent<Tile>().GridPosition = new int[2] { 0, StartTilePosZ };
+        EndTile.GetComponent<Tile>().TileGrid = this;
+        EndTile.GetComponent<Tile>().GridPosition = new int[2] { GridDimension + 1, EndTilePosZ };
 
         //Add tiles to board
-        Board[0, StartTilePosZ] = startTile;
-        Board[GridDimension + 1, EndTilePosZ] = endTile;
+        Board[0, StartTilePosZ] = StartTile;
+        Board[GridDimension + 1, EndTilePosZ] = EndTile;
 
         #endregion
 
@@ -89,13 +104,13 @@ public class TileGrid : MonoBehaviour
                 float rand = Random.Range(0f, CrossSplitThreshold);
                 GameObject prefab;
                 if (rand <= Turn90Threshold)
-                    prefab = Turn90Tile;
+                    prefab = Turn90TilePrefab;
                 else if (rand <= StraightThreshold)
-                    prefab = StraightTile;
+                    prefab = StraightTilePrefab;
                 else if (rand <= TSplitThreshold)
-                    prefab = TSplitTile;
+                    prefab = TSplitTilePrefab;
                 else //CrossSplit
-                    prefab = CrossSplitTile;
+                    prefab = CrossSplitTilePrefab;
 
                 //Instantiate a new tile, move to current tile position and scale to tile size
                 GameObject tile = Instantiate(prefab, transform.position, transform.rotation, transform);
@@ -132,6 +147,15 @@ public class TileGrid : MonoBehaviour
     //Destroys all board tiles
     public void DestroyBoard()
     {
+        //Path-clearing
+        StartTile = null;
+        EndTile = null;
+        CameFrom.Clear();
+        OpenList.Clear();
+        ClosedList.Clear();
+        GeneratedPath.Clear();
+        DetectedPath.Clear();
+
         //Loop over all board elements, and destroy each object found
         for (int i = 0; i < Board.GetLength(0); i++)
             for (int j = 0; j < Board.GetLength(1); j++)
@@ -139,45 +163,124 @@ public class TileGrid : MonoBehaviour
                     Destroy(Board[i, j]);
     }
 
+    //Detect whether or not the circuit contains a vaild path
     public bool DetectCompleteCircuit()
     {
-        //Initialise tile search lists
-        List<Tile> visitedTiles = new List<Tile>();
-        List<Tile> frontierTiles = new List<Tile>();
+        //Perform A* search
+        DetectedPath = AStarSearch(StartTile.GetComponent<Tile>(), EndTile.GetComponent<Tile>());
 
-        //Add the start tile to the frontier
-        frontierTiles.Add(Board[0, StartTilePosZ].GetComponent<Tile>());
+        if (DetectedPath == null) return false;
+        if (DetectedPath.Count == 0) return false;
+        return true;
+    }
 
-        //Loop over all frontier tiles until none remain
-        while (frontierTiles.Count > 0)
+    //Draw the detected path
+    private void DebugDrawDetectedPath()
+    {
+        Debug.Log("Drawing detected path!");
+        for (int i = 0; i < DetectedPath.Count - 1; i++)
         {
-            //Get the first tile in the frontier
-            Tile frontierTile = frontierTiles[0];
+            Vector3 posStart = DetectedPath[i].transform.position;
+            posStart.x += 0.1f;
+            posStart.z += 0.1f;
+            Vector3 posEnd = DetectedPath[i + 1].transform.position;
+            posEnd.x += 0.1f;
+            posEnd.z += 0.1f;
 
-            //Retrieve the tiles connected to the current frontier tile
-            List<Tile> connectedTiles = frontierTile.GetConnectedTiles();
+            Debug.DrawLine(posStart, posEnd, DetectedPathColor);
+        }
+    }
 
-            //Loop over all new tiles and add them to the frontier, or discard if already visited
-            foreach (Tile newTile in connectedTiles)
+    //Perform an A* path-finding search from the given 'start' tile to the given 'end' tile
+    private List<Tile> AStarSearch(Tile start, Tile end)
+    {
+        //Clear Lists/Dictionaries at start
+        OpenList.Clear();
+        ClosedList.Clear();
+        CameFrom.Clear();
+
+        //Begin
+        OpenList.Add(start);
+        float gScore = 0;
+
+        //While there are open tiles remaining
+        while (OpenList.Count > 0)
+        {
+            //Find the tile in openList that has the lowest fScore
+            Tile currentTile = BestOpenListFScore(start, end);
+
+            //Found the end, reconstruct entire path and return
+            if (currentTile == end)
+                return ReconstructPath(CameFrom, currentTile);
+
+            //Close current Tile
+            OpenList.Remove(currentTile);
+            ClosedList.Add(currentTile);
+
+            //Look at each connected tile to current tile
+            List<Tile> connectedTiles = currentTile.GetConnectedTiles();
+            for (int i = 0; i < connectedTiles.Count; i++)
             {
-                if (!frontierTiles.Contains(newTile) && !visitedTiles.Contains(newTile))
-                    frontierTiles.Add(newTile);
-            }
+                Tile thisNeighbourTile = connectedTiles[i];
 
-            //Remove current frontier tile from the frontier and add it to the visited tiles
-            frontierTiles.Remove(frontierTile);
-            visitedTiles.Add(frontierTile);
+                //Ignore if neighbour tile is attached
+                if (!ClosedList.Contains(thisNeighbourTile))
+                {
+                    //Distance from current to the next tile
+                    float tentativeGScore = Heuristic(start, currentTile) + Heuristic(currentTile, thisNeighbourTile);
+
+                    //Check to see if in openList or if new GScore is more sensible
+                    if (!OpenList.Contains(thisNeighbourTile) || tentativeGScore < gScore)
+                        OpenList.Add(thisNeighbourTile);
+
+                    //Add to Dictionary - this neighour came from this parent
+                    if (!CameFrom.ContainsKey(thisNeighbourTile))
+                        CameFrom.Add(thisNeighbourTile, currentTile);
+
+                    gScore = tentativeGScore;
+                }
+            }
         }
 
-        //If end tile has been visited, the circuit connects start to end
-        bool circuitComplete = visitedTiles.Contains(Board[GridDimension + 1, EndTilePosZ].GetComponent<Tile>());
+        //Return null if not path exists
+        return null;
+    }
 
-        //If circuit is completed, show all visited connected cables
-        if (circuitComplete)
-            foreach (Tile tile in visitedTiles)
-                tile.ConnectedColour = Color.green;
+    //The heuristic function for A* search
+    private float Heuristic(Tile a, Tile b)
+    {
+        return Vector3.Distance(a.transform.position, b.transform.position);
+    }
 
-        return circuitComplete;
+    //Find the best tile in the open list with the lowest f-score
+    private Tile BestOpenListFScore(Tile start, Tile goal)
+    {
+        int bestIndex = 0;
+
+        for (int i = 0; i < OpenList.Count; i++)
+        {
+            if ((Heuristic(OpenList[i], start) + Heuristic(OpenList[i], goal)) < (Heuristic(OpenList[bestIndex], start) + Heuristic(OpenList[bestIndex], goal)))
+                bestIndex = i;
+        }
+
+        Tile bestTile = OpenList[bestIndex];
+        return bestTile;
+    }
+
+    //Reconstruct path from the current tile to the start tile
+    private List<Tile> ReconstructPath(Dictionary<Tile, Tile> CF, Tile current)
+    {
+        List<Tile> finalPath = new List<Tile>();
+        finalPath.Add(current);
+
+        while (CF.ContainsKey(current))
+        {
+            current = CF[current];
+            finalPath.Add(current);
+        }
+
+        finalPath.Reverse();
+        return finalPath;
     }
 
     //Check whether a tile exists at the input grid position
