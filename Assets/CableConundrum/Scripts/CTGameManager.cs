@@ -14,19 +14,23 @@ public class CTGameManager : GameManager {
     public Camera MainCamera;
     public GameObject TileGrid;
 
+    [Header("Difficulties")]
+    public CCDifficulty Easy = new CCDifficulty();
+    public CCDifficulty Medium = new CCDifficulty();
+    public CCDifficulty Hard = new CCDifficulty();
+
+    //Game variables
+    private bool RoundOver;
+    private float GameTimer;
+    private float GameTimerDuration;
+    private float Score;
+
     [Header("HUD References")]
     public GameObject GameStartHUD;
     public GameObject RoundHUD;
     public GameObject RoundEndGoodHUD;
     public GameObject RoundEndBadHUD;
     public GameObject GameOverHUD;
-
-    //Game variables
-    private bool RoundOver;
-    private float GameTimer;
-    public float GameTimerDuration = 120f;
-    private float Score;
-
 
     // Awake Checks - Singleton setup
     private void Awake() {
@@ -51,13 +55,6 @@ public class CTGameManager : GameManager {
 
     private void Update()
     {
-        if (!GameStarted)
-            if (Input.GetKeyDown("space"))
-            {
-                StartGame();
-                return;
-            }
-
         //Don't process further if game is paused
         if (GameManager.instance.Paused)
             return;
@@ -70,8 +67,6 @@ public class CTGameManager : GameManager {
                 ClickTile();
             if (Input.GetKeyDown("space"))
                 TestCircuit();
-            if (Input.GetKeyDown("r"))
-                RegenerateBoard();
         }
         else if (GameStarted && RoundOver)
         {
@@ -85,6 +80,40 @@ public class CTGameManager : GameManager {
         }
     }
 
+    //Button event to set difficulty to Easy
+    public void SetDifficultyEasy()
+    {
+        SetDifficulty(Easy);
+        StartGame();
+    }
+
+    //Button event to set difficulty to Medium
+    public void SetDifficultyMedium()
+    {
+        SetDifficulty(Medium);
+        StartGame();
+    }
+
+    //Button event to set difficulty to Hard
+    public void SetDifficultyHard()
+    {
+        SetDifficulty(Hard);
+        StartGame();
+    }
+
+    //Apply difficulty settings of specified difficulty
+    private void SetDifficulty(CCDifficulty difficulty)
+    {
+        TileGrid.GetComponent<TileGrid>().GridDimension = difficulty.GridDimension;
+        TileGrid.GetComponent<TileGrid>().StartTilePosZ = difficulty.StartTilePosZ;
+        TileGrid.GetComponent<TileGrid>().EndTilePosZ = difficulty.EndTilePosZ;
+        GameTimerDuration = difficulty.GameTimerDuration;
+        TileGrid.GetComponent<TileGrid>().Turn90Weight = difficulty.Turn90Weight;
+        TileGrid.GetComponent<TileGrid>().StraightWeight = difficulty.StraightWeight;
+        TileGrid.GetComponent<TileGrid>().TSplitWeight = difficulty.TSplitWeight;
+        TileGrid.GetComponent<TileGrid>().CrossSplitWeight = difficulty.CrossSplitWeight;
+    }
+    
     //Starts the game
     private void StartGame()
     {
@@ -139,15 +168,6 @@ public class CTGameManager : GameManager {
         TileGrid.GetComponent<TileGrid>().DestroyBoard();
 
         //Start a new round
-        StartRound();
-    }
-
-    //Regenerates the board, in the event it is not completable (REMOVE)
-    private void RegenerateBoard()
-    {
-        //Destroy round objects
-        TileGrid.GetComponent<TileGrid>().DestroyBoard();
-
         StartRound();
     }
 
@@ -216,4 +236,19 @@ public class CTGameManager : GameManager {
         else
             EndRoundBad();
     }
+}
+
+[System.Serializable]
+public class CCDifficulty {
+
+    public int GridDimension;
+    public int StartTilePosZ;
+    public int EndTilePosZ;
+    public float GameTimerDuration;
+
+    [Header("Tile Weights")]
+    public float Turn90Weight;
+    public float StraightWeight;
+    public float TSplitWeight;
+    public float CrossSplitWeight;
 }
