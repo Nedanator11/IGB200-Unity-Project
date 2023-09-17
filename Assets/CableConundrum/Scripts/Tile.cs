@@ -1,14 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class Tile : MonoBehaviour
 {
     public TileGrid TileGrid;
     public int[] GridPosition;
     public bool[] CableSides = new bool[4] { false, false, false, false }; //Filled from prefabs: { Top, Right, Bottom, Left }
-    public int[] ConnectedSides = new int[4] { 0, 0, 0, 0 };
+    public bool[] ConnectedSides = new bool[4] { false, false, false, false };
 
     //TEMP VARS
     public Color ConnectedColour = Color.green;
@@ -30,7 +28,7 @@ public class Tile : MonoBehaviour
             Vector3 dest = transform.position;
             dest.y += 0.01f;
             dest.z += transform.localScale.z * 5f;
-            Debug.DrawLine(transform.position, dest, ConnectedSides[0] > 0 ? ConnectedColour : DisconnectedColour);
+            Debug.DrawLine(transform.position, dest, ConnectedSides[0] ? ConnectedColour : DisconnectedColour);
         }
         if (CableSides[1])
         {
@@ -39,7 +37,7 @@ public class Tile : MonoBehaviour
             Vector3 dest = transform.position;
             dest.y += 0.01f;
             dest.x += transform.localScale.x * 5f;
-            Debug.DrawLine(transform.position, dest, ConnectedSides[1] > 0 ? ConnectedColour : DisconnectedColour);
+            Debug.DrawLine(transform.position, dest, ConnectedSides[1] ? ConnectedColour : DisconnectedColour);
         }
         if (CableSides[2])
         {
@@ -48,7 +46,7 @@ public class Tile : MonoBehaviour
             Vector3 dest = transform.position;
             dest.y += 0.01f;
             dest.z -= transform.localScale.z * 5f;
-            Debug.DrawLine(transform.position, dest, ConnectedSides[2] > 0 ? ConnectedColour : DisconnectedColour);
+            Debug.DrawLine(transform.position, dest, ConnectedSides[2] ? ConnectedColour : DisconnectedColour);
         }
         if (CableSides[3])
         {
@@ -57,7 +55,7 @@ public class Tile : MonoBehaviour
             Vector3 dest = transform.position;
             dest.y += 0.01f;
             dest.x -= transform.localScale.x * 5f;
-            Debug.DrawLine(transform.position, dest, ConnectedSides[3] > 0 ? ConnectedColour : DisconnectedColour);
+            Debug.DrawLine(transform.position, dest, ConnectedSides[3] ? ConnectedColour : DisconnectedColour);
         }
         //========= TEMPORARY CODE: Placeholder for tile image assets ==========
     }
@@ -88,27 +86,27 @@ public class Tile : MonoBehaviour
         Tile left = Left();
 
         //Disconnect all cables initially
-        ConnectedSides = new int[] { -1, -1, -1, -1 };
+        ConnectedSides = new bool[] { false, false, false, false };
 
         //If there is a top cable and a tile above
         if (CableSides[0] && top)
             if (top.CableSides[2]) //If the tile above has a bottom cable
-                    ConnectedSides[0] = 1; //Connect the top cable
+                ConnectedSides[0] = true; //Connect the top cable
 
         //If there is a right cable and a tile to the right
         if (CableSides[1] && right)
             if (right.CableSides[3]) //If the tile to the right has a left cable
-                ConnectedSides[1] = 1; //Connect the right cable
+                ConnectedSides[1] = true; //Connect the right cable
 
         //If there is a bottom cable and a tile below
         if (CableSides[2] && bottom)
             if (bottom.CableSides[0]) //If the tile below has a top cable
-                ConnectedSides[2] = 1; //Connect the bottom cable
+                ConnectedSides[2] = true; //Connect the bottom cable
 
         //If there is a left cable and a tile to the left
         if (CableSides[3] && left)
             if (left.CableSides[1]) //If the tile to the left has a right cable
-                ConnectedSides[3] = 1; //Connect the left cable
+                ConnectedSides[3] = true; //Connect the left cable
     }
 
     #region Adjacent Tile Retrievers
@@ -155,13 +153,13 @@ public class Tile : MonoBehaviour
         List<Tile> tiles = new List<Tile>();
 
         //Test sides for connected cable, add adjacent tile if connected
-        if (ConnectedSides[0] > 0)
+        if (ConnectedSides[0])
             tiles.Add(Top());
-        if (ConnectedSides[1] > 0)
+        if (ConnectedSides[1])
             tiles.Add(Right());
-        if (ConnectedSides[2] > 0)
+        if (ConnectedSides[2])
             tiles.Add(Bottom());
-        if (ConnectedSides[3] > 0)
+        if (ConnectedSides[3])
             tiles.Add(Left());
 
         return tiles;
