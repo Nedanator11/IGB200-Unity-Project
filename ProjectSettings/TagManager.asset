@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GoodOption
   - BadOption
+  - GameManager
   layers:
   - Default
   - TransparentFX

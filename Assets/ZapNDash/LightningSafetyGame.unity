@@ -3127,7 +3127,7 @@ GameObject:
   - component: {fileID: 859785605}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3180,6 +3180,11 @@ MonoBehaviour:
   OptionBadPrefab: {fileID: 3467323777358193492, guid: de8ff985a3b1d4646a244ccee56b1600, type: 3}
   PlayerPrefab: {fileID: 7767052954490673877, guid: 754515dc393a74e49afdbbed1017353a, type: 3}
   CloudPrefab: {fileID: 3285910293236084853, guid: 9f256f2bdc270964e92d638eba5867a1, type: 3}
+  Environment: {fileID: 0}
+  Options: []
+  Player: {fileID: 0}
+  Cloud: {fileID: 0}
+  SelectedOption: {fileID: 0}
   ScorePerRound: 10
   InitialTimerDuration: 10
   TimerDurationDecrease: 1
