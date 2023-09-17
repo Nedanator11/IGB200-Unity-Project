@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Net.Sockets;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
@@ -12,13 +14,24 @@ public class Tile : MonoBehaviour
     public Color ConnectedColour = Color.green;
     public Color DisconnectedColour = Color.red;
 
+    [Header("Animation")]
+    public bool Animating = false;
+    public float RotationDuration = 0.25f;
+    public float RotationScaleInflation = 0.1f;
+    private float TargetRotation = -1f;
+
     private void Update()
     {
         //Don't process if game is paused
         if (GameManager.instance.Paused)
             return;
 
+        //Update connected sides
         CheckConnectedSides();
+
+        //Animate tile rotation
+        if (Animating)
+            RotateTile();
 
         //========= TEMPORARY CODE: Placeholder for tile image assets ==========
         if (CableSides[0])
@@ -60,20 +73,72 @@ public class Tile : MonoBehaviour
         //========= TEMPORARY CODE: Placeholder for tile image assets ==========
     }
 
-    public void ClockwiseRotate()
+    public void RotateTile(bool instantRotation = false)
     {
-        //Rotate gameObejct
-        transform.Rotate(new Vector3(0f, 90f, 0f));
+        //if rotating instantly
+        if (instantRotation)
+        {
+            //Rotate gameObejct
+            transform.Rotate(new Vector3(0f, 90f, 0f));
 
-        //Rightshift CableSides array
-        bool[] newCableSides = new bool[] { false, false, false, false };
-        newCableSides[0] = CableSides[3];
-        newCableSides[1] = CableSides[0];
-        newCableSides[2] = CableSides[1];
-        newCableSides[3] = CableSides[2];
-        CableSides = newCableSides;
+            //Rightshift CableSides array
+            bool[] newCableSides = new bool[] { false, false, false, false };
+            newCableSides[0] = CableSides[3];
+            newCableSides[1] = CableSides[0];
+            newCableSides[2] = CableSides[1];
+            newCableSides[3] = CableSides[2];
+            CableSides = newCableSides;
 
-        CheckConnectedSides();
+            //Update connected sides
+            CheckConnectedSides();
+
+            //Don't process anything further
+            return;
+        }
+
+        //If animation has not yet begun
+        if (!Animating && TargetRotation < 0)
+        {
+            //Bring tile forward a touch to render above neighbouring tiles
+            transform.Translate(new Vector3(0f, 0.1f, 0f));
+
+            //Start animation
+            TargetRotation = transform.eulerAngles.y + 90f;
+            Animating = true;
+        }
+
+        //Calculate rotation step
+        float rotationSpeed = 90f / RotationDuration;
+        float rotationStep = rotationSpeed * Time.deltaTime;
+
+        //Check if rotation step will reach target rotation
+        if (transform.eulerAngles.y + rotationStep >= TargetRotation)
+        {
+            //Step to target rotation
+            transform.Rotate(new Vector3(0f, TargetRotation - transform.eulerAngles.y, 0f));
+
+            //Rightshift CableSides array
+            bool[] newCableSides = new bool[] { false, false, false, false };
+            newCableSides[0] = CableSides[3];
+            newCableSides[1] = CableSides[0];
+            newCableSides[2] = CableSides[1];
+            newCableSides[3] = CableSides[2];
+            CableSides = newCableSides;
+
+            //Update connected sides
+            CheckConnectedSides();
+
+            //Move tile back to it's original depth alongside it's neighbouring tiles
+            transform.Translate(new Vector3(0f, -0.1f, 0f));
+
+            //End animation
+            TargetRotation = -1f;
+            Animating = false;
+        }
+        else //Step towards target rotation
+        {
+            transform.Rotate(new Vector3(0f, rotationStep, 0f));
+        }
     }
 
     //Check cable sides for connection to adjacent tiles

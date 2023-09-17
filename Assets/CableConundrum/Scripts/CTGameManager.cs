@@ -20,6 +20,7 @@ public class CTGameManager : GameManager {
     public CCDifficulty Hard = new CCDifficulty();
 
     //Game variables
+    private Tile ClickedTile;
     private bool RoundOver;
     private float GameTimer;
     private float GameTimerDuration;
@@ -224,7 +225,10 @@ public class CTGameManager : GameManager {
 
             //If gameObject is a tile, rotate it clockwise
             if (hitObject.GetComponent<Tile>())
-                hitObject.GetComponent<Tile>().ClockwiseRotate();
+            {
+                ClickedTile = hitObject.GetComponent<Tile>();
+                ClickedTile.RotateTile();
+            }
         }
     }
 

@@ -295,7 +295,7 @@ public class TileGrid : MonoBehaviour
 
             //Apply random rotation to tile
             for (int r = 0; r < Random.Range(0, 4); r++)
-                tile.GetComponent<Tile>().ClockwiseRotate();
+                tile.GetComponent<Tile>().RotateTile(true);
         }
 
         //Loop over all remaining empty board spaces
@@ -337,7 +337,7 @@ public class TileGrid : MonoBehaviour
 
                 //Apply random rotation to tile
                 for (int r = 0; r < Random.Range(0, 4); r++)
-                    tile.GetComponent<Tile>().ClockwiseRotate();
+                    tile.GetComponent<Tile>().RotateTile(true);
             }
         }
 
