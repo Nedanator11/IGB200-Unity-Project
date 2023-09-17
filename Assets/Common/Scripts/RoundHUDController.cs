@@ -15,8 +15,8 @@ public class RoundHUDController : MonoBehaviour
     }
 
     //Sets the text of the score HUD object to given value, rounded up to next whole number
-    public void SetScoreText(float value)
+    public void SetScoreText(string text)
     {
-        ScoreHUDObject.GetComponent<TextMeshProUGUI>().text = "Score: " + Mathf.CeilToInt(value).ToString();
+        ScoreHUDObject.GetComponent<TextMeshProUGUI>().text = text;
     }
 }

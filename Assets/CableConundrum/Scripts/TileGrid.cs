@@ -139,7 +139,8 @@ public class TileGrid : MonoBehaviour
                     if (node.connectionCosts[0] < 0f)
                     {
                         //Generate random cost
-                        float cost = Random.Range(tileLengthZ * 0.5f, tileLengthZ * 1.5f);
+                        //float cost = Random.Range(tileLengthZ * 0.5f, tileLengthZ * 1.5f);
+                        float cost = Random.Range(100, 1000);
 
                         //Set cost between both nodes
                         node.connectionCosts[0] = cost;
@@ -157,7 +158,8 @@ public class TileGrid : MonoBehaviour
                     if (node.connectionCosts[1] < 0f)
                     {
                         //Generate random cost
-                        float cost = Random.Range(tileLengthX * 0.5f, tileLengthX * 1.5f);
+                        //float cost = Random.Range(tileLengthX * 0.5f, tileLengthX * 1.5f);
+                        float cost = Random.Range(100, 1000);
 
                         //Set cost between both nodes
                         node.connectionCosts[1] = cost;
@@ -175,7 +177,8 @@ public class TileGrid : MonoBehaviour
                     if (node.connectionCosts[2] < 0f)
                     {
                         //Generate random cost
-                        float cost = Random.Range(tileLengthZ * 0.5f, tileLengthZ * 1.5f);
+                        //float cost = Random.Range(tileLengthZ * 0.5f, tileLengthZ * 1.5f);
+                        float cost = Random.Range(100, 1000);
 
                         //Set cost between both nodes
                         node.connectionCosts[2] = cost;
@@ -193,7 +196,8 @@ public class TileGrid : MonoBehaviour
                     if (node.connectionCosts[3] < 0f)
                     {
                         //Generate random cost
-                        float cost = Random.Range(tileLengthX * 0.5f, tileLengthX * 1.5f);
+                        //float cost = Random.Range(tileLengthX * 0.5f, tileLengthX * 1.5f);
+                        float cost = Random.Range(100, 1000);
 
                         //Set cost between both nodes
                         node.connectionCosts[3] = cost;
@@ -346,10 +350,10 @@ public class TileGrid : MonoBehaviour
         //Path-clearing
         StartTile = null;
         EndTile = null;
-        OpenList.Clear();
-        ClosedList.Clear();
-        GeneratedPath.Clear();
-        DetectedPath.Clear();
+        OpenList = new List<GridNode>();
+        ClosedList = new List<GridNode>();
+        GeneratedPath = new List<GridNode>();
+        DetectedPath = new List<GridNode>();
 
         //Loop over all Graph elements, and destroy each object found
         for (int i = 0; i < Graph.GetLength(0); i++)

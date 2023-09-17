@@ -150,7 +150,7 @@ public class LSGameManager : GameManager {
     {
         Score += ScorePerRound;
         Score += Mathf.Ceil(RoundTimer);
-        RoundHUD.GetComponent<RoundHUDController>().SetScoreText(Score);
+        RoundHUD.GetComponent<RoundHUDController>().SetScoreText("Score: " + Score);
 
         RoundOver = true;
         RoundHUD.SetActive(false);

@@ -19,16 +19,13 @@ public class CTGameManager : GameManager {
     public GameObject RoundHUD;
     public GameObject RoundEndGoodHUD;
     public GameObject RoundEndBadHUD;
+    public GameObject GameOverHUD;
 
-    [Header("Other")]
-    //Score Variables
-    public float ScorePerRound;
-    private float Score;
-
-    //Round variables
+    //Game variables
     private bool RoundOver;
-    private float RoundTimer;
-    public float RoundTimerDuration = 20f;
+    private float GameTimer;
+    public float GameTimerDuration = 120f;
+    private float Score;
 
 
     // Awake Checks - Singleton setup
@@ -96,6 +93,9 @@ public class CTGameManager : GameManager {
         StartRound();
 
         GameStarted = true;
+
+        //Start game timer
+        StartRoundTimer(GameTimerDuration);
     }
 
     //Starts a new round
@@ -107,17 +107,13 @@ public class CTGameManager : GameManager {
 
         //Generate a new tile board
         TileGrid.GetComponent<TileGrid>().GenerateBoard();
-
-        //Start round timer
-        StartRoundTimer(RoundTimerDuration);
     }
 
     //End current round with completed circuit
     private void EndRoundGood()
     {
-        Score += ScorePerRound;
-        Score += Mathf.Ceil(RoundTimer);
-        RoundHUD.GetComponent<RoundHUDController>().SetScoreText(Score);
+        Score += 1;
+        RoundHUD.GetComponent<RoundHUDController>().SetScoreText("Completed: " + Score);
 
         RoundOver = true;
         RoundHUD.SetActive(false);
@@ -130,7 +126,6 @@ public class CTGameManager : GameManager {
         RoundOver = true;
         RoundHUD.SetActive(false);
         RoundEndBadHUD.SetActive(true);
-        GameOver = true;
     }
 
     //Clean up current round and start the next round
@@ -138,6 +133,7 @@ public class CTGameManager : GameManager {
     {
         //Hide round end HUD
         RoundEndGoodHUD.SetActive(false);
+        RoundEndBadHUD.SetActive(false);
 
         //Destroy round objects
         TileGrid.GetComponent<TileGrid>().DestroyBoard();
@@ -155,6 +151,19 @@ public class CTGameManager : GameManager {
         StartRound();
     }
 
+    //Ends the current game
+    private void EndGame()
+    {
+        //Hide round & round end HUDs
+        RoundHUD.SetActive(false);
+        RoundEndGoodHUD.SetActive(false);
+        RoundEndBadHUD.SetActive(false);
+
+        //Show game over HUD
+        GameOverHUD.GetComponent<GameOverHUDController>().SetText(Score);
+        GameOverHUD.SetActive(true);
+    }
+
     //Restarts the game
     private void RestartGame()
     {
@@ -164,20 +173,22 @@ public class CTGameManager : GameManager {
     //Start the current round timer
     private void StartRoundTimer(float duration)
     {
-        RoundTimer = duration;
-        RoundHUD.GetComponent<RoundHUDController>().SetTimerText(RoundTimer);
+        GameTimer = duration;
+        RoundHUD.GetComponent<RoundHUDController>().SetTimerText(GameTimer);
     }
 
     //Elapse timer for current update cycle
     private void ElapseRoundTimer()
     {
-        RoundTimer -= Time.deltaTime;
-        if (RoundTimer < 0f)
+        GameTimer -= Time.deltaTime;
+        if (GameTimer < 0f)
         {
-            RoundTimer = 0f;
+            GameTimer = 0f;
             TestCircuit();
+            EndGame();
+            GameOver = true;
         }
-        RoundHUD.GetComponent<RoundHUDController>().SetTimerText(RoundTimer);
+        RoundHUD.GetComponent<RoundHUDController>().SetTimerText(GameTimer);
     }
 
     //Detects if player has clicked on a tile, and rotates it if true
