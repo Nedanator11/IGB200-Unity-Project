@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d6bde014d6e7b549a9adac3da8aab26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
+  playerController: {fileID: 100000, guid: 2ad737ad16d60de4781354cfb1a4a30d, type: 3}
   arcadeMachine: {fileID: 7856962453602782847}
   distance: 0
   distanceThreshold: 10

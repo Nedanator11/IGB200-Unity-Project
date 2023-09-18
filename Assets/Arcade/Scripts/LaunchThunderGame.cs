@@ -7,6 +7,8 @@ using static UnityEditor.Progress;
 
 public class LaunchThunderGame : MonoBehaviour
 {
+    public GameObject SceneTransitions;
+
     //variables
     public GameObject playerController;
     public GameObject arcadeMachine;
@@ -24,8 +26,8 @@ public class LaunchThunderGame : MonoBehaviour
             arcadeMachine.GetComponentInChildren<TextMeshPro>().enabled = true;
             if(Input.GetKeyDown("e"))
             {
-                
-                SceneManager.LoadScene("LightningSafetyGame");
+
+                SceneManager.LoadScene(5);
             }
 
         }

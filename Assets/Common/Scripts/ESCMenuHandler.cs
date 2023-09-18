@@ -9,9 +9,7 @@ public class ESCMenuHandler : MonoBehaviour
     private bool active = false;
 
     public GameObject menu;
-
     SceneHandler sceneHandler;
-
 
     private void Start()
     {
@@ -29,7 +27,6 @@ public class ESCMenuHandler : MonoBehaviour
     {
         active = !active;
         menu.SetActive(active);
-
         GameManager.instance.Paused = active;
     }
 

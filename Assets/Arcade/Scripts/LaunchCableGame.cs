@@ -24,8 +24,8 @@ public class LaunchCableGame : MonoBehaviour
             arcadeMachine.GetComponentInChildren<TextMeshPro>().enabled = true;
             if(Input.GetKeyDown("e"))
             {
-                
-                SceneManager.LoadScene("CableTileGame");
+
+                SceneManager.LoadScene(4);
             }
 
         }
