@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using UnityEngine.WSA;
 
 public class CTGameManager : GameManager {
 
@@ -50,8 +51,12 @@ public class CTGameManager : GameManager {
 
     private void Start()
     {
+        
         GameStarted = false;
         GameOver = false;
+
+        //reset cursor
+        
     }
 
     private void Update()

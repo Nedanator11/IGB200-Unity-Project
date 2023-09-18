@@ -8,6 +8,12 @@ public class Player : MonoBehaviour
     public float MoveSpeed;
     public bool FinishedAnimating;
 
+    private void Start()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
     private void Update()
     {
         if (Destination != null)
