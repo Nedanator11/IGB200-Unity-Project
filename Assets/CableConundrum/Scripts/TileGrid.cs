@@ -383,6 +383,19 @@ public class TileGrid : MonoBehaviour
         return true;
     }
 
+    //Checks if the game has finished animating all objects
+    public bool FinishedAnimating()
+    {
+        //Loop through all tiles and check if animating
+        for (int i = 0; i < GridDimension + 2; i++)
+            for (int j = 0; j < GridDimension + 2; j++)
+                if (Board[i, j] != null)
+                    if (Board[i, j].GetComponent<Tile>().Animating) return false;
+
+        //If none are animating, return true
+        return true;
+    }
+
     //Resets the connection data of all nodes
     private void ResetNodes()
     {
