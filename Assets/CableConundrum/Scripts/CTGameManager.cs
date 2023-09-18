@@ -22,6 +22,7 @@ public class CTGameManager : GameManager {
 
     //Game variables
     private Tile ClickedTile;
+    private bool TestingCircuit;
     private bool RoundOver;
     private float GameTimer;
     private float GameTimerDuration;
@@ -70,9 +71,18 @@ public class CTGameManager : GameManager {
             ElapseRoundTimer();
 
             if (Input.GetMouseButtonDown(0))
+            {
                 ClickTile();
+            }
             if (Input.GetKeyDown("space"))
-                TestCircuit();
+            {
+                RoundOver = true;
+                TestingCircuit = true;
+            }
+        }
+        else if (TestingCircuit)
+        {
+            TestCircuit();
         }
         else if (GameStarted && RoundOver)
         {
@@ -150,7 +160,6 @@ public class CTGameManager : GameManager {
         Score += 1;
         RoundHUD.GetComponent<RoundHUDController>().SetScoreText("Completed: " + Score);
 
-        RoundOver = true;
         RoundHUD.SetActive(false);
         RoundEndGoodHUD.SetActive(true);
     }
@@ -158,7 +167,6 @@ public class CTGameManager : GameManager {
     //End round with incorrect circuit
     private void EndRoundBad()
     {
-        RoundOver = true;
         RoundHUD.SetActive(false);
         RoundEndBadHUD.SetActive(true);
     }
@@ -240,10 +248,15 @@ public class CTGameManager : GameManager {
     //Tests the circuit to see if win condition is met
     private void TestCircuit()
     {
+        if (!TileGrid.GetComponent<TileGrid>().FinishedAnimating())
+            return;
+
         if (TileGrid.GetComponent<TileGrid>().DetectCompleteCircuit())
             EndRoundGood();
         else
             EndRoundBad();
+
+        TestingCircuit = false;
     }
 }
 
