@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class ESCMenuHandler : MonoBehaviour
 {
-
     private bool active = false;
 
     public GameObject menu;

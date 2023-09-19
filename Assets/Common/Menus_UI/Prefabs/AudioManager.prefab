@@ -304,7 +304,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1560604283795034627}
   sfxSource: {fileID: 1560604283247088080}
-  buttonHover: {fileID: 0}
-  buttonClick: {fileID: 0}
+  buttonHover: {fileID: 8300000, guid: abe7bb45c0fe94c4e957c5838de6f17d, type: 3}
+  buttonClick: {fileID: 8300000, guid: 170569100b34ec742a1b0c4844be505e, type: 3}
   BGMusicArcade: {fileID: 8300000, guid: d3fb616593aa1034eacb67e05794a9c3, type: 3}
   machineInteract: {fileID: 8300000, guid: d76fd36d0bda1ac4a8dd8912e06a1fdb, type: 3}
+  BGMusicZND: {fileID: 0}
+  BGMusicCC: {fileID: 0}

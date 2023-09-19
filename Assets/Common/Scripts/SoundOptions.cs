@@ -14,12 +14,12 @@ public class SoundOptions : MonoBehaviour
     public void SetMusicVolume()
     {
         float volume = musicSlider.value;
-        audioMixer.SetFloat("music", volume);
+        audioMixer.SetFloat("music", Mathf.Log10(volume)*20);   
     }
 
     public void SetSFXVolume()
     {
         float volume = sfxSlider.value;
-        audioMixer.SetFloat("sfx", volume);
+        audioMixer.SetFloat("sfx", Mathf.Log10(volume) * 20);
     }
 }

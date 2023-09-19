@@ -13,7 +13,7 @@ public class MenuInput : MonoBehaviour
     void Start()
     {
         sceneHandler = GetComponent<SceneHandler>();
-        currentScene = SceneManager.GetActiveScene().buildIndex;
+        currentScene = sceneHandler.currentScene;
     }
 
     // Update is called once per frame

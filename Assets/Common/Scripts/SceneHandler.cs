@@ -8,6 +8,13 @@ public class SceneHandler : MonoBehaviour
 
     public Animator animator;
     private int sceneToLoad;
+    public int currentScene;
+
+    public void Start()
+    {
+        currentScene = SceneManager.GetActiveScene().buildIndex;
+    }
+
 
     public void FadeToLevel(int levelIndex)
     {

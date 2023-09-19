@@ -6,18 +6,20 @@ AudioMixerController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Arcade_AudioMixer
+  m_Name: AudioMixer
   m_OutputGroup: {fileID: 0}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}
   m_StartSnapshot: {fileID: 24500006}
-  m_SuspendThreshold: -80
+  m_SuspendThreshold: 0
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
   - guid: 111f7811ee582884d9943b9902ba79bf
-    name: Music
+    name: music
+  - guid: f24194b4d0f066846b59c14d9d7bb8de
+    name: sfx
   m_AudioMixerGroupViews:
   - guids:
     - 7b83ebea75beb99418557e68f521194a
@@ -72,6 +74,7 @@ AudioMixerSnapshotController:
   m_SnapshotID: 6d9b80f6727bd034693017c1cab7d828
   m_FloatValues:
     111f7811ee582884d9943b9902ba79bf: 0
+    f24194b4d0f066846b59c14d9d7bb8de: -0.19117308
   m_TransitionOverrides: {}
 --- !u!244 &790423007228067284
 AudioMixerEffectController:
