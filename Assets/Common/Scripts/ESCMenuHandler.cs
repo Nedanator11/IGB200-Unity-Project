@@ -8,11 +8,17 @@ public class ESCMenuHandler : MonoBehaviour
     private bool active = false;
 
     public GameObject menu;
+    public GameObject sceneTransitions;
+
     SceneHandler sceneHandler;
+    SoundOptions soundOptions;
 
     private void Start()
     {
-        sceneHandler = GetComponent<SceneHandler>();
+        sceneHandler = sceneTransitions.GetComponent<SceneHandler>();
+        soundOptions = menu.GetComponent<SoundOptions>();
+
+        soundOptions.GetSliderVolumes();
     }
 
     // Update is called once per frame

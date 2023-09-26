@@ -11,15 +11,30 @@ public class SoundOptions : MonoBehaviour
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
 
+
     public void SetMusicVolume()
     {
-        float volume = musicSlider.value;
-        audioMixer.SetFloat("music", Mathf.Log10(volume)*20);   
+        float volumeRaw = musicSlider.value;
+        float volume = Mathf.Log10(volumeRaw) * 20;
+
+        audioMixer.SetFloat("music", volume);
+
+        PlayerPrefs.SetFloat("music", volumeRaw);
     }
 
     public void SetSFXVolume()
     {
-        float volume = sfxSlider.value;
-        audioMixer.SetFloat("sfx", Mathf.Log10(volume) * 20);
+        float volumeRaw = sfxSlider.value;
+        float volume = Mathf.Log10(volumeRaw) * 20;
+
+        audioMixer.SetFloat("sfx", volume);
+
+        PlayerPrefs.SetFloat("sfx", volumeRaw);
+    }
+
+    public void GetSliderVolumes()
+    {
+        musicSlider.value = PlayerPrefs.GetFloat("music", 0.75f);
+        sfxSlider.value = PlayerPrefs.GetFloat("sfx", 0.75f);
     }
 }

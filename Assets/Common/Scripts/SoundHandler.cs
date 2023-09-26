@@ -8,7 +8,6 @@ public class SoundHandler : MonoBehaviour
 {
     private int currentScene;
 
-
     [Header("------Audio Source-----")]
 
     [SerializeField] AudioSource musicSource;
@@ -63,7 +62,4 @@ public class SoundHandler : MonoBehaviour
     {
         sfxSource.PlayOneShot(clip);
     }
-
-
-
 }
