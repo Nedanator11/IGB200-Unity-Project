@@ -9,6 +9,8 @@ TagManager:
   - GameManager
   - CinemachineTarget
   - SceneTransitions
+  - AudioManager
+  - LSPlayer
   layers:
   - Default
   - TransparentFX

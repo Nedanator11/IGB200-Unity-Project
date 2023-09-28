@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 1560604283961994118}
   m_Layer: 0
   m_Name: AudioManager
-  m_TagString: Untagged
+  m_TagString: AudioManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -305,8 +305,22 @@ MonoBehaviour:
   musicSource: {fileID: 1560604283795034627}
   sfxSource: {fileID: 1560604283247088080}
   buttonHover: {fileID: 8300000, guid: abe7bb45c0fe94c4e957c5838de6f17d, type: 3}
-  buttonClick: {fileID: 8300000, guid: 170569100b34ec742a1b0c4844be505e, type: 3}
+  buttonClick: {fileID: 8300000, guid: 3faca33628541b94daf41619df119644, type: 3}
+  buttonQuit: {fileID: 8300000, guid: 51444560ebeb03e4b8d48eec876572e4, type: 3}
+  menuOpen: {fileID: 0}
+  menuClose: {fileID: 0}
+  gameStart: {fileID: 0}
   BGMusicArcade: {fileID: 8300000, guid: d3fb616593aa1034eacb67e05794a9c3, type: 3}
   machineInteract: {fileID: 8300000, guid: d76fd36d0bda1ac4a8dd8912e06a1fdb, type: 3}
+  machineMusic: {fileID: 0}
+  ballCollide: {fileID: 0}
   BGMusicZND: {fileID: 0}
+  playerWalk: {fileID: 0}
+  lightningStrike: {fileID: 8300000, guid: 9829cdeaed50c2a4db6676a21a7ca1e7, type: 3}
+  playerElectrocute: {fileID: 8300000, guid: f99c4459cd825d142bffd814dd5351e3, type: 3}
+  parkSoundscape: {fileID: 0}
+  citySoundscape: {fileID: 0}
   BGMusicCC: {fileID: 0}
+  tileRotate: {fileID: 0}
+  circuitCorrect: {fileID: 0}
+  circuitIncorrect: {fileID: 0}

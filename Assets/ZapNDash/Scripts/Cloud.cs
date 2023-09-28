@@ -13,6 +13,15 @@ public class Cloud : MonoBehaviour
     public GameObject LightningMarker;
     public float LightningStrikeDuration;
 
+    SoundHandler soundHandler;
+    Player playerScript;
+
+    private void Start()
+    {
+        soundHandler = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<SoundHandler>();
+        playerScript = GameObject.FindGameObjectWithTag("LSPlayer").GetComponent<Player>();
+    }
+
     private void Update()
     {
         if (Destinations != null)
@@ -76,5 +85,6 @@ public class Cloud : MonoBehaviour
         GameObject strike = Instantiate(LightningStrikePrefab, LightningMarker.transform.position, LightningMarker.transform.rotation);
         Destroy(strike, LightningStrikeDuration);
 
+        soundHandler.PlaySFX(soundHandler.lightningStrike);
     }
 }

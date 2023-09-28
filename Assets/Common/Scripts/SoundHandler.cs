@@ -17,19 +17,33 @@ public class SoundHandler : MonoBehaviour
 
     public AudioClip buttonHover;
     public AudioClip buttonClick;
+    public AudioClip buttonQuit;
+    public AudioClip menuOpen;
+    public AudioClip menuClose;
+    public AudioClip gameStart;
 
     [Header("------- Arcade --------")]
 
     public AudioClip BGMusicArcade;
     public AudioClip machineInteract;
+    public AudioClip machineMusic;
+    public AudioClip ballCollide;
 
     [Header("------ Zap N' Dash -------")]
 
     public AudioClip BGMusicZND;
+    public AudioClip playerWalk;
+    public AudioClip lightningStrike;
+    public AudioClip playerElectrocute;
+    public AudioClip parkSoundscape;
+    public AudioClip citySoundscape;
 
     [Header("----- Cable Conundrum ------")]
 
     public AudioClip BGMusicCC;
+    public AudioClip tileRotate;
+    public AudioClip circuitCorrect;
+    public AudioClip circuitIncorrect;
 
 
     void Start()
