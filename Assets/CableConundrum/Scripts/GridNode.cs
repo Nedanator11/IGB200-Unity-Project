@@ -3,6 +3,7 @@ using UnityEngine;
 public class GridNode : MonoBehaviour
 {
     public GridNode[] connectedNodes = new GridNode[] { null, null, null, null };
+    public GridNode[] adjacentNodes = new GridNode[] { null, null, null, null };
     public float[] connectionCosts = new float[] { -1f, -1f, -1f, -1f };
     public float StraightLineDistanceToEnd;
     public float MinCostToStart = -1f;

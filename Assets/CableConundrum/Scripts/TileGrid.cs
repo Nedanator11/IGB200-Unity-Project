@@ -12,6 +12,7 @@ public class TileGrid : MonoBehaviour
     //Path-Finding
     private GameObject StartTile;
     private GameObject EndTile;
+    public List<Tile> HazardTiles = new List<Tile>();
     private List<GridNode> OpenList = new List<GridNode>();
     private List<GridNode> ClosedList = new List<GridNode>();
     private List<GridNode> GeneratedPath = new List<GridNode>();
@@ -37,6 +38,8 @@ public class TileGrid : MonoBehaviour
     public float TSplitWeight;
     public GameObject CrossSplitTilePrefab;
     public float CrossSplitWeight;
+    public GameObject HazardTilePrefab;
+    public float HazardTilePercent;
 
     private void Update()
     {
@@ -134,6 +137,7 @@ public class TileGrid : MonoBehaviour
                 {
                     //Connect to node above
                     node.connectedNodes[0] = Graph[i, j + 1].GetComponent<GridNode>();
+                    node.adjacentNodes[0] = Graph[i, j + 1].GetComponent<GridNode>();
 
                     //If cost has not yet been set
                     if (node.connectionCosts[0] < 0f)
@@ -153,6 +157,7 @@ public class TileGrid : MonoBehaviour
                 {
                     //Connect to node right
                     node.connectedNodes[1] = Graph[i + 1, j].GetComponent<GridNode>();
+                    node.adjacentNodes[1] = Graph[i + 1, j].GetComponent<GridNode>();
 
                     //If cost has not yet been set
                     if (node.connectionCosts[1] < 0f)
@@ -172,6 +177,7 @@ public class TileGrid : MonoBehaviour
                 {
                     //Connect to node below
                     node.connectedNodes[2] = Graph[i, j - 1].GetComponent<GridNode>();
+                    node.adjacentNodes[2] = Graph[i, j - 1].GetComponent<GridNode>();
 
                     //If cost has not yet been set
                     if (node.connectionCosts[2] < 0f)
@@ -191,6 +197,7 @@ public class TileGrid : MonoBehaviour
                 {
                     //Connect to node left
                     node.connectedNodes[3] = Graph[i - 1, j].GetComponent<GridNode>();
+                    node.adjacentNodes[3] = Graph[i - 1, j].GetComponent<GridNode>();
 
                     //If cost has not yet been set
                     if (node.connectionCosts[3] < 0f)
@@ -213,6 +220,55 @@ public class TileGrid : MonoBehaviour
         for (int i = 1; i < GridDimension + 1; i++)
             for (int j = 1; j < GridDimension + 1; j++)
                 Graph[i, j].GetComponent<GridNode>().StraightLineDistanceToEnd = Graph[i, j].GetComponent<GridNode>().StraightLineDistanceTo(endNode.GetComponent<GridNode>());
+
+        #region Hazard Node Generation
+
+        //Populate list of potential hazard nodes
+        List<GridNode> possibleHazardNodes = new List<GridNode>();
+        for (int i = 1; i < GridDimension + 1; i++)
+            for (int j = 1; j < GridDimension + 1; j++)
+                possibleHazardNodes.Add(Graph[i, j].GetComponent<GridNode>());
+        possibleHazardNodes.Remove(startNode.GetComponent<GridNode>().connectedNodes[1].GetComponent<GridNode>());
+        possibleHazardNodes.Remove(endNode.GetComponent<GridNode>().connectedNodes[3].GetComponent<GridNode>());
+
+        //Calculate max number of hazard nodes
+        int totalNodes = GridDimension * GridDimension;
+        int hazardMax = (int)(totalNodes * HazardTilePercent / 100f);
+        if ((totalNodes * HazardTilePercent / 100f) % 1f > 0f && Random.Range(0f, 1f) <= (totalNodes * HazardTilePercent / 100f) % 1f)
+            hazardMax += 1;
+
+        //Generate hazard nodes
+        List<GridNode> hazardNodes = new List<GridNode>();
+        for (int i = 0; i < hazardMax; i++)
+        {
+            //If list is exhausted, break
+            if (possibleHazardNodes.Count <= 0) break;
+
+            //Retrieve random node and remove it from list of potential hazard nodes
+            GridNode newHazard = possibleHazardNodes[Random.Range(0, possibleHazardNodes.Count)];
+            possibleHazardNodes.Remove(newHazard);
+
+            //Loop through connected nodes
+            for (int c = 0; c < newHazard.connectedNodes.Length; c++)
+            {
+                //If there is an adjacent tile
+                if (newHazard.connectedNodes[c])
+                {
+                    //Remove adjacent tile & diagonal clock-wise tile from possible hazard nodes
+                    possibleHazardNodes.Remove(newHazard.connectedNodes[c]);
+                    possibleHazardNodes.Remove(newHazard.connectedNodes[c].connectedNodes[(c + 1) % 4]);
+
+                    //Sever connection between adjacent node and this one
+                    newHazard.connectedNodes[c].connectedNodes[(c + 2) % 4] = null;
+                    newHazard.connectedNodes[c] = null;
+                }
+            }
+
+            //Add this node to the list of hazard nodes
+            hazardNodes.Add(newHazard);
+        }
+
+        #endregion
 
         //Generate the least-cost path from start to end
         GeneratedPath = AStarSearch(startNode.GetComponent<GridNode>(), endNode.GetComponent<GridNode>());
@@ -252,15 +308,23 @@ public class TileGrid : MonoBehaviour
             GridNode node = GeneratedPath[i];
             GridNode nodeNext = GeneratedPath[i + 1];
 
+            //Get the number of adjacent hazard tiles
+            int adjacentHazards = node.adjacentNodes.Where(cn => hazardNodes.Contains(cn)).Count();
+
+
             //If the three sequenced nodes lie on the same x or same y, the path is straight
             GameObject tilePrefab;
             if ((nodePrev.GridPosition[0] == node.GridPosition[0] && node.GridPosition[0] == nodeNext.GridPosition[0]) ||
                 (nodePrev.GridPosition[1] == node.GridPosition[1] && node.GridPosition[1] == nodeNext.GridPosition[1]))
             {
-                //Choose tile prefab
+                //Calculate weight thresholds
                 float StraightThreshold = Turn90Weight + StraightWeight;
                 float TSplitThreshold = StraightThreshold + TSplitWeight;
                 float CrossSplitThreshold = TSplitThreshold + CrossSplitWeight;
+                if (adjacentHazards >= 2) TSplitThreshold = StraightThreshold;
+                if (adjacentHazards >= 1) CrossSplitThreshold = TSplitThreshold;
+
+                //Choose tile prefab
                 float rand = Random.Range(0f, CrossSplitThreshold);
                 if (rand <= StraightThreshold)
                     tilePrefab = StraightTilePrefab;
@@ -271,10 +335,14 @@ public class TileGrid : MonoBehaviour
             }
             else //The path is a turn
             {
-                //Choose tile prefab
+                //Calculate weight thresholds
                 float Turn90Threshold = Turn90Weight + StraightWeight;
                 float TSplitThreshold = Turn90Threshold + TSplitWeight;
                 float CrossSplitThreshold = TSplitThreshold + CrossSplitWeight;
+                if (adjacentHazards >= 2) TSplitThreshold = Turn90Threshold;
+                if (adjacentHazards >= 1) CrossSplitThreshold = TSplitThreshold;
+
+                //Choose tile prefab
                 float rand = Random.Range(0f, CrossSplitThreshold);
                 if (rand <= Turn90Threshold)
                     tilePrefab = Turn90TilePrefab;
@@ -298,6 +366,28 @@ public class TileGrid : MonoBehaviour
                 tile.GetComponent<Tile>().RotateTile(true);
         }
 
+        //Loop over all hazard nodes
+        for (int i = 0; i < hazardNodes.Count; i++)
+        {
+            GridNode node = hazardNodes[i];
+
+            //Instantiate a new tile and scale to tile size
+            GameObject tile = Instantiate(HazardTilePrefab, node.transform.position, node.transform.rotation, node.transform);
+            tile.transform.localScale = new Vector3(0.1f * tileLengthX, transform.localScale.y, 0.1f * tileLengthZ);
+
+            //Add tile to the board
+            tile.GetComponent<Tile>().TileGrid = this;
+            tile.GetComponent<Tile>().GridPosition = new int[2] { node.GridPosition[0], node.GridPosition[1] };
+            Board[node.GridPosition[0], node.GridPosition[1]] = tile;
+
+            //Apply random rotation to tile
+            for (int r = 0; r < Random.Range(0, 4); r++)
+                tile.GetComponent<Tile>().RotateTile(true);
+
+            //Add tile to hazard tiles list
+            HazardTiles.Add(tile.GetComponent<Tile>());
+        }
+
         //Loop over all remaining empty board spaces
         for (int i = 1; i < Board.GetLength(0) - 1; i++)
         {
@@ -310,17 +400,25 @@ public class TileGrid : MonoBehaviour
                 //Get correponding node
                 GameObject node = Graph[i, j];
 
-                //Choose tile prefab
-                float Turn90Threshold = Turn90Weight;
-                float StraightThreshold = Turn90Threshold + StraightWeight;
-                float TSplitThreshold = StraightThreshold + TSplitWeight;
+                //Get the number of adjacent hazard tiles
+                int adjacentHazards = node.GetComponent<GridNode>().adjacentNodes.Where(cn => hazardNodes.Contains(cn)).Count();
+
+                //Calculate weight thresholds
+                float StraightThreshold = StraightWeight;
+                float Turn90Threshold = StraightThreshold + Turn90Weight;
+                float TSplitThreshold = Turn90Threshold + TSplitWeight;
                 float CrossSplitThreshold = TSplitThreshold + CrossSplitWeight;
+                if (adjacentHazards >= 2) Turn90Threshold = StraightThreshold;
+                if (adjacentHazards >= 2) TSplitThreshold = Turn90Threshold;
+                if (adjacentHazards >= 1) CrossSplitThreshold = TSplitThreshold;
+
+                //Choose tile prefab
                 float rand = Random.Range(0f, CrossSplitThreshold);
                 GameObject tilePrefab;
-                if (rand <= Turn90Threshold)
-                    tilePrefab = Turn90TilePrefab;
-                else if (rand <= StraightThreshold)
+                if (rand <= StraightThreshold)
                     tilePrefab = StraightTilePrefab;
+                else if (rand <= Turn90Threshold)
+                    tilePrefab = Turn90TilePrefab;
                 else if (rand <= TSplitThreshold)
                     tilePrefab = TSplitTilePrefab;
                 else //CrossSplit
@@ -350,6 +448,7 @@ public class TileGrid : MonoBehaviour
         //Path-clearing
         StartTile = null;
         EndTile = null;
+        HazardTiles = new List<Tile>();
         OpenList = new List<GridNode>();
         ClosedList = new List<GridNode>();
         GeneratedPath = new List<GridNode>();
@@ -380,7 +479,39 @@ public class TileGrid : MonoBehaviour
 
         if (DetectedPath == null) return false;
         if (DetectedPath.Count == 0) return false;
+        if (DetectHazardConnections()) return false;
         return true;
+    }
+
+    //Search for a path from the start to any of the hazard tiles
+    private bool DetectHazardConnections()
+    {
+        //Initialise lists
+        List<Tile> visited = new List<Tile>();
+        List<Tile> frontier = new List<Tile>();
+        frontier.Add(StartTile.GetComponent<Tile>());
+
+        //Repeat until frontier exhausted
+        while (frontier.Count > 0)
+        {
+            //Get next tile and it's connected tiles
+            Tile tile = frontier[0];
+            List<Tile> connectedTiles = tile.GetConnectedTiles();
+
+            //If connected to any hazard tile, return true (circuit failed)
+            if (connectedTiles.Any(ct => HazardTiles.Contains(ct)))
+                return true;
+
+            //Add connected tiles to frontier
+            frontier.AddRange(connectedTiles.Where(ct => !frontier.Contains(ct) && !visited.Contains(ct)));
+
+            //Remove tile from frontier
+            visited.Add(tile);
+            frontier.Remove(tile);
+        }
+
+        //If no hazard tiles found, return false (circuit success)
+        return false;
     }
 
     //Checks if the game has finished animating all objects

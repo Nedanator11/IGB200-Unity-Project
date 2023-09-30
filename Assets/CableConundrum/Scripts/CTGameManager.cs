@@ -128,6 +128,7 @@ public class CTGameManager : GameManager {
         TileGrid.GetComponent<TileGrid>().StraightWeight = difficulty.StraightWeight;
         TileGrid.GetComponent<TileGrid>().TSplitWeight = difficulty.TSplitWeight;
         TileGrid.GetComponent<TileGrid>().CrossSplitWeight = difficulty.CrossSplitWeight;
+        TileGrid.GetComponent<TileGrid>().HazardTilePercent = difficulty.HazardTilePercent;
     }
     
     //Starts the game
@@ -273,4 +274,5 @@ public class CCDifficulty {
     public float StraightWeight;
     public float TSplitWeight;
     public float CrossSplitWeight;
+    public float HazardTilePercent;
 }

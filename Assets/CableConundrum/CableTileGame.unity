@@ -3866,6 +3866,7 @@ MonoBehaviour:
     StraightWeight: 50
     TSplitWeight: 30
     CrossSplitWeight: 15
+    HazardTilePercent: 5
   Medium:
     GridDimension: 6
     StartTilePosZ: 2
@@ -3875,15 +3876,17 @@ MonoBehaviour:
     StraightWeight: 50
     TSplitWeight: 20
     CrossSplitWeight: 10
+    HazardTilePercent: 10
   Hard:
     GridDimension: 8
     StartTilePosZ: 2
     EndTilePosZ: 7
     GameTimerDuration: 60
-    Turn90Weight: 50
-    StraightWeight: 50
-    TSplitWeight: 10
-    CrossSplitWeight: 5
+    Turn90Weight: 1
+    StraightWeight: 1
+    TSplitWeight: 100
+    CrossSplitWeight: 10000
+    HazardTilePercent: 15
   GameStartHUD: {fileID: 1562354875}
   RoundHUD: {fileID: 1815183319}
   RoundEndGoodHUD: {fileID: 541056336}
@@ -4142,6 +4145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41bbd173c5bc364da721ce930b772fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HazardTiles: []
   GeneratedPathColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   DetectedPathColor: {r: 0, g: 1, b: 0, a: 1}
   GridDimension: 7
@@ -4159,6 +4163,8 @@ MonoBehaviour:
   TSplitWeight: 10
   CrossSplitTilePrefab: {fileID: 7434009604181900485, guid: 1a7797446f58dab47bed24ab5a7c1680, type: 3}
   CrossSplitWeight: 5
+  HazardTilePrefab: {fileID: 7434009604181900485, guid: 4753873a410a06043bd46f32e12160bc, type: 3}
+  HazardTilePercent: 0
 --- !u!4 &1963071926
 Transform:
   m_ObjectHideFlags: 0
