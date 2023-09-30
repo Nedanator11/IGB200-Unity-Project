@@ -26,7 +26,7 @@ public class LSGameManager : GameManager {
     public GameObject CloudPrefab;
 
     [Header("Object References")]
-    public GameObject Environment;
+    public GameObject EnvironmentScape;
     public GameObject[] Options;
     public GameObject Player;
     public GameObject Cloud;
@@ -160,22 +160,14 @@ public class LSGameManager : GameManager {
         RoundHUD.SetActive(true);
 
         //Randomly select evironment
-        Environment = Instantiate(EnvironmentPrefabs[Random.Range(0, EnvironmentPrefabs.Length)], EnvironmentMarker.transform.position, EnvironmentMarker.transform.rotation);
+        EnvironmentScape = Instantiate(EnvironmentPrefabs[Random.Range(0, EnvironmentPrefabs.Length)], EnvironmentMarker.transform.position, EnvironmentMarker.transform.rotation);
 
-        //Randomly pick correct option position
-        Options = new GameObject[4];
-        int correctPosition = Random.Range(0, 4);
-        Options[correctPosition] = Instantiate(OptionGoodPrefab, OptionMarkers[correctPosition].transform.position, OptionMarkers[correctPosition].transform.rotation, OptionMarkers[correctPosition].transform);
-
-        //Populate remaining option positions with incorrect options
-        if (!Options[0])
-            Options[0] = Instantiate(OptionBadPrefab, OptionMarkers[0].transform.position, OptionMarkers[0].transform.rotation, OptionMarkers[0].transform);
-        if (!Options[1])
-            Options[1] = Instantiate(OptionBadPrefab, OptionMarkers[1].transform.position, OptionMarkers[1].transform.rotation, OptionMarkers[1].transform);
-        if (!Options[2])
-            Options[2] = Instantiate(OptionBadPrefab, OptionMarkers[2].transform.position, OptionMarkers[2].transform.rotation, OptionMarkers[2].transform);
-        if (!Options[3])
-            Options[3] = Instantiate(OptionBadPrefab, OptionMarkers[3].transform.position, OptionMarkers[3].transform.rotation, OptionMarkers[3].transform);
+        //Randomly populate options
+        List<GameObject> options = EnvironmentScape.GetComponent<Environment>().SelectBadOptions().ToList();
+        options.Insert(Random.Range(0, 4), EnvironmentScape.GetComponent<Environment>().SelectGoodOption());
+        Options = options.ToArray();
+        for (int i = 0; i < Options.Length; i++)
+            Options[i] = Instantiate(Options[i], OptionMarkers[i].transform.position, OptionMarkers[i].transform.rotation, OptionMarkers[i].transform);
 
         //Initialise player & cloud objects
         Player = Instantiate(PlayerPrefab, PlayerInitialMarker.transform.position, PlayerInitialMarker.transform.rotation);
@@ -222,7 +214,7 @@ public class LSGameManager : GameManager {
         RoundEndGoodHUD.SetActive(false);
 
         //Destroy round objects
-        Destroy(Environment);
+        Destroy(EnvironmentScape);
         Destroy(Options[0]);
         Destroy(Options[1]);
         Destroy(Options[2]);
@@ -289,6 +281,7 @@ public class LSGameManager : GameManager {
     //Trigger the cloud object to begin animating
     public void TriggerCloudAnimation()
     {
+        Debug.Log(Options[0].transform.parent == null);
         Cloud.GetComponent<Cloud>().Destinations = Options.ToList().Select(o => o.transform.parent.Find("CloudPlaceMarker").gameObject).ToList();
         Cloud.GetComponent<Cloud>().FinishedAnimating = false;
     }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using UnityEngine;
@@ -14,11 +15,19 @@ public class Tile : MonoBehaviour
     public Color ConnectedColour = Color.green;
     public Color DisconnectedColour = Color.red;
 
+    public Sprite[] Sprites;
+
     [Header("Animation")]
     public bool Animating = false;
     public float RotationDuration = 0.25f;
     public float RotationScaleInflation = 0.1f;
     private float TargetRotation = -1f;
+
+    private void Start()
+    {
+        //Initialise with random type sprite
+        SelectSprite();
+    }
 
     private void Update()
     {
@@ -71,6 +80,12 @@ public class Tile : MonoBehaviour
             Debug.DrawLine(transform.position, dest, ConnectedSides[3] ? ConnectedColour : DisconnectedColour);
         }
         //========= TEMPORARY CODE: Placeholder for tile image assets ==========
+    }
+
+    private void SelectSprite()
+    {
+        if (Sprites.Length > 0)
+            transform.Find("Sprite").gameObject.GetComponent<SpriteRenderer>().sprite = Sprites[Random.Range(0, Sprites.Length)];
     }
 
     public void RotateTile(bool instantRotation = false)
