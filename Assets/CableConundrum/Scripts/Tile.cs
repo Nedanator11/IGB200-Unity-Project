@@ -23,10 +23,15 @@ public class Tile : MonoBehaviour
     public float RotationScaleInflation = 0.1f;
     private float TargetRotation = -1f;
 
+    // Sound Hander
+    SoundHandler soundHandler;
+
     private void Start()
     {
         //Initialise with random type sprite
         SelectSprite();
+
+        soundHandler = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<SoundHandler>();
     }
 
     private void Update()
@@ -114,6 +119,9 @@ public class Tile : MonoBehaviour
         //If animation has not yet begun
         if (!Animating && TargetRotation < 0)
         {
+            // Tile Rotation SFX
+            soundHandler.PlaySFX(soundHandler.tileRotate);
+
             //Bring tile forward a touch to render above neighbouring tiles
             transform.Translate(new Vector3(0f, 0.1f, 0f));
 

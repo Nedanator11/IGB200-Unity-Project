@@ -266,7 +266,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4cb3fb09125686429e7bb1689d83ddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 20995769}
+  sceneAnimator: {fileID: 20995769}
+  currentScene: 0
 --- !u!114 &20995771
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -35,6 +35,12 @@ public class CTGameManager : GameManager {
     public GameObject RoundEndBadHUD;
     public GameObject GameOverHUD;
 
+    // Animator for round transitions
+    public Animator ccAnimator;
+
+    // Sound Handler
+    SoundHandler soundHandler;
+
     // Awake Checks - Singleton setup
     private void Awake() {
 
@@ -57,7 +63,7 @@ public class CTGameManager : GameManager {
         GameOver = false;
 
         //reset cursor
-        
+
     }
 
     private void Update()
@@ -89,7 +95,10 @@ public class CTGameManager : GameManager {
             if (Input.GetKeyDown("space"))
             {
                 if (!GameOver)
-                    NextRound();
+                {
+                    // NextRound calls from animation event
+                    ccAnimator.SetTrigger("DoorClose");
+                }
                 else
                     RestartGame();
             }
@@ -173,7 +182,7 @@ public class CTGameManager : GameManager {
     }
 
     //Clean up current round and start the next round
-    private void NextRound()
+    public void NextRound()
     {
         //Hide round end HUD
         RoundEndGoodHUD.SetActive(false);

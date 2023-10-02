@@ -43,7 +43,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 1830531018689320668, guid: aa31fad60df13b84694cf223f78c0ed9, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -307,8 +307,8 @@ MonoBehaviour:
   buttonHover: {fileID: 8300000, guid: abe7bb45c0fe94c4e957c5838de6f17d, type: 3}
   buttonClick: {fileID: 8300000, guid: 3faca33628541b94daf41619df119644, type: 3}
   buttonQuit: {fileID: 8300000, guid: 51444560ebeb03e4b8d48eec876572e4, type: 3}
-  menuOpen: {fileID: 0}
-  menuClose: {fileID: 0}
+  menuOpen: {fileID: 8300000, guid: 994073ac66f10b14998c49e5f0e53f25, type: 3}
+  menuClose: {fileID: 8300000, guid: 350572709dc1d1648ab308c7d8de57ae, type: 3}
   gameStart: {fileID: 0}
   BGMusicArcade: {fileID: 8300000, guid: d3fb616593aa1034eacb67e05794a9c3, type: 3}
   machineInteract: {fileID: 8300000, guid: d76fd36d0bda1ac4a8dd8912e06a1fdb, type: 3}
@@ -321,6 +321,6 @@ MonoBehaviour:
   parkSoundscape: {fileID: 0}
   citySoundscape: {fileID: 0}
   BGMusicCC: {fileID: 0}
-  tileRotate: {fileID: 0}
+  tileRotate: {fileID: 8300000, guid: 2f0c848c54cec0a41bf78acfa8628394, type: 3}
   circuitCorrect: {fileID: 0}
   circuitIncorrect: {fileID: 0}

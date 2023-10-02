@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
+    public Animator sceneAnimator;
 
-    public Animator animator;
     private int sceneToLoad;
     public int currentScene;
 
@@ -19,7 +19,7 @@ public class SceneHandler : MonoBehaviour
     public void FadeToLevel(int levelIndex)
     {
         sceneToLoad = levelIndex;
-        animator.SetTrigger("FadeToBlack");
+        sceneAnimator.SetTrigger("FadeToBlack");
     }
 
     public void OnFadeComplete()
