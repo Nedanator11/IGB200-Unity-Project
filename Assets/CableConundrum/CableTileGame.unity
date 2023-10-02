@@ -4258,10 +4258,10 @@ MonoBehaviour:
     StartTilePosZ: 2
     EndTilePosZ: 7
     GameTimerDuration: 60
-    Turn90Weight: 1
-    StraightWeight: 1
-    TSplitWeight: 100
-    CrossSplitWeight: 10000
+    Turn90Weight: 50
+    StraightWeight: 50
+    TSplitWeight: 10
+    CrossSplitWeight: 5
     HazardTilePercent: 15
   GameStartHUD: {fileID: 1562354875}
   RoundHUD: {fileID: 1815183319}
