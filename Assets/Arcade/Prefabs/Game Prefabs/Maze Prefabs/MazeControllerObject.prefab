@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1870459427099190666
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1870459427099190664}
+  - component: {fileID: 1870459427099190667}
+  m_Layer: 0
+  m_Name: MazeControllerObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1870459427099190664
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870459427099190666}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.5392876, y: -1.7636104, z: -18.739864}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1870459427099190667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870459427099190666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7cb014620364141863dda632fc174a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mazeButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  hazardList:
+  - {fileID: 4373318590622688460, guid: 506582b52b7d7aa4db97044280480740, type: 3}
+  - {fileID: 4373318590622688460, guid: 9ae5fdaab88178a4682053c9bef1999f, type: 3}
+  - {fileID: 4373318590622688460, guid: a97611071e8337b42a6fdbf0fd253b61, type: 3}
+  - {fileID: 4373318590622688460, guid: a6f18dc9b6caf894a9c216fe1f63fc02, type: 3}
+  - {fileID: 4373318590622688460, guid: 7d37ea59e889ede4da28ca7875c9a999, type: 3}
+  - {fileID: 4373318590622688460, guid: 152d2907a26a2294f87ef8da87e7057f, type: 3}
+  hazardSpawnLoations:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

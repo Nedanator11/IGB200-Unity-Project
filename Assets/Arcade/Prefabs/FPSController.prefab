@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 11400000}
   - component: {fileID: 5400000}
   - component: {fileID: 8200000}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FPSController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +304,8 @@ GameObject:
   - component: {fileID: 2000000}
   - component: {fileID: 8100000}
   - component: {fileID: 12474086}
-  m_Layer: 0
+  - component: {fileID: 6638584419474526392}
+  m_Layer: 2
   m_Name: FirstPersonCharacter
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -386,6 +387,18 @@ Behaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100002}
   m_Enabled: 1
+--- !u!114 &6638584419474526392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa6718539a8afbb46bddbd2b463d7dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1791031155519009676
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +410,7 @@ GameObject:
   - component: {fileID: 4227804890670692887}
   - component: {fileID: 3469126897658054483}
   - component: {fileID: 2643493709944258629}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Dot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -474,7 +487,7 @@ GameObject:
   - component: {fileID: 7621168042120561304}
   - component: {fileID: 3898951369808361808}
   - component: {fileID: 8563619885395028392}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

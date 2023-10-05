@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     {
         if (Destination != null)
             AnimatePlayer();
+
     }
 
     //Process player animation for this frame

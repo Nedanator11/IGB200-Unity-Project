@@ -11,6 +11,9 @@ TagManager:
   - SceneTransitions
   - AudioManager
   - LSPlayer
+  - aMazeButton
+  - mazeConfirmButton
+  - mazeHazard
   layers:
   - Default
   - TransparentFX
