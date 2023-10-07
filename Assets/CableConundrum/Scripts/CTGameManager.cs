@@ -130,8 +130,8 @@ public class CTGameManager : GameManager {
     private void SetDifficulty(CCDifficulty difficulty)
     {
         TileGrid.GetComponent<TileGrid>().GridDimension = difficulty.GridDimension;
-        TileGrid.GetComponent<TileGrid>().StartTilePosZ = difficulty.StartTilePosZ;
-        TileGrid.GetComponent<TileGrid>().EndTilePosZ = difficulty.EndTilePosZ;
+        TileGrid.GetComponent<TileGrid>().StartTileSettings.GridPosition = new Vector2(0, difficulty.StartTilePosZ);
+        TileGrid.GetComponent<TileGrid>().EndTileSettings.GridPosition = new Vector2(difficulty.GridDimension + 1, difficulty.EndTilePosZ);
         GameTimerDuration = difficulty.GameTimerDuration;
         TileGrid.GetComponent<TileGrid>().Turn90Weight = difficulty.Turn90Weight;
         TileGrid.GetComponent<TileGrid>().StraightWeight = difficulty.StraightWeight;

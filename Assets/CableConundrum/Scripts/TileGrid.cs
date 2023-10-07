@@ -26,10 +26,8 @@ public class TileGrid : MonoBehaviour
     public Vector2 GridMaxBounds = new Vector2(8f, 8f);
 
     [Header("Tiles")]
-    public GameObject StartTilePrefab;
-    public int StartTilePosZ;
-    public GameObject EndTilePrefab;
-    public int EndTilePosZ;
+    public TileSetting StartTileSettings;
+    public TileSetting EndTileSettings;
     public GameObject Turn90TilePrefab;
     public float Turn90Weight;
     public GameObject StraightTilePrefab;
@@ -55,8 +53,8 @@ public class TileGrid : MonoBehaviour
         float gridLengthZ = GridMaxBounds[1] - GridMinBounds[1];
 
         //Tile geometry calculations
-        float tileLengthX = gridLengthX / GridDimension;
-        float tileLengthZ = gridLengthZ / GridDimension;
+        float tileLengthX = gridLengthX / (GridDimension + 2);
+        float tileLengthZ = gridLengthZ / (GridDimension + 2);
         float tileCentreX = tileLengthX / 2f;
         float tileCentreZ = tileLengthZ / 2f;
 
@@ -65,10 +63,10 @@ public class TileGrid : MonoBehaviour
         #region Start & End Node Instantiation
 
         //World position calculation
-        float startNodeX = GridMinBounds[0] - tileCentreX;
-        float startNodeZ = GridMinBounds[1] - tileCentreZ + (tileLengthZ * StartTilePosZ);
-        float endNodeX = GridMaxBounds[0] + tileCentreX;
-        float endNodeZ = GridMinBounds[1] - tileCentreZ + (tileLengthZ * EndTilePosZ);
+        float startNodeX = GridMinBounds[0] + tileCentreX;
+        float startNodeZ = GridMinBounds[1] + tileCentreZ + (tileLengthZ * StartTileSettings.GridPosition.y);
+        float endNodeX = GridMaxBounds[0] - tileCentreX;
+        float endNodeZ = GridMinBounds[1] + tileCentreZ + (tileLengthZ * EndTileSettings.GridPosition.y);
 
         //Instantiate the board
         Graph = new GameObject[GridDimension + 2, GridDimension + 2];
@@ -88,16 +86,16 @@ public class TileGrid : MonoBehaviour
         endNode.transform.Translate(endNodeX, 0f, endNodeZ);
 
         //Add nodes to board
-        startNode.GetComponent<GridNode>().GridPosition = new int[] { 0, StartTilePosZ };
-        Graph[0, StartTilePosZ] = startNode;
-        endNode.GetComponent<GridNode>().GridPosition = new int[] { GridDimension + 1, EndTilePosZ };
-        Graph[GridDimension + 1, EndTilePosZ] = endNode;
+        startNode.GetComponent<GridNode>().GridPosition = new int[] { 0, (int)StartTileSettings.GridPosition.y };
+        Graph[0, (int)StartTileSettings.GridPosition.y] = startNode;
+        endNode.GetComponent<GridNode>().GridPosition = new int[] { GridDimension + 1, (int)EndTileSettings.GridPosition.y };
+        Graph[GridDimension + 1, (int)EndTileSettings.GridPosition.y] = endNode;
 
         #endregion
 
         //Loop over grid positions & instantiate nodes
-        float currentNodeX = GridMinBounds[0] + tileCentreX;
-        float currentNodeZ = GridMinBounds[1] + tileCentreZ;
+        float currentNodeX = GridMinBounds[0] + tileCentreX + tileLengthX;
+        float currentNodeZ = GridMinBounds[1] + tileCentreZ + tileLengthZ;
         for (int i = 1; i < GridDimension + 1; i++)
         {
             for (int j = 1; j < GridDimension + 1; j++)
@@ -120,12 +118,40 @@ public class TileGrid : MonoBehaviour
 
             //Increment current tile x-position & reset current tile z-position
             currentNodeX += tileLengthX;
-            currentNodeZ = GridMinBounds[1] + tileCentreZ;
+            currentNodeZ = GridMinBounds[1] + tileCentreZ + tileLengthZ;
         }
 
-        //Loop over all nodes and populate node connections & costs
-        startNode.GetComponent<GridNode>().connectedNodes[1] = Graph[1, StartTilePosZ].GetComponent<GridNode>();
-        endNode.GetComponent<GridNode>().connectedNodes[3] = Graph[GridDimension, EndTilePosZ].GetComponent<GridNode>();
+        //Loop over all nodes and populate node connections & costsswitch (StartTileSettings.Rotation)
+        switch (StartTileSettings.Rotation)
+        {
+            case TileSetting.TileRotation.Up:
+                startNode.GetComponent<GridNode>().connectedNodes[0] = Graph[(int)StartTileSettings.GridPosition.x, (int)StartTileSettings.GridPosition.y + 1].GetComponent<GridNode>();
+            break;
+            case TileSetting.TileRotation.Right:
+                startNode.GetComponent<GridNode>().connectedNodes[1] = Graph[(int)StartTileSettings.GridPosition.x + 1, (int)StartTileSettings.GridPosition.y].GetComponent<GridNode>();
+            break;
+            case TileSetting.TileRotation.Down:
+                startNode.GetComponent<GridNode>().connectedNodes[2] = Graph[(int)StartTileSettings.GridPosition.x, (int)StartTileSettings.GridPosition.y - 1].GetComponent<GridNode>();
+            break;
+            case TileSetting.TileRotation.Left:
+                startNode.GetComponent<GridNode>().connectedNodes[3] = Graph[(int)StartTileSettings.GridPosition.x - 1, (int)StartTileSettings.GridPosition.y].GetComponent<GridNode>();
+            break;
+        }
+        switch (EndTileSettings.Rotation)
+        {
+            case TileSetting.TileRotation.Up:
+                endNode.GetComponent<GridNode>().connectedNodes[0] = Graph[(int)EndTileSettings.GridPosition.x, (int)EndTileSettings.GridPosition.y + 1].GetComponent<GridNode>();
+                break;
+            case TileSetting.TileRotation.Right:
+                endNode.GetComponent<GridNode>().connectedNodes[1] = Graph[(int)EndTileSettings.GridPosition.x + 1, (int)EndTileSettings.GridPosition.y].GetComponent<GridNode>();
+                break;
+            case TileSetting.TileRotation.Down:
+                endNode.GetComponent<GridNode>().connectedNodes[2] = Graph[(int)EndTileSettings.GridPosition.x, (int)EndTileSettings.GridPosition.y - 1].GetComponent<GridNode>();
+                break;
+            case TileSetting.TileRotation.Left:
+                endNode.GetComponent<GridNode>().connectedNodes[3] = Graph[(int)EndTileSettings.GridPosition.x - 1, (int)EndTileSettings.GridPosition.y].GetComponent<GridNode>();
+                break;
+        }
         for (int i = 1; i < GridDimension + 1; i++)
         {
             for (int j = 1; j < GridDimension + 1; j++)
@@ -133,7 +159,7 @@ public class TileGrid : MonoBehaviour
                 GridNode node = Graph[i, j].GetComponent<GridNode>();
 
                 //Node above
-                if (j != GridDimension)
+                if (Graph[i, j + 1])
                 {
                     //Connect to node above
                     node.connectedNodes[0] = Graph[i, j + 1].GetComponent<GridNode>();
@@ -153,7 +179,7 @@ public class TileGrid : MonoBehaviour
                 }
 
                 //Node right
-                if (i != GridDimension || j == EndTilePosZ)
+                if (Graph[i + 1, j])
                 {
                     //Connect to node right
                     node.connectedNodes[1] = Graph[i + 1, j].GetComponent<GridNode>();
@@ -173,7 +199,7 @@ public class TileGrid : MonoBehaviour
                 }
 
                 //Node down
-                if (j != 1)
+                if (Graph[i, j - 1])
                 {
                     //Connect to node below
                     node.connectedNodes[2] = Graph[i, j - 1].GetComponent<GridNode>();
@@ -193,7 +219,7 @@ public class TileGrid : MonoBehaviour
                 }
 
                 //Node left
-                if (i != 1 || j == StartTilePosZ)
+                if (Graph[i - 1, j])
                 {
                     //Connect to node left
                     node.connectedNodes[3] = Graph[i - 1, j].GetComponent<GridNode>();
@@ -283,20 +309,26 @@ public class TileGrid : MonoBehaviour
         #region Start & End Tile Instantiation
 
         //Instantiate tiles & scale
-        StartTile = Instantiate(StartTilePrefab, startNode.transform.position, startNode.transform.rotation, startNode.transform);
-        EndTile = Instantiate(EndTilePrefab, endNode.transform.position, endNode.transform.rotation, endNode.transform);
+        StartTile = Instantiate(StartTileSettings.TilePrefab, startNode.transform.position, startNode.transform.rotation, startNode.transform);
+        EndTile = Instantiate(EndTileSettings.TilePrefab, endNode.transform.position, endNode.transform.rotation, endNode.transform);
         StartTile.transform.localScale = new Vector3(0.1f * tileLengthX, transform.localScale.y, 0.1f * tileLengthZ);
         EndTile.transform.localScale = new Vector3(0.1f * tileLengthX, transform.localScale.y, 0.1f * tileLengthZ);
 
         //Set tile variables
         StartTile.GetComponent<Tile>().TileGrid = this;
-        StartTile.GetComponent<Tile>().GridPosition = new int[2] { 0, StartTilePosZ };
+        StartTile.GetComponent<Tile>().GridPosition = new int[2] { 0, (int)StartTileSettings.GridPosition.y };
         EndTile.GetComponent<Tile>().TileGrid = this;
-        EndTile.GetComponent<Tile>().GridPosition = new int[2] { GridDimension + 1, EndTilePosZ };
+        EndTile.GetComponent<Tile>().GridPosition = new int[2] { GridDimension + 1, (int)EndTileSettings.GridPosition.y };
 
         //Add tiles to board
-        Board[0, StartTilePosZ] = StartTile;
-        Board[GridDimension + 1, EndTilePosZ] = EndTile;
+        Board[0, (int)StartTileSettings.GridPosition.y] = StartTile;
+        Board[GridDimension + 1, (int)EndTileSettings.GridPosition.y] = EndTile;
+
+        //Rotate tiles
+        for (int i = 0; i < (int)StartTileSettings.Rotation; i++)
+            StartTile.GetComponent<Tile>().RotateTile(true);
+        for (int i = 0; i < (int)EndTileSettings.Rotation; i++)
+            EndTile.GetComponent<Tile>().RotateTile(true);
 
         #endregion
 
@@ -442,6 +474,149 @@ public class TileGrid : MonoBehaviour
         #endregion
     }
 
+    //Generate a new board of tiles
+    public void LoadLevel(Level level)
+    {
+        //Load level settings
+        GridDimension = level.GetGridDimension();
+        StartTileSettings = level.StartTile;
+        EndTileSettings = level.EndTile;
+
+        //Grid geometry calculations
+        float gridLengthX = GridMaxBounds[0] - GridMinBounds[0];
+        float gridLengthZ = GridMaxBounds[1] - GridMinBounds[1];
+
+        //Tile geometry calculations
+        float tileLengthX = gridLengthX / GridDimension;
+        float tileLengthZ = gridLengthZ / GridDimension;
+        float tileCentreX = tileLengthX / 2f;
+        float tileCentreZ = tileLengthZ / 2f;
+
+        #region Node & Graph Generation
+
+        #region Start & End Node Instantiation
+
+        //World position calculation
+        float startNodeX = GridMinBounds[0] + tileCentreX + (tileLengthX * StartTileSettings.GridPosition.x);
+        float startNodeZ = GridMinBounds[1] + tileCentreZ + (tileLengthZ * StartTileSettings.GridPosition.y);
+        float endNodeX = GridMinBounds[0] + tileCentreX + (tileLengthX * EndTileSettings.GridPosition.x);
+        float endNodeZ = GridMinBounds[1] + tileCentreZ + (tileLengthZ * EndTileSettings.GridPosition.y);
+
+        //Instantiate the board
+        Graph = new GameObject[GridDimension, GridDimension];
+
+        //Instantiate start/end nodes
+        GameObject startNode = new GameObject("Start Node");
+        startNode.AddComponent<GridNode>();
+        startNode.transform.parent = transform;
+        startNode.transform.position = transform.position;
+        startNode.transform.rotation = transform.rotation;
+        startNode.transform.Translate(startNodeX, 0f, startNodeZ);
+        GameObject endNode = new GameObject("End Node");
+        endNode.AddComponent<GridNode>();
+        endNode.transform.parent = transform;
+        endNode.transform.position = transform.position;
+        endNode.transform.rotation = transform.rotation;
+        endNode.transform.Translate(endNodeX, 0f, endNodeZ);
+
+        //Add nodes to board
+        startNode.GetComponent<GridNode>().GridPosition = new int[] { (int)StartTileSettings.GridPosition.x, (int)StartTileSettings.GridPosition.y };
+        Graph[(int)StartTileSettings.GridPosition.x, (int)StartTileSettings.GridPosition.y] = startNode;
+        endNode.GetComponent<GridNode>().GridPosition = new int[] { (int)EndTileSettings.GridPosition.x, (int)EndTileSettings.GridPosition.y };
+        Graph[(int)EndTileSettings.GridPosition.x, (int)EndTileSettings.GridPosition.y] = endNode;
+
+        #endregion
+
+        //Loop over grid positions & instantiate nodes
+        float currentNodeX = GridMinBounds[0] + tileCentreX + tileLengthX;
+        float currentNodeZ = GridMinBounds[1] + tileCentreZ + tileLengthZ;
+        for (int i = 1; i < GridDimension - 1; i++)
+        {
+            for (int j = 1; j < GridDimension - 1; j++)
+            {
+                //Create new node and move to position
+                GameObject newNode = new GameObject("Node [" + i + "," + j + "]");
+                newNode.AddComponent<GridNode>();
+                newNode.transform.parent = transform;
+                newNode.transform.position = transform.position;
+                newNode.transform.rotation = transform.rotation;
+                newNode.transform.Translate(currentNodeX, 0f, currentNodeZ);
+
+                //Add node to the board
+                newNode.GetComponent<GridNode>().GridPosition = new int[] { i, j };
+                Graph[i, j] = newNode;
+
+                //Increment current tile z-position
+                currentNodeZ += tileLengthZ;
+            }
+
+            //Increment current tile x-position & reset current tile z-position
+            currentNodeX += tileLengthX;
+            currentNodeZ = GridMinBounds[1] + tileCentreZ + tileLengthZ;
+        }
+
+        #endregion
+
+        #region Tile Population
+
+        //Instantiate the board
+        Board = new GameObject[GridDimension, GridDimension];
+
+        #region Start & End Tile Instantiation
+
+        //Instantiate tiles & scale
+        StartTile = Instantiate(StartTileSettings.TilePrefab, startNode.transform.position, startNode.transform.rotation, startNode.transform);
+        EndTile = Instantiate(EndTileSettings.TilePrefab, endNode.transform.position, endNode.transform.rotation, endNode.transform);
+        StartTile.transform.localScale = new Vector3(0.1f * tileLengthX, transform.localScale.y, 0.1f * tileLengthZ);
+        EndTile.transform.localScale = new Vector3(0.1f * tileLengthX, transform.localScale.y, 0.1f * tileLengthZ);
+
+        //Set tile variables
+        StartTile.GetComponent<Tile>().TileGrid = this;
+        StartTile.GetComponent<Tile>().GridPosition = new int[2] { (int)StartTileSettings.GridPosition.x, (int)StartTileSettings.GridPosition.y };
+        EndTile.GetComponent<Tile>().TileGrid = this;
+        EndTile.GetComponent<Tile>().GridPosition = new int[2] { (int)EndTileSettings.GridPosition.x, (int)EndTileSettings.GridPosition.y };
+
+        //Add tiles to board
+        Board[(int)StartTileSettings.GridPosition.x, (int)StartTileSettings.GridPosition.y] = StartTile;
+        Board[(int)EndTileSettings.GridPosition.x, (int)EndTileSettings.GridPosition.y] = EndTile;
+
+        //Rotate tiles
+        for (int i = 0; i < (int)StartTileSettings.Rotation; i++)
+            StartTile.GetComponent<Tile>().RotateTile(true);
+        for (int i = 0; i < (int)EndTileSettings.Rotation; i++)
+            EndTile.GetComponent<Tile>().RotateTile(true);
+
+        #endregion
+
+        //Loop through all tiles, retrieve prefab from level and instantiate
+        for (int i = 1; i < GridDimension - 1; i++)
+        {
+            for (int j = 1; j < GridDimension - 1; j++)
+            {
+                //Get correponding node
+                GameObject node = Graph[i, j];
+
+                //Instantiate a new tile and scale to tile size
+                GameObject tile = Instantiate(level.GetTileForGridPosition(i, j), node.transform.position, node.transform.rotation, node.transform);
+                tile.transform.localScale = new Vector3(0.1f * tileLengthX, transform.localScale.y, 0.1f * tileLengthZ);
+
+                //Add tile to the board
+                tile.GetComponent<Tile>().TileGrid = this;
+                tile.GetComponent<Tile>().GridPosition = new int[2] { i, j };
+                Board[i, j] = tile;
+
+                //Apply random rotation to tile
+                for (int r = 0; r < Random.Range(0, 4); r++)
+                    tile.GetComponent<Tile>().RotateTile(true);
+            }
+        }
+
+        //Populate list of Hazard Tiles
+        HazardTiles.AddRange(GameObject.FindGameObjectsWithTag("HazardCable").Select(t => t.GetComponent<Tile>()));
+
+        #endregion
+    }
+
     //Destroys all board tiles
     public void DestroyBoard()
     {
@@ -518,8 +693,8 @@ public class TileGrid : MonoBehaviour
     public bool FinishedAnimating()
     {
         //Loop through all tiles and check if animating
-        for (int i = 0; i < GridDimension + 2; i++)
-            for (int j = 0; j < GridDimension + 2; j++)
+        for (int i = 0; i < GridDimension; i++)
+            for (int j = 0; j < GridDimension; j++)
                 if (Board[i, j] != null)
                     if (Board[i, j].GetComponent<Tile>().Animating) return false;
 
@@ -531,8 +706,8 @@ public class TileGrid : MonoBehaviour
     private void ResetNodes()
     {
         //Loop over all nodes & reset each
-        for (int i = 0; i < GridDimension + 2; i++)
-            for (int j = 0; j < GridDimension + 2; j++)
+        for (int i = 0; i < GridDimension; i++)
+            for (int j = 0; j < GridDimension; j++)
                 if (Graph[i, j] != null)
                     Graph[i, j].GetComponent<GridNode>().ResetNode();
     }
@@ -549,9 +724,9 @@ public class TileGrid : MonoBehaviour
         float tileLengthZ = gridLengthZ / GridDimension;
 
         //Loop over all tiles
-        for (int i = 0; i < GridDimension + 2; i++)
+        for (int i = 0; i < GridDimension; i++)
         {
-            for (int j = 0; j < GridDimension + 2; j++)
+            for (int j = 0; j < GridDimension; j++)
             {
                 //Check if tile exists
                 if (Board[i, j] != null)
@@ -711,4 +886,20 @@ public class TileGrid : MonoBehaviour
     {
         return Graph[tile.GridPosition[0], tile.GridPosition[1]].GetComponent<GridNode>();
     }
+}
+
+[System.Serializable]
+public class TileSetting
+{
+    public enum TileRotation
+    {
+        Up = 0,
+        Right = 1,
+        Down = 2,
+        Left = 3
+    }
+
+    public GameObject TilePrefab;
+    public Vector2 GridPosition;
+    public TileRotation Rotation;
 }
