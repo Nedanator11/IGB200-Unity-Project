@@ -14,7 +14,7 @@ TagManager:
   - aMazeButton
   - mazeConfirmButton
   - mazeHazard
-  - Maze reset button
+  - HazardCable
   layers:
   - Default
   - TransparentFX

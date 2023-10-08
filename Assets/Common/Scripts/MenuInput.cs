@@ -25,10 +25,7 @@ public class MenuInput : MonoBehaviour
             if (Input.GetMouseButton(0))
             {
                 animator.SetTrigger("KeyPress");
-                if (currentScene == 4) //Cable Tile
-                {
-                    sceneHandler.FadeToLevel(1);
-                }
+
                 if (currentScene == 5) // Lightning Safety
                 {
                     sceneHandler.FadeToLevel(2);

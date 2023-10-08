@@ -113,10 +113,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileGrid: {fileID: 0}
   GridPosition: 
-  CableSides: 00010000
+  CableSides: 01000000
   ConnectedSides: 00000000
   ConnectedColour: {r: 0, g: 0.14901961, b: 1, a: 1}
   DisconnectedColour: {r: 1, g: 0, b: 0, a: 1}
+  Sprites: []
+  Animating: 0
+  RotationDuration: 0.25
+  RotationScaleInflation: 0.1
 --- !u!1 &7928571790702192783
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,14 +145,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7928571790702192783}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 62.5, y: 62.50002, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4827047254580162613}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!212 &5490790098832610649
 SpriteRenderer:
   m_ObjectHideFlags: 0
