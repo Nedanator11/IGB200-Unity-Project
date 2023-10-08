@@ -30,11 +30,7 @@ public class MazeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("r"))
-        {
-            spawnHazards();
-            resetButtons();
-        }
+
     }
 
     public void checkButtonsActive()
@@ -123,6 +119,7 @@ public class MazeController : MonoBehaviour
                 //spawn the hazard then move it to the spawn location then add 
                 GameObject h = Instantiate(hazardList[randNumb]);
                 h.transform.position = hazardSpawnLoations[i].transform.position;
+                h.transform.rotation = hazardSpawnLoations[i].transform.rotation;
             }
             else
             {
@@ -162,5 +159,11 @@ public class MazeController : MonoBehaviour
                 o.GetComponent<MazeButton>().flipChecked();
             }
         }
+    }
+
+    public void restMaze()
+    {
+        spawnHazards();
+        resetButtons();
     }
 }

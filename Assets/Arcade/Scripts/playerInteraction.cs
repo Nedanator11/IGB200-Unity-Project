@@ -50,11 +50,17 @@ public class playerInteraction : MonoBehaviour
                     }
                     else if(hitGameObject.tag == "mazeConfirmButton")
                     {
-                    hitGameObject.GetComponent<MazeConfirmButton>().callMazeController();
+                        hitGameObject.GetComponent<MazeConfirmButton>().callMazeController();
+                        hitGameObject.GetComponent<MazeConfirmButton>().changeMat();
+                    }
+                else if (hitGameObject.tag == "Maze reset button")
+                {
+                    hitGameObject.GetComponent<ResetButton>().callMazeController();
+                    hitGameObject.GetComponent<ResetButton>().changeMat();
                 }
-                    
-                    
-                }
+
+
+            }
 
         }
         else

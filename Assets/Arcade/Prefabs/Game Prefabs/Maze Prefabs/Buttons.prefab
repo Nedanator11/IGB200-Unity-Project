@@ -47,6 +47,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: aMazeButton
       objectReference: {fileID: 0}
+    - target: {fileID: -8704541351367245709, guid: 07ba175b78a275445bf166ce130b240d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f28b055b6e59b92499b2c20bb9cccb7b, type: 2}
     - target: {fileID: -8679921383154817045, guid: 07ba175b78a275445bf166ce130b240d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -191,6 +195,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.049
       objectReference: {fileID: 0}
+    - target: {fileID: 5679326056270495653, guid: 07ba175b78a275445bf166ce130b240d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cb3759309503eea4f9eb6947f93969f4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07ba175b78a275445bf166ce130b240d, type: 3}
 --- !u!1 &437471194449156257 stripped
@@ -224,9 +232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba96f9f70575384bb702802862d4dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
-  playerController: {fileID: 0}
-  button: {fileID: 437471194449156257}
   distanceThreshold: 10
   uncheckedMaterial: {fileID: 2100000, guid: de6a186e5a2a3954dadd46b313971262, type: 2}
   checkedMaterial: {fileID: 2100000, guid: 7fe06ad9b5fc8f74e9777cf91ec54b4c, type: 2}
@@ -263,9 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba96f9f70575384bb702802862d4dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
-  playerController: {fileID: 0}
-  button: {fileID: 1270299244164905864}
   distanceThreshold: 10
   uncheckedMaterial: {fileID: 2100000, guid: 2f4bd52f85685c948942601e70785470, type: 2}
   checkedMaterial: {fileID: 2100000, guid: 5bdc5a293024172469d10fcb7df2f719, type: 2}
@@ -302,9 +304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba96f9f70575384bb702802862d4dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
-  playerController: {fileID: 0}
-  button: {fileID: 1532997294246297971}
   distanceThreshold: 10
   uncheckedMaterial: {fileID: 2100000, guid: ba6342cdcfedb3448b2650f17b74e81f, type: 2}
   checkedMaterial: {fileID: 2100000, guid: 3151316c60103ec4daf42df0c6f68a25, type: 2}
@@ -341,9 +340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba96f9f70575384bb702802862d4dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
-  playerController: {fileID: 0}
-  button: {fileID: 1815252694795909282}
   distanceThreshold: 10
   uncheckedMaterial: {fileID: 2100000, guid: dcf5036b36de863429325d5c6839d2c2, type: 2}
   checkedMaterial: {fileID: 2100000, guid: 77a0540217bb32b44a3a4246fea8db1b, type: 2}
@@ -385,9 +381,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba96f9f70575384bb702802862d4dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
-  playerController: {fileID: 0}
-  button: {fileID: 3615888769307088884}
   distanceThreshold: 10
   uncheckedMaterial: {fileID: 2100000, guid: ca4477b2b90cc4f4aabfcdff0955de3f, type: 2}
   checkedMaterial: {fileID: 2100000, guid: 5d2f864bf5946784095e71dde6ef8bfa, type: 2}
@@ -424,9 +417,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba96f9f70575384bb702802862d4dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
-  playerController: {fileID: 0}
-  button: {fileID: 5440976286020219205}
   distanceThreshold: 10
   uncheckedMaterial: {fileID: 2100000, guid: 4578a85794762084eb41061cd675e39a, type: 2}
   checkedMaterial: {fileID: 2100000, guid: fbde0bd14939cde4682322c62e674548, type: 2}
@@ -437,19 +427,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -4368538539298155220, guid: 07ba175b78a275445bf166ce130b240d, type: 3}
   m_PrefabInstance: {fileID: 4034932417116753417}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &603641391030511217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8404034662853532453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e04cdb7eeba6f0641b25f9d8b1c729fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mazeControllerObject: {fileID: 0}
 --- !u!64 &2314435274917259023
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -464,3 +441,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4741248262444097506, guid: 07ba175b78a275445bf166ce130b240d, type: 3}
+--- !u!114 &603641391030511217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8404034662853532453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e04cdb7eeba6f0641b25f9d8b1c729fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mazeControllerObject: {fileID: 0}
+  notpresssedMat: {fileID: 2100000, guid: cb3759309503eea4f9eb6947f93969f4, type: 2}
+  presssedMat: {fileID: 2100000, guid: b37e36fb435688145a4e71b3fae37a5a, type: 2}
