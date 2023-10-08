@@ -704,7 +704,7 @@ GameObject:
   - component: {fileID: 373944829}
   - component: {fileID: 373944828}
   m_Layer: 5
-  m_Name: ImproperConnections
+  m_Name: MessageDEFAULT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5087,7 +5087,7 @@ MonoBehaviour:
   GameStartHUD: {fileID: 1562354875}
   RoundHUD: {fileID: 1815183319}
   RoundEndGoodHUD: {fileID: 541056336}
-  RoundEndBadHUD: {fileID: 0}
+  RoundEndBadHUD: {fileID: 1461558947}
   GameOverHUD: {fileID: 1993977984}
   ccAnimator: {fileID: 625706380}
 --- !u!4 &1743000822
