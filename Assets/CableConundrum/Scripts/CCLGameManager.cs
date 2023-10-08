@@ -19,6 +19,8 @@ public class CCLGameManager : GameManager
     private bool RoundOver;
     private float GameTimer;
 
+    public bool FinalLevel;
+
     [Header("HUD References")]
     public GameObject LevelSelectHUD;
     public GameObject RoundHUD;
@@ -79,7 +81,6 @@ public class CCLGameManager : GameManager
         {
             if (Input.GetKeyDown("space"))
             {
-                //ccAnimator.SetTrigger("DoorClose");
                 RestartGame();
             }
         }
@@ -116,7 +117,7 @@ public class CCLGameManager : GameManager
     }
 
     //Restarts the game
-    private void RestartGame()
+    public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
