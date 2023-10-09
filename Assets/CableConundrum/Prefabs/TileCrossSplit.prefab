@@ -135,7 +135,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7434009604181900485}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -203,7 +203,6 @@ MonoBehaviour:
   DisconnectedColour: {r: 1, g: 0, b: 0, a: 1}
   Sprites:
   - {fileID: 21300000, guid: 65457d1514db0ce4a9ee1af8ce228ffb, type: 3}
-  - {fileID: 21300000, guid: 0965e78d31e0fcd4bab607bc3b722cdb, type: 3}
   Animating: 0
   RotationDuration: 0.25
   RotationScaleInflation: 0.1

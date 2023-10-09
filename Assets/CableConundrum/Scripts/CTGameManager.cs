@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using UnityEngine.WSA;
 
 public class CTGameManager : GameManager {
 
@@ -58,12 +56,8 @@ public class CTGameManager : GameManager {
 
     private void Start()
     {
-        
         GameStarted = false;
         GameOver = false;
-
-        //reset cursor
-
     }
 
     private void Update()
@@ -206,6 +200,9 @@ public class CTGameManager : GameManager {
         //Show game over HUD
         GameOverHUD.GetComponent<GameOverHUDController>().SetText(Score);
         GameOverHUD.SetActive(true);
+
+        RoundOver = true;
+        GameOver = true;
     }
 
     //Restarts the game
@@ -228,9 +225,7 @@ public class CTGameManager : GameManager {
         if (GameTimer < 0f)
         {
             GameTimer = 0f;
-            TestCircuit();
             EndGame();
-            GameOver = true;
         }
         RoundHUD.GetComponent<RoundHUDController>().SetTimerText(GameTimer);
     }
@@ -249,8 +244,15 @@ public class CTGameManager : GameManager {
             //If gameObject is a tile, rotate it clockwise
             if (hitObject.GetComponent<Tile>())
             {
-                ClickedTile = hitObject.GetComponent<Tile>();
-                ClickedTile.RotateTile();
+                if (hitObject.CompareTag("HazardCable"))
+                {
+                    //TODO: Show 'clicked on hazardous cable' player feedback message
+                }
+                else //Basic Tile
+                {
+                    ClickedTile = hitObject.GetComponent<Tile>();
+                    ClickedTile.RotateTile();
+                }
             }
         }
     }

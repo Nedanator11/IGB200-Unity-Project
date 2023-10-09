@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class TileGrid : MonoBehaviour
@@ -53,8 +52,8 @@ public class TileGrid : MonoBehaviour
         float gridLengthZ = GridMaxBounds[1] - GridMinBounds[1];
 
         //Tile geometry calculations
-        float tileLengthX = gridLengthX / (GridDimension + 2);
-        float tileLengthZ = gridLengthZ / (GridDimension + 2);
+        float tileLengthX = gridLengthX / (GridDimension);
+        float tileLengthZ = gridLengthZ / (GridDimension);
         float tileCentreX = tileLengthX / 2f;
         float tileCentreZ = tileLengthZ / 2f;
 
@@ -63,10 +62,10 @@ public class TileGrid : MonoBehaviour
         #region Start & End Node Instantiation
 
         //World position calculation
-        float startNodeX = GridMinBounds[0] + tileCentreX;
-        float startNodeZ = GridMinBounds[1] + tileCentreZ + (tileLengthZ * StartTileSettings.GridPosition.y);
-        float endNodeX = GridMaxBounds[0] - tileCentreX;
-        float endNodeZ = GridMinBounds[1] + tileCentreZ + (tileLengthZ * EndTileSettings.GridPosition.y);
+        float startNodeX = GridMinBounds[0] - tileCentreX;
+        float startNodeZ = GridMinBounds[1] - tileCentreZ + (tileLengthZ * StartTileSettings.GridPosition.y);
+        float endNodeX = GridMaxBounds[0] + tileCentreX;
+        float endNodeZ = GridMinBounds[1] - tileCentreZ + (tileLengthZ * EndTileSettings.GridPosition.y);
 
         //Instantiate the board
         Graph = new GameObject[GridDimension + 2, GridDimension + 2];
@@ -94,8 +93,8 @@ public class TileGrid : MonoBehaviour
         #endregion
 
         //Loop over grid positions & instantiate nodes
-        float currentNodeX = GridMinBounds[0] + tileCentreX + tileLengthX;
-        float currentNodeZ = GridMinBounds[1] + tileCentreZ + tileLengthZ;
+        float currentNodeX = GridMinBounds[0] - tileCentreX + tileLengthX;
+        float currentNodeZ = GridMinBounds[1] - tileCentreZ + tileLengthZ;
         for (int i = 1; i < GridDimension + 1; i++)
         {
             for (int j = 1; j < GridDimension + 1; j++)
@@ -118,7 +117,7 @@ public class TileGrid : MonoBehaviour
 
             //Increment current tile x-position & reset current tile z-position
             currentNodeX += tileLengthX;
-            currentNodeZ = GridMinBounds[1] + tileCentreZ + tileLengthZ;
+            currentNodeZ = GridMinBounds[1] - tileCentreZ + tileLengthZ;
         }
 
         //Loop over all nodes and populate node connections & costsswitch (StartTileSettings.Rotation)
@@ -487,8 +486,8 @@ public class TileGrid : MonoBehaviour
         float gridLengthZ = GridMaxBounds[1] - GridMinBounds[1];
 
         //Tile geometry calculations
-        float tileLengthX = gridLengthX / GridDimension;
-        float tileLengthZ = gridLengthZ / GridDimension;
+        float tileLengthX = gridLengthX / (GridDimension - 2);
+        float tileLengthZ = gridLengthZ / (GridDimension - 2);
         float tileCentreX = tileLengthX / 2f;
         float tileCentreZ = tileLengthZ / 2f;
 
@@ -497,10 +496,10 @@ public class TileGrid : MonoBehaviour
         #region Start & End Node Instantiation
 
         //World position calculation
-        float startNodeX = GridMinBounds[0] + tileCentreX + (tileLengthX * StartTileSettings.GridPosition.x);
-        float startNodeZ = GridMinBounds[1] + tileCentreZ + (tileLengthZ * StartTileSettings.GridPosition.y);
-        float endNodeX = GridMinBounds[0] + tileCentreX + (tileLengthX * EndTileSettings.GridPosition.x);
-        float endNodeZ = GridMinBounds[1] + tileCentreZ + (tileLengthZ * EndTileSettings.GridPosition.y);
+        float startNodeX = GridMinBounds[0] - tileCentreX + (tileLengthX * StartTileSettings.GridPosition.x);
+        float startNodeZ = GridMinBounds[1] - tileCentreZ + (tileLengthZ * StartTileSettings.GridPosition.y);
+        float endNodeX = GridMinBounds[0] - tileCentreX + (tileLengthX * EndTileSettings.GridPosition.x);
+        float endNodeZ = GridMinBounds[1] - tileCentreZ + (tileLengthZ * EndTileSettings.GridPosition.y);
 
         //Instantiate the board
         Graph = new GameObject[GridDimension, GridDimension];
@@ -528,8 +527,8 @@ public class TileGrid : MonoBehaviour
         #endregion
 
         //Loop over grid positions & instantiate nodes
-        float currentNodeX = GridMinBounds[0] + tileCentreX + tileLengthX;
-        float currentNodeZ = GridMinBounds[1] + tileCentreZ + tileLengthZ;
+        float currentNodeX = GridMinBounds[0] - tileCentreX + tileLengthX;
+        float currentNodeZ = GridMinBounds[1] - tileCentreZ + tileLengthZ;
         for (int i = 1; i < GridDimension - 1; i++)
         {
             for (int j = 1; j < GridDimension - 1; j++)
@@ -552,7 +551,7 @@ public class TileGrid : MonoBehaviour
 
             //Increment current tile x-position & reset current tile z-position
             currentNodeX += tileLengthX;
-            currentNodeZ = GridMinBounds[1] + tileCentreZ + tileLengthZ;
+            currentNodeZ = GridMinBounds[1] - tileCentreZ + tileLengthZ;
         }
 
         #endregion
