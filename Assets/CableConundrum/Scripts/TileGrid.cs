@@ -35,7 +35,7 @@ public class TileGrid : MonoBehaviour
     public float TSplitWeight;
     public GameObject CrossSplitTilePrefab;
     public float CrossSplitWeight;
-    public GameObject HazardTilePrefab;
+    public GameObject[] HazardTilePrefabs;
     public float HazardTilePercent;
 
     private void Update()
@@ -342,7 +342,6 @@ public class TileGrid : MonoBehaviour
             //Get the number of adjacent hazard tiles
             int adjacentHazards = node.adjacentNodes.Where(cn => hazardNodes.Contains(cn)).Count();
 
-
             //If the three sequenced nodes lie on the same x or same y, the path is straight
             GameObject tilePrefab;
             if ((nodePrev.GridPosition[0] == node.GridPosition[0] && node.GridPosition[0] == nodeNext.GridPosition[0]) ||
@@ -403,7 +402,7 @@ public class TileGrid : MonoBehaviour
             GridNode node = hazardNodes[i];
 
             //Instantiate a new tile and scale to tile size
-            GameObject tile = Instantiate(HazardTilePrefab, node.transform.position, node.transform.rotation, node.transform);
+            GameObject tile = Instantiate(HazardTilePrefabs[Random.Range(0, 3)], node.transform.position, node.transform.rotation, node.transform);
             tile.transform.localScale = new Vector3(0.1f * tileLengthX, transform.localScale.y, 0.1f * tileLengthZ);
 
             //Add tile to the board

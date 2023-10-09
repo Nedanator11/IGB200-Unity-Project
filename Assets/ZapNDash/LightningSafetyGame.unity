@@ -2693,7 +2693,7 @@ MonoBehaviour:
   ScorePerRound: 10
   InitialTimerDuration: 10
   TimerDurationDecrease: 1
-  CycleLength: 3
+  CycleLength: 1
 --- !u!1 &958559619
 GameObject:
   m_ObjectHideFlags: 0
