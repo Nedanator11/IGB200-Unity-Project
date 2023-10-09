@@ -1697,7 +1697,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549709470}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1749,7 +1749,7 @@ Transform:
   m_GameObject: {fileID: 549709470}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.28, y: 1, z: 1.28}
+  m_LocalScale: {x: 1.6, y: 1, z: 1.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 763123488}
@@ -6345,8 +6345,8 @@ MonoBehaviour:
   GeneratedPathColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   DetectedPathColor: {r: 0, g: 1, b: 0, a: 1}
   GridDimension: 7
-  GridMinBounds: {x: -6.4, y: -6.4}
-  GridMaxBounds: {x: 6.4, y: 6.4}
+  GridMinBounds: {x: -8, y: -8}
+  GridMaxBounds: {x: 8, y: 8}
   StartTileSettings:
     TilePrefab: {fileID: 7434009604181900485, guid: 1908408545508284da23edf6f0f3679f, type: 3}
     GridPosition: {x: 0, y: 2}
@@ -6363,7 +6363,7 @@ MonoBehaviour:
   TSplitWeight: 10
   CrossSplitTilePrefab: {fileID: 7434009604181900485, guid: 1a7797446f58dab47bed24ab5a7c1680, type: 3}
   CrossSplitWeight: 5
-  HazardTilePrefab: {fileID: 7434009604181900485, guid: 4753873a410a06043bd46f32e12160bc, type: 3}
+  HazardTilePrefabs: []
   HazardTilePercent: 0
 --- !u!4 &1963071926
 Transform:
