@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Destinations: []
-  MoveSpeed: 5
+  MoveSpeed: 8
   FinishedAnimating: 0
   LightningStrikePrefab: {fileID: 291198217327336633, guid: 9585eab30c13cd245865ea1b2be9c0a6, type: 3}
   LightningMarker: {fileID: 288722043672864957}

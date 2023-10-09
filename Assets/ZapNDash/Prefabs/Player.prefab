@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Destination: {fileID: 0}
-  MoveSpeed: 5
+  MoveSpeed: 8
   FinishedAnimating: 0
 --- !u!1 &8499638504441064280
 GameObject:
