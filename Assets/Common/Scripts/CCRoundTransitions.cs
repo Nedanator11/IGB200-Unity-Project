@@ -21,19 +21,21 @@ public class CCRoundTransitions : MonoBehaviour
 
     public void CTNextRound()
     {
-        ccAnimator.SetTrigger("DoorOpen");
         cc.NextRound();
     }
 
     public void CCLevelSelect()
     {
-        ccAnimator.SetTrigger("ReturnOpen");
         ccNormal.RestartGame();
     }
 
     public void CCNextLevel()
     {
-        ccAnimator.SetTrigger("DoorOpen");
+        ccNormal.LoadNextLevel();
     }
 
+    public void CCRetryLevel()
+    {
+        ccNormal.RetryLevel();
+    }
 }

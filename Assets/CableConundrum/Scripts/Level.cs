@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
+    public int levelInt;
+
     public float TimeLimit;
     public TileSetting StartTile;
     public TileSetting EndTile;

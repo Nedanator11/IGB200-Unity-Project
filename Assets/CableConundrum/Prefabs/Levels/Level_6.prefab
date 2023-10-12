@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52ad7cf7cb4e8024f93061c8753f924b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelInt: 6
   TimeLimit: 240
   StartTile:
     TilePrefab: {fileID: 7434009604181900485, guid: 1908408545508284da23edf6f0f3679f, type: 3}

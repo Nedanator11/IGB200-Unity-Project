@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class CCLGameManager : GameManager
 {
+    // Levels
+    public GameObject[] levels;
+
     //Reference Variables
     public Camera MainCamera;
     public GameObject TileGridObject;
@@ -17,7 +20,8 @@ public class CCLGameManager : GameManager
     private bool RoundOver;
     private float GameTimer;
 
-    public bool FinalLevel;
+    public int currentLevel;
+    private bool levelPass;
 
     [Header("HUD References")]
     public GameObject LevelSelectHUD;
@@ -77,9 +81,22 @@ public class CCLGameManager : GameManager
         }
         else if (LevelStarted && RoundOver)
         {
+            // Trigger round/level transitions. Functions called as animation events.
             if (Input.GetKeyDown("space"))
             {
-                RestartGame();
+                if (levelPass)
+                {
+                    ccAnimator.SetTrigger("NextLevel");
+
+                    if (currentLevel == 6)
+                    {
+                        ccAnimator.SetTrigger("LevelSelect");
+                    }
+                }
+                else if (!levelPass)
+                {
+                    ccAnimator.SetTrigger("Retry");
+                }
             }
         }
     }
@@ -87,6 +104,11 @@ public class CCLGameManager : GameManager
     //Starts the game
     public void LoadLevel(Level level)
     {
+        currentLevel = level.levelInt;
+
+        RoundEndGoodHUD.SetActive(false);
+        RoundEndBadHUD.SetActive(false);
+
         LevelSelectHUD.SetActive(false);
         RoundHUD.SetActive(true);
 
@@ -103,6 +125,7 @@ public class CCLGameManager : GameManager
     //End current round with completed circuit
     private void EndRoundGood()
     {
+        levelPass = true;
         RoundHUD.SetActive(false);
         RoundEndGoodHUD.SetActive(true);
     }
@@ -110,6 +133,7 @@ public class CCLGameManager : GameManager
     //End round with incorrect circuit
     private void EndRoundBad()
     {
+        levelPass = false;
         RoundHUD.SetActive(false);
         RoundEndBadHUD.SetActive(true);
     }
@@ -172,5 +196,19 @@ public class CCLGameManager : GameManager
             EndRoundBad();
 
         TestingCircuit = false;
+    }
+
+    // Load the next level
+    public void LoadNextLevel()
+    {
+        TileGridObject.GetComponent<TileGrid>().DestroyBoard();
+        LoadLevel(levels[currentLevel].GetComponent<Level>());
+    }
+
+    // Reload the current level
+    public void RetryLevel()
+    {
+        TileGridObject.GetComponent<TileGrid>().DestroyBoard();
+        LoadLevel(levels[currentLevel - 1].GetComponent<Level>());
     }
 }

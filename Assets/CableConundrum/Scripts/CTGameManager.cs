@@ -91,7 +91,7 @@ public class CTGameManager : GameManager {
                 if (!GameOver)
                 {
                     // NextRound calls from animation event
-                    ccAnimator.SetTrigger("DoorClose");
+                    ccAnimator.SetTrigger("NextRound");
                 }
                 else
                     RestartGame();
