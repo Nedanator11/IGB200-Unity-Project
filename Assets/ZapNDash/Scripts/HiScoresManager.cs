@@ -18,11 +18,10 @@ public class HiScoresManager : MonoBehaviour
 
     public string[] Headers;
 
-    private bool NewHiScore;
     private string CompareField;
-    private int[] NewHiScoreValues;
+    public int[] NewHiScoreValues;
 
-    private void Start()
+    private void Awake()
     {
         //Retrieve row objects on start
         Rows = HiScoresObject.transform.Cast<Transform>().Where(t => t.name.Contains("Row"))
@@ -193,25 +192,29 @@ public class HiScoresManager : MonoBehaviour
     //Compares specified score against current hi-scores
     public void CompareHiScore(string compareField, int[] values)
     {
-        //Get field values from Row game objects
-        string[] compareFieldTransforms = Rows.Select(o => o.transform.Find(compareField).GetComponent<TextMeshProUGUI>().text).ToArray();
-        string[] nonEmptyStrings = compareFieldTransforms.Where(s => s != "---").ToArray();
-        int[] valuesabc = nonEmptyStrings.Select(s => int.Parse(s)).ToArray();
+        //Get the hi-score rows
+        Rows = HiScoresObject.transform.Cast<Transform>().Where(t => t.name.Contains("Row"))
+            .Select(t => t.gameObject).ToArray();
 
+        //Get field values from Row game objects
         int[] fieldValues = Rows.Select(o => o.transform.Find(compareField).GetComponent<TextMeshProUGUI>().text).Where(s => s != "---")
             .Select(s => int.Parse(s)).ToArray();
 
         //If the Hi-Scores board is not full, or the specified value is greater than an existing hi-score
-        if (fieldValues.Length < 5 || fieldValues.Any(v => v < values[Array.IndexOf(Headers, compareField)]))
+        if (fieldValues.Length < 5 || fieldValues.Any(v => v < values[Array.IndexOf(Headers, compareField) - 1]))
         {
             //Flag new hi-score
-            NewHiScore = true;
             CompareField = compareField;
             NewHiScoreValues = values;
 
             //Show NewHiScoreForm
             NewHiScoreForm.SetActive(true);
             transform.Find("RestartGameButton").GetComponent<Button>().interactable = false;
+        }
+        else //Not a new hi-score
+        {
+            NewHiScoreForm.SetActive(false);
+            transform.Find("RestartGameButton").GetComponent<Button>().interactable = true;
         }
     }
 
@@ -227,6 +230,8 @@ public class HiScoresManager : MonoBehaviour
         int newHiScoreRow;
         if (fieldValues.Length == 0)
             newHiScoreRow = 0;
+        else if (fieldValues.Length < 5 && !fieldValues.Any(v => v <= compareValue))
+            newHiScoreRow = fieldValues.Length;
         else
             newHiScoreRow = Array.IndexOf(fieldValues, fieldValues.First(v => v <= compareValue));
 

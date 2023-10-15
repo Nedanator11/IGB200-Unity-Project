@@ -135,7 +135,7 @@ public class Tile : MonoBehaviour
         float rotationStep = rotationSpeed * Time.deltaTime;
 
         //Check if rotation step will reach target rotation
-        if (transform.eulerAngles.y + rotationStep >= TargetRotation)
+        if (transform.eulerAngles.y + rotationStep + 1 >= TargetRotation)
         {
             //Step to target rotation
             transform.Rotate(new Vector3(0f, TargetRotation - transform.eulerAngles.y, 0f));
