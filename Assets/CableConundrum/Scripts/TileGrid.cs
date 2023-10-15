@@ -704,8 +704,8 @@ public class TileGrid : MonoBehaviour
     private void ResetNodes()
     {
         //Loop over all nodes & reset each
-        for (int i = 0; i < GridDimension; i++)
-            for (int j = 0; j < GridDimension; j++)
+        for (int i = 0; i < Graph.GetLength(0); i++)
+            for (int j = 0; j < Graph.GetLength(1); j++)
                 if (Graph[i, j] != null)
                     Graph[i, j].GetComponent<GridNode>().ResetNode();
     }
@@ -722,9 +722,9 @@ public class TileGrid : MonoBehaviour
         float tileLengthZ = gridLengthZ / GridDimension;
 
         //Loop over all tiles
-        for (int i = 0; i < GridDimension; i++)
+        for (int i = 0; i < Board.GetLength(0); i++)
         {
-            for (int j = 0; j < GridDimension; j++)
+            for (int j = 0; j < Board.GetLength(1); j++)
             {
                 //Check if tile exists
                 if (Board[i, j] != null)

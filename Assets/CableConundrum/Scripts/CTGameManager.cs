@@ -6,8 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class CTGameManager : GameManager {
 
-    private bool GameStarted;
-    private bool GameOver;
+    public enum GameStates
+    {
+        DifficultyMenu,
+        Gameplay,
+        TestingCircuit,
+        RoundEndGood,
+        RoundEndBad,
+        GameOver,
+        HiScores
+    }
+
+    private GameStates GameState;
 
     //Reference Variables
     public Camera MainCamera;
@@ -32,6 +42,7 @@ public class CTGameManager : GameManager {
     public GameObject RoundEndGoodHUD;
     public GameObject RoundEndBadHUD;
     public GameObject GameOverHUD;
+    public GameObject HiScoresHUD;
 
     // Animator for round transitions
     public Animator ccAnimator;
@@ -56,48 +67,104 @@ public class CTGameManager : GameManager {
 
     private void Start()
     {
-        GameStarted = false;
-        GameOver = false;
+        GameState = GameStates.DifficultyMenu;
     }
 
     private void Update()
     {
-        //Don't process further if game is paused
+        //Don't process if game is paused
         if (GameManager.instance.Paused)
             return;
 
-        if (GameStarted && !RoundOver)
+        switch (GameState)
         {
-            ElapseRoundTimer();
+            //Main Menu Disabled - Gameplay starts immediately instead
+            case GameStates.DifficultyMenu:
+                GameState_DifficultyMenu();
+                break;
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                ClickTile();
-            }
-            if (Input.GetKeyDown("space"))
-            {
-                RoundOver = true;
-                TestingCircuit = true;
-            }
-        }
-        else if (TestingCircuit)
-        {
-            TestCircuit();
-        }
-        else if (GameStarted && RoundOver)
-        {
-            if (Input.GetKeyDown("space"))
-            {
-                if (!GameOver)
-                {
-                    // NextRound calls from animation event
-                    ccAnimator.SetTrigger("NextRound");
-                }
-                else
-                    RestartGame();
-            }
+            case GameStates.Gameplay:
+                GameState_Gameplay();
+                break;
+
+            case GameStates.TestingCircuit:
+                GameState_TestingCircuit();
+                break;
+
+            case GameStates.RoundEndGood:
+                GameState_RoundEndGood();
+                break;
+
+            case GameStates.RoundEndBad:
+                GameState_RoundEndBad();
+                break;
+
+            case GameStates.GameOver:
+                GameState_GameOver();
+                break;
+
+            case GameStates.HiScores:
+                GameState_HiScores();
+                break;
         }
     }
+
+    #region GameState Methods
+
+    private void GameState_DifficultyMenu()
+    {
+        //Show GameStartHUD
+        if (!GameStartHUD.activeSelf) GameStartHUD.SetActive(true);
+    }
+
+    private void GameState_Gameplay()
+    {
+        //Show RoundHUD
+        if (!RoundHUD.activeSelf) RoundHUD.SetActive(true);
+
+        ElapseRoundTimer();
+
+        //Check for mouse button down event
+        if (Input.GetMouseButtonDown(0))
+        {
+            ClickTile();
+        }
+    }
+
+    private void GameState_TestingCircuit()
+    {
+        TestCircuit();
+    }
+
+    private void GameState_RoundEndGood()
+    {
+        //Show RoundEndGoodHUD
+        if (!RoundEndGoodHUD.activeSelf) RoundEndGoodHUD.SetActive(true);
+    }
+
+    private void GameState_RoundEndBad()
+    {
+        //Show RoundEndBadHUD
+        if (!RoundEndBadHUD.activeSelf) RoundEndBadHUD.SetActive(true);
+    }
+
+    private void GameState_GameOver()
+    {
+        //Show GameOverHUD
+        if (!GameOverHUD.activeSelf) GameOverHUD.SetActive(true);
+    }
+
+    private void GameState_HiScores()
+    {
+        //Show HiScoresHUD & load data on first showing
+        if (!HiScoresHUD.activeSelf)
+        {
+            HiScoresHUD.GetComponent<HiScoresManager>().LoadHiScores();
+            HiScoresHUD.SetActive(true);
+        }
+    }
+
+    #endregion
 
     //Button event to set difficulty to Easy
     public void SetDifficultyEasy()
@@ -132,6 +199,8 @@ public class CTGameManager : GameManager {
         TileGrid.GetComponent<TileGrid>().TSplitWeight = difficulty.TSplitWeight;
         TileGrid.GetComponent<TileGrid>().CrossSplitWeight = difficulty.CrossSplitWeight;
         TileGrid.GetComponent<TileGrid>().HazardTilePercent = difficulty.HazardTilePercent;
+
+        HiScoresHUD.GetComponent<HiScoresManager>().FileName = "CableConundrum" + difficulty.Name;
     }
     
     //Starts the game
@@ -141,8 +210,6 @@ public class CTGameManager : GameManager {
         Score = 0;
         StartRound();
 
-        GameStarted = true;
-
         //Start game timer
         StartRoundTimer(GameTimerDuration);
     }
@@ -150,9 +217,8 @@ public class CTGameManager : GameManager {
     //Starts a new round
     private void StartRound()
     {
-        //Start new round
-        RoundOver = false;
-        RoundHUD.SetActive(true);
+        //Sets the game state to 'Gameplay'
+        GameState = GameStates.Gameplay;
 
         //Generate a new tile board
         TileGrid.GetComponent<TileGrid>().GenerateBoard();
@@ -165,14 +231,14 @@ public class CTGameManager : GameManager {
         RoundHUD.GetComponent<RoundHUDController>().SetScoreText("Completed: " + Score);
 
         RoundHUD.SetActive(false);
-        RoundEndGoodHUD.SetActive(true);
+        GameState = GameStates.RoundEndGood;
     }
 
     //End round with incorrect circuit
     private void EndRoundBad()
     {
         RoundHUD.SetActive(false);
-        RoundEndBadHUD.SetActive(true);
+        GameState = GameStates.RoundEndBad;
     }
 
     //Clean up current round and start the next round
@@ -199,10 +265,13 @@ public class CTGameManager : GameManager {
 
         //Show game over HUD
         GameOverHUD.GetComponent<GameOverHUDController>().SetText(Score);
-        GameOverHUD.SetActive(true);
+        GameState = GameStates.GameOver;
+    }
 
-        RoundOver = true;
-        GameOver = true;
+    //Checks the player's final score against the current hi-scores
+    private void CheckHiScores()
+    {
+        HiScoresHUD.GetComponent<HiScoresManager>().CompareHiScore("Boards", new int[] { (int)Score });
     }
 
     //Restarts the game
@@ -267,13 +336,42 @@ public class CTGameManager : GameManager {
             EndRoundGood();
         else
             EndRoundBad();
-
-        TestingCircuit = false;
     }
+
+    #region Button Events
+
+    public void TestCircuitButtonClick()
+    {
+        GameState = GameStates.TestingCircuit;
+    }
+
+    public void NextRoundButtonClick()
+    {
+        // NextRound calls from animation event
+        ccAnimator.SetTrigger("NextRound");
+    }
+
+    public void EndGameButtonClick()
+    {
+        GameOverHUD.SetActive(false);
+        GameState = GameStates.HiScores;
+        HiScoresHUD.GetComponent<HiScoresManager>().LoadHiScores();
+        CheckHiScores();
+    }
+
+    public void RestartGameButtonClick()
+    {
+        HiScoresHUD.GetComponent<HiScoresManager>().SaveHiScores();
+        RestartGame();
+    }
+
+    #endregion
 }
 
 [System.Serializable]
 public class CCDifficulty {
+
+    public string Name;
 
     public int GridDimension;
     public int StartTilePosZ;

@@ -4,13 +4,23 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LSGameManager : GameManager {
+public class LSGameManager : GameManager
+{
+    public enum GameStates
+    {
+        MainMenu,
+        Gameplay,
+        RoundEndGood,
+        RoundEndBad,
+        HiScores
+    }
 
     [Header("HUD References")]
     public GameObject GameStartHUD;
     public GameObject RoundHUD;
     public GameObject RoundEndGoodHUD;
     public GameObject RoundEndBadHUD;
+    public GameObject HiScoresHUD;
 
     [Header("Place Markers")]
     public GameObject EnvironmentMarker;
@@ -32,8 +42,7 @@ public class LSGameManager : GameManager {
     public GameObject Cloud;
     public GameObject SelectedOption;
 
-    private bool GameStarted;
-    private bool GameOver;
+    private GameStates GameState;
 
     [Header("Other")]
     //Score Variables
@@ -46,14 +55,12 @@ public class LSGameManager : GameManager {
     private int Cycle = 0;
     public int CycleLength;
     private int RoundCount = 0;
-
-    //Round variables
-    private bool RoundOver;
     private float RoundTimer;
     private float RoundTimerDuration;
 
     // Awake Checks - Singleton setup
-    private void Awake() {
+    private void Awake()
+    {
 
         //Check if instance already exists
         if (instance == null)
@@ -69,8 +76,7 @@ public class LSGameManager : GameManager {
 
     private void Start()
     {
-        GameStarted = false;
-        GameOver = false;
+        StartGame();
     }
 
     private void Update()
@@ -79,85 +85,106 @@ public class LSGameManager : GameManager {
         if (GameManager.instance.Paused)
             return;
 
-        //Game not started condition
-        if (!GameStarted)
+        switch (GameState)
         {
-            if (Input.GetKeyDown("space"))
-            {
-                StartGame();
-                return;
-            }
-        }
+            //Main Menu Disabled - Gameplay starts immediately instead
+            case GameStates.MainMenu:
+                GameState_MainMenu();
+                break;
 
-        //Round is running condition
-        if (GameStarted && !RoundOver)
-        {
-            //If player has not yet selected an option
-            if (SelectedOption == null)
-            {
-                //Detect player input
-                if (Input.GetMouseButtonDown(0))
-                    ClickObject();
+            case GameStates.Gameplay:
+                GameState_Gameplay();
+                break;
 
-                //Elapse round timer
-                ElapseRoundTimer();
+            case GameStates.RoundEndGood:
+                GameState_RoundEndGood();
+                break;
 
-                return;
-            }
+            case GameStates.RoundEndBad:
+                GameState_RoundEndBad();
+                break;
 
-            //If animation has finished
-            if (Player.GetComponent<Player>().FinishedAnimating && Cloud.GetComponent<Cloud>().FinishedAnimating)
-            {
-                RoundOver = true;
-                CheckWinCondition();
-                return;
-            }
-        }
-
-        //Game over condition
-        if (GameOver)
-        {
-            if (Input.GetKeyDown("space"))
-            {
-                RestartGame();
-                return;
-            }
-        }
-
-        //Round over condition
-        if (RoundOver)
-        {
-            if (Input.GetKeyDown("space"))
-            {
-                NextRound();
-                return;
-            }
+            case GameStates.HiScores:
+                GameState_HiScores();
+                break;
         }
     }
+
+    #region GameState Methods
+
+    private void GameState_MainMenu()
+    {
+
+    }
+
+    private void GameState_Gameplay()
+    {
+        //Show RoundHUD
+        if (!RoundHUD.activeSelf) RoundHUD.SetActive(true);
+
+        //If player has not yet selected an option
+        if (SelectedOption == null)
+        {
+            //Detect player input
+            if (Input.GetMouseButtonDown(0))
+                ClickObject();
+
+            //Elapse round timer
+            ElapseRoundTimer();
+
+            return;
+        }
+
+        //If animation has finished
+        if (Player.GetComponent<Player>().FinishedAnimating && Cloud.GetComponent<Cloud>().FinishedAnimating)
+        {
+            //RoundOver = true;
+            CheckWinCondition();
+            return;
+        }
+    }
+
+    private void GameState_RoundEndGood()
+    {
+        //Show RoundEndGoodHUD
+        if (!RoundEndGoodHUD.activeSelf) RoundEndGoodHUD.SetActive(true);
+    }
+
+    private void GameState_RoundEndBad()
+    {
+        //Show RoundEndBadHUD
+        if (!RoundEndBadHUD.activeSelf) RoundEndBadHUD.SetActive(true);
+    }
+
+    private void GameState_HiScores()
+    {
+        //Show HiScoresHUD & load data on first showing
+        if (!HiScoresHUD.activeSelf)
+        {
+            HiScoresHUD.GetComponent<HiScoresManager>().LoadHiScores();
+            HiScoresHUD.SetActive(true);
+        }
+    }
+
+    #endregion
 
     //Starts the game
     private void StartGame()
     {
-        GameStartHUD.SetActive(false);
-        GameStarted = true;
         Score = 0;
+        RoundCount = 0;
         StartRound();
     }
 
     //Starts a new round
     private void StartRound()
     {
-        //Increment RoundCount
-        RoundCount++;
+        //Sets the game state to 'Gameplay'
+        GameState = GameStates.Gameplay;
 
         //Cycle Check
-        Cycle = (RoundCount + CycleLength - 1) / CycleLength;
+        Cycle = (RoundCount + CycleLength) / CycleLength;
         RoundTimerDuration = Mathf.Max(InitialTimerDuration - (TimerDurationDecrease * (Cycle - 1)), 1);
-
-        //Start new round
-        RoundOver = false;
-        SelectedOption = null;
-        RoundHUD.SetActive(true);
 
         //Randomly select evironment
         EnvironmentScape = Instantiate(EnvironmentPrefabs[Random.Range(0, EnvironmentPrefabs.Length)], EnvironmentMarker.transform.position, EnvironmentMarker.transform.rotation);
@@ -186,25 +213,29 @@ public class LSGameManager : GameManager {
             EndRoundBad();
     }
 
+    //Checks the player's final score against the current hi-scores
+    private void CheckHiScores()
+    {
+        HiScoresHUD.GetComponent<HiScoresManager>().CompareHiScore("Score", new int[] { RoundCount, (int)Score });
+    }
+
     //End current round with correct choice by player
     private void EndRoundGood()
     {
         Score += ScorePerRound;
         Score += Mathf.Ceil(RoundTimer);
+        RoundCount++;
         RoundHUD.GetComponent<RoundHUDController>().SetScoreText("Score: " + Score);
 
-        RoundOver = true;
         RoundHUD.SetActive(false);
-        RoundEndGoodHUD.SetActive(true);
+        GameState = GameStates.RoundEndGood;
     }
 
     //End round with incorrect choice by player
     private void EndRoundBad()
     {
-        RoundOver = true;
         RoundHUD.SetActive(false);
-        RoundEndBadHUD.SetActive(true);
-        GameOver = true;
+        GameState = GameStates.RoundEndBad;
     }
 
     //Clean up current round and start the next round
@@ -221,6 +252,9 @@ public class LSGameManager : GameManager {
         Destroy(Options[3]);
         Destroy(Player);
         Destroy(Cloud);
+
+        //Clear round variables
+        SelectedOption = null;
 
         //Start a new round
         StartRound();
@@ -281,8 +315,31 @@ public class LSGameManager : GameManager {
     //Trigger the cloud object to begin animating
     public void TriggerCloudAnimation()
     {
-        Debug.Log(Options[0].transform.parent == null);
         Cloud.GetComponent<Cloud>().Destinations = Options.ToList().Select(o => o.transform.parent.Find("CloudPlaceMarker").gameObject).ToList();
         Cloud.GetComponent<Cloud>().FinishedAnimating = false;
     }
+
+    #region Button Events
+
+    public void NextRoundButtonClick()
+    {
+        RoundEndGoodHUD.SetActive(false);
+        NextRound();
+    }
+
+    public void EndGameButtonClick()
+    {
+        RoundEndBadHUD.SetActive(false);
+        GameState = GameStates.HiScores;
+        HiScoresHUD.GetComponent<HiScoresManager>().LoadHiScores();
+        CheckHiScores();
+    }
+
+    public void RestartGameButtonClick()
+    {
+        HiScoresHUD.GetComponent<HiScoresManager>().SaveHiScores();
+        RestartGame();
+    }
+
+    #endregion
 }
