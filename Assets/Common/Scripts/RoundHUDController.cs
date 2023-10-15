@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoundHUDController : MonoBehaviour
 {
+    public Image TimerBarObject;
     public GameObject TimerHUDObject;
     public GameObject ScoreHUDObject;
 
@@ -18,5 +20,13 @@ public class RoundHUDController : MonoBehaviour
     public void SetScoreText(string text)
     {
         ScoreHUDObject.GetComponent<TextMeshProUGUI>().text = text;
+    }
+
+    public void SetTimerBar(float fill)
+    {
+        if (TimerBarObject != null)
+        {
+            TimerBarObject.fillAmount = fill / 10;
+        }
     }
 }

@@ -82,7 +82,7 @@ public class CCLGameManager : GameManager
         else if (LevelStarted && RoundOver)
         {
             // Trigger round/level transitions. Functions called as animation events.
-            if (Input.GetKeyDown("space"))
+            if (Input.GetKeyDown("space"))  
             {
                 if (levelPass)
                 {
@@ -104,6 +104,7 @@ public class CCLGameManager : GameManager
     //Starts the game
     public void LoadLevel(Level level)
     {
+        // Current index = currentLevel - 1
         currentLevel = level.levelInt;
 
         RoundEndGoodHUD.SetActive(false);

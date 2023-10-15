@@ -72,6 +72,19 @@ public class CTGameManager : GameManager {
 
     private void Update()
     {
+        if (Input.GetKeyDown("space"))
+        {
+            if (GameState == GameStates.Gameplay)
+            {
+                TestCircuitTrigger();
+            }
+
+            else if (GameState == GameStates.RoundEndBad || GameState == GameStates.RoundEndGood)
+            {
+                NextRoundTrigger();
+            }
+        }
+
         //Don't process if game is paused
         if (GameManager.instance.Paused)
             return;
@@ -275,7 +288,7 @@ public class CTGameManager : GameManager {
     }
 
     //Restarts the game
-    private void RestartGame()
+    public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -340,12 +353,12 @@ public class CTGameManager : GameManager {
 
     #region Button Events
 
-    public void TestCircuitButtonClick()
+    public void TestCircuitTrigger()
     {
         GameState = GameStates.TestingCircuit;
     }
 
-    public void NextRoundButtonClick()
+    public void NextRoundTrigger()
     {
         // NextRound calls from animation event
         ccAnimator.SetTrigger("NextRound");
@@ -359,10 +372,10 @@ public class CTGameManager : GameManager {
         CheckHiScores();
     }
 
-    public void RestartGameButtonClick()
+    public void RestartGameTrigger()
     {
         HiScoresHUD.GetComponent<HiScoresManager>().SaveHiScores();
-        RestartGame();
+        ccAnimator.SetTrigger("DifficultySelect");
     }
 
     #endregion

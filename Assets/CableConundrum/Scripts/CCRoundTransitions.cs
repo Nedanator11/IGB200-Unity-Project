@@ -38,4 +38,9 @@ public class CCRoundTransitions : MonoBehaviour
     {
         ccNormal.RetryLevel();
     }
+
+    public void CCDifficultySelect()
+    {
+        cc.RestartGame();
+    }
 }

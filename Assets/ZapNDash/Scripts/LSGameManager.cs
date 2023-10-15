@@ -58,6 +58,7 @@ public class LSGameManager : GameManager
     private float RoundTimer;
     private float RoundTimerDuration;
 
+
     // Awake Checks - Singleton setup
     private void Awake()
     {
@@ -283,6 +284,7 @@ public class LSGameManager : GameManager
             EndRoundBad();
         }
         RoundHUD.GetComponent<RoundHUDController>().SetTimerText(RoundTimer);
+        RoundHUD.GetComponent<RoundHUDController>().SetTimerBar(RoundTimer);
     }
 
     //Raycast from camera to determine if an object is clicked

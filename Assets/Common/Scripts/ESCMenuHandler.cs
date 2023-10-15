@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class ESCMenuHandler : MonoBehaviour
 {
-    private bool active = false;
+    private bool active;
+    public bool menuBase;
 
     public GameObject sceneTransitions;
     public GameObject escMenu;
@@ -15,6 +16,8 @@ public class ESCMenuHandler : MonoBehaviour
     SoundOptions soundOptions;
     SoundHandler soundHandler;
 
+    Animator animator;
+
     private void Start()
     {
         sceneHandler = sceneTransitions.GetComponent<SceneHandler>();
@@ -22,29 +25,77 @@ public class ESCMenuHandler : MonoBehaviour
         soundHandler = audioManager.GetComponent<SoundHandler>();
 
         soundOptions.GetSliderVolumes();
+
+        animator = escMenu.GetComponent<Animator>();
+
+        active = false;
+        menuBase = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            TogglePause();
+        {
+            if (menuBase)
+            {
+                TogglePause();
+            }
+            else
+            {
+                animator.SetTrigger("ESCReturn");
+                menuBase = true;
+            }
+        }
     }
 
     public void TogglePause()
     {
         active = !active;
-        escMenu.SetActive(active);
-        GameManager.instance.Paused = active;
 
         if (active)
+        {
+            escMenu.SetActive(true);
+            animator.SetTrigger("ESCOpen");
             soundHandler.PlaySFX(soundHandler.menuOpen);
+            menuBase = true;
+        }
         else
+        {
+            // Sets !active in animation
+            animator.SetTrigger("ESCClose");
             soundHandler.PlaySFX(soundHandler.menuClose);
+        }
+
+        GameManager.instance.Paused = active;
     }
 
     public void QuitToMenu(int targetScene)
     {
         sceneHandler.FadeToLevel(targetScene);
+    }
+
+    public void ESCOptions()
+    {
+        menuBase = false;
+        animator.SetTrigger("ESCOptions");
+    }
+
+    public void ESCHelp()
+    {
+        menuBase = false;
+        animator.SetTrigger("ESCHelp");
+    }
+
+    public void ESCQuit()
+    {
+        menuBase = false;
+        animator.SetTrigger("ESCQuit");
+    }
+
+    public void ESCReturn()
+    {
+        menuBase = true;
+        animator.SetTrigger("ESCReturn");
     }
 }
