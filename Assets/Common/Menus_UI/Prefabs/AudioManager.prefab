@@ -322,5 +322,7 @@ MonoBehaviour:
   citySoundscape: {fileID: 0}
   BGMusicCC: {fileID: 0}
   tileRotate: {fileID: 8300000, guid: 2f0c848c54cec0a41bf78acfa8628394, type: 3}
-  circuitCorrect: {fileID: 0}
-  circuitIncorrect: {fileID: 0}
+  circuitCorrect: {fileID: 8300000, guid: 043a40f3aeed4104aaa1e075f9fd5074, type: 3}
+  circuitIncorrect: {fileID: 8300000, guid: c477ccc46f9b88e4ba1d045ad31f1ef1, type: 3}
+  doorClose: {fileID: 8300000, guid: 2c424e9471ade414a8cce012d39d8a43, type: 3}
+  doorOpen: {fileID: 8300000, guid: 40c2876c51f05fc44afe525e124cd65d, type: 3}

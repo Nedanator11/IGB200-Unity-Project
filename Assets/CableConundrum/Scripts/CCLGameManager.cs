@@ -34,6 +34,7 @@ public class CCLGameManager : GameManager
 
     // Sound Handler
     SoundHandler soundHandler;
+    public GameObject audioManager;
 
     // Awake Checks - Singleton setup
     private void Awake() {
@@ -53,6 +54,7 @@ public class CCLGameManager : GameManager
     private void Start()
     {
         LevelStarted = false;
+        soundHandler = audioManager.GetComponent<SoundHandler>();
     }
 
     private void Update()
@@ -87,14 +89,16 @@ public class CCLGameManager : GameManager
                 if (levelPass)
                 {
                     ccAnimator.SetTrigger("NextLevel");
+                    soundHandler.PlaySFX(soundHandler.doorClose);
 
                     if (currentLevel == 6)
                     {
-                        ccAnimator.SetTrigger("LevelSelect");
+                        ccAnimator.SetTrigger("Return");
                     }
                 }
                 else if (!levelPass)
                 {
+                    soundHandler.PlaySFX(soundHandler.doorClose);
                     ccAnimator.SetTrigger("Retry");
                 }
             }
@@ -126,6 +130,7 @@ public class CCLGameManager : GameManager
     //End current round with completed circuit
     private void EndRoundGood()
     {
+        soundHandler.PlaySFX(soundHandler.circuitCorrect);
         levelPass = true;
         RoundHUD.SetActive(false);
         RoundEndGoodHUD.SetActive(true);
@@ -134,6 +139,7 @@ public class CCLGameManager : GameManager
     //End round with incorrect circuit
     private void EndRoundBad()
     {
+        soundHandler.PlaySFX(soundHandler.circuitIncorrect);
         levelPass = false;
         RoundHUD.SetActive(false);
         RoundEndBadHUD.SetActive(true);

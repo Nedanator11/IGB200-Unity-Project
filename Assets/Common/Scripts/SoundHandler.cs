@@ -44,6 +44,8 @@ public class SoundHandler : MonoBehaviour
     public AudioClip tileRotate;
     public AudioClip circuitCorrect;
     public AudioClip circuitIncorrect;
+    public AudioClip doorClose;
+    public AudioClip doorOpen;
 
 
     void Start()

@@ -49,6 +49,7 @@ public class CTGameManager : GameManager {
 
     // Sound Handler
     SoundHandler soundHandler;
+    public GameObject audioManager;
 
     // Awake Checks - Singleton setup
     private void Awake() {
@@ -68,6 +69,8 @@ public class CTGameManager : GameManager {
     private void Start()
     {
         GameState = GameStates.DifficultyMenu;
+
+        soundHandler = audioManager.GetComponent<SoundHandler>();
     }
 
     private void Update()
@@ -240,6 +243,7 @@ public class CTGameManager : GameManager {
     //End current round with completed circuit
     private void EndRoundGood()
     {
+        soundHandler.PlaySFX(soundHandler.circuitCorrect);
         Score += 1;
         RoundHUD.GetComponent<RoundHUDController>().SetScoreText("Completed: " + Score);
 
@@ -250,6 +254,7 @@ public class CTGameManager : GameManager {
     //End round with incorrect circuit
     private void EndRoundBad()
     {
+        soundHandler.PlaySFX(soundHandler.circuitIncorrect);
         RoundHUD.SetActive(false);
         GameState = GameStates.RoundEndBad;
     }
@@ -361,6 +366,7 @@ public class CTGameManager : GameManager {
     public void NextRoundTrigger()
     {
         // NextRound calls from animation event
+        soundHandler.PlaySFX(soundHandler.doorClose);
         ccAnimator.SetTrigger("NextRound");
     }
 
@@ -375,7 +381,8 @@ public class CTGameManager : GameManager {
     public void RestartGameTrigger()
     {
         HiScoresHUD.GetComponent<HiScoresManager>().SaveHiScores();
-        ccAnimator.SetTrigger("DifficultySelect");
+        soundHandler.PlaySFX(soundHandler.doorClose);
+        ccAnimator.SetTrigger("Return");
     }
 
     #endregion

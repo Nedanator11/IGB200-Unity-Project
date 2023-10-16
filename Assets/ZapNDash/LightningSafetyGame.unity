@@ -8117,6 +8117,7 @@ MonoBehaviour:
   Rows: []
   FileName: ZapNDash
   Headers: []
+  NewHiScoreValues: 
 --- !u!1 &1815801918
 GameObject:
   m_ObjectHideFlags: 0
