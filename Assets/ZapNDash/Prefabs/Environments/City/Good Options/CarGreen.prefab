@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 105431196207311974}
   - component: {fileID: 105431196207311975}
   - component: {fileID: 105431196207311972}
+  - component: {fileID: 1341620986853110459}
   m_Layer: 0
   m_Name: CarGreen
   m_TagString: GoodOption
@@ -99,6 +100,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1341620986853110459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105431196207311978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce3115b13f208284dbb7f6925da2d5da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Description: 
 --- !u!1 &1921490362007651559
 GameObject:
   m_ObjectHideFlags: 0

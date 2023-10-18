@@ -6,6 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class CCLGameManager : GameManager
 {
+    public enum GameStates
+    {
+        LevelSelect,
+        Gameplay,
+        TestingCircuit,
+        RoundEndGood,
+        RoundEndBad
+    }
+
+    private GameStates GameState;
+
     // Levels
     public GameObject[] levels;
 
@@ -15,13 +26,9 @@ public class CCLGameManager : GameManager
 
     //Game variables
     private Tile ClickedTile;
-    private bool LevelStarted;
-    private bool TestingCircuit;
-    private bool RoundOver;
     private float GameTimer;
 
     public int currentLevel;
-    private bool levelPass;
 
     [Header("HUD References")]
     public GameObject LevelSelectHUD;
@@ -53,7 +60,8 @@ public class CCLGameManager : GameManager
 
     private void Start()
     {
-        LevelStarted = false;
+        GameState = GameStates.LevelSelect;
+
         soundHandler = audioManager.GetComponent<SoundHandler>();
     }
 
@@ -63,64 +71,101 @@ public class CCLGameManager : GameManager
         if (GameManager.instance.Paused)
             return;
 
-        if (LevelStarted && !RoundOver)
+        switch (GameState)
         {
-            ElapseRoundTimer();
+            case GameStates.LevelSelect:
+                GameState_LevelSelect();
+                break;
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                ClickTile();
-            }
-            if (Input.GetKeyDown("space"))
-            {
-                RoundOver = true;
-                TestingCircuit = true;
-            }
-        }
-        else if (TestingCircuit)
-        {
-            TestCircuit();
-        }
-        else if (LevelStarted && RoundOver)
-        {
-            // Trigger round/level transitions. Functions called as animation events.
-            if (Input.GetKeyDown("space"))  
-            {
-                if (levelPass)
-                {
-                    ccAnimator.SetTrigger("NextLevel");
-                    soundHandler.PlaySFX(soundHandler.doorClose);
+            case GameStates.Gameplay:
+                GameState_Gameplay();
+                break;
 
-                    if (currentLevel == 6)
-                    {
-                        ccAnimator.SetTrigger("Return");
-                    }
-                }
-                else if (!levelPass)
-                {
-                    soundHandler.PlaySFX(soundHandler.doorClose);
-                    ccAnimator.SetTrigger("Retry");
-                }
-            }
+            case GameStates.TestingCircuit:
+                GameState_TestingCircuit();
+                break;
+
+            case GameStates.RoundEndGood:
+                GameState_RoundEndGood();
+                break;
+
+            case GameStates.RoundEndBad:
+                GameState_RoundEndBad();
+                break;
         }
     }
-    
+
+    #region GameState Methods
+
+    private void GameState_LevelSelect()
+    {
+        //Show GameStartHUD
+        if (!LevelSelectHUD.activeSelf) LevelSelectHUD.SetActive(true);
+    }
+
+    private void GameState_Gameplay()
+    {
+        //Show RoundHUD
+        if (!RoundHUD.activeSelf) RoundHUD.SetActive(true);
+
+        ElapseRoundTimer();
+
+        //Check for mouse button down event
+        if (Input.GetMouseButtonDown(0))
+            ClickTile();
+
+        //Check for space bar down event
+        if (Input.GetKeyDown("space"))
+            GameState = GameStates.TestingCircuit;
+    }
+
+    private void GameState_TestingCircuit()
+    {
+        TestCircuit();
+    }
+
+    private void GameState_RoundEndGood()
+    {
+        //Show RoundEndGoodHUD
+        if (!RoundEndGoodHUD.activeSelf) RoundEndGoodHUD.SetActive(true);
+
+        // Trigger round/level transitions. Functions called as animation events.
+        if (Input.GetKeyDown("space"))
+        {
+            ccAnimator.SetTrigger("NextLevel");
+            soundHandler.PlaySFX(soundHandler.doorClose);
+
+            if (currentLevel == levels.Length)
+                ccAnimator.SetTrigger("Return");
+        }
+    }
+
+    private void GameState_RoundEndBad()
+    {
+        //Show RoundEndBadHUD
+        if (!RoundEndBadHUD.activeSelf) RoundEndBadHUD.SetActive(true);
+
+        // Trigger round/level transitions. Functions called as animation events.
+        if (Input.GetKeyDown("space"))
+        {
+            soundHandler.PlaySFX(soundHandler.doorClose);
+            ccAnimator.SetTrigger("Retry");
+        }
+    }
+
+    #endregion
+
     //Starts the game
     public void LoadLevel(Level level)
     {
         // Current index = currentLevel - 1
         currentLevel = level.levelInt;
 
-        RoundEndGoodHUD.SetActive(false);
-        RoundEndBadHUD.SetActive(false);
-
+        //Hide level select HUD
         LevelSelectHUD.SetActive(false);
-        RoundHUD.SetActive(true);
 
-        TestingCircuit = false;
-        RoundOver = false;
-        LevelStarted = true;
-
+        //Change game state & load level
+        GameState = GameStates.Gameplay;
         TileGridObject.GetComponent<TileGrid>().LoadLevel(level);
 
         //Start game timer
@@ -131,18 +176,16 @@ public class CCLGameManager : GameManager
     private void EndRoundGood()
     {
         soundHandler.PlaySFX(soundHandler.circuitCorrect);
-        levelPass = true;
         RoundHUD.SetActive(false);
-        RoundEndGoodHUD.SetActive(true);
+        GameState = GameStates.RoundEndGood;
     }
 
     //End round with incorrect circuit
     private void EndRoundBad()
     {
         soundHandler.PlaySFX(soundHandler.circuitIncorrect);
-        levelPass = false;
         RoundHUD.SetActive(false);
-        RoundEndBadHUD.SetActive(true);
+        GameState = GameStates.RoundEndBad;
     }
 
     //Restarts the game
@@ -165,8 +208,10 @@ public class CCLGameManager : GameManager
         if (GameTimer < 0f)
         {
             GameTimer = 0f;
-            TestCircuit();
-            RoundOver = true;
+
+            //End the level
+            RoundEndBadHUD.GetComponent<RoundFailController>().ShowFailureDescription(RoundFailController.FailType.TimerElapsed);
+            EndRoundBad();
         }
         RoundHUD.GetComponent<RoundHUDController>().SetTimerText(GameTimer);
     }
@@ -185,8 +230,15 @@ public class CCLGameManager : GameManager
             //If gameObject is a tile, rotate it clockwise
             if (hitObject.GetComponent<Tile>())
             {
-                ClickedTile = hitObject.GetComponent<Tile>();
-                ClickedTile.RotateTile();
+                if (hitObject.CompareTag("HazardCable"))
+                {
+                    //TODO: Show 'clicked on hazardous cable' player feedback message
+                }
+                else //Basic Tile
+                {
+                    ClickedTile = hitObject.GetComponent<Tile>();
+                    ClickedTile.RotateTile();
+                }
             }
         }
     }
@@ -197,17 +249,27 @@ public class CCLGameManager : GameManager
         if (!TileGridObject.GetComponent<TileGrid>().FinishedAnimating())
             return;
 
-        if (TileGridObject.GetComponent<TileGrid>().DetectCompleteCircuit())
+        //Detect any failures in the circuit
+        RoundFailController.FailType failure = TileGridObject.GetComponent<TileGrid>().DetectCircuitFailure();
+        if (failure == RoundFailController.FailType.None)
+        {
             EndRoundGood();
+        }
         else
+        {
+            RoundEndBadHUD.GetComponent<RoundFailController>().ShowFailureDescription(failure);
             EndRoundBad();
-
-        TestingCircuit = false;
+        }
     }
 
     // Load the next level
     public void LoadNextLevel()
     {
+        //Hide round end HUD
+        RoundEndGoodHUD.SetActive(false);
+        RoundEndBadHUD.SetActive(false);
+        RoundEndBadHUD.GetComponent<RoundFailController>().ResetFailureDescription();
+
         TileGridObject.GetComponent<TileGrid>().DestroyBoard();
         LoadLevel(levels[currentLevel].GetComponent<Level>());
     }
@@ -215,6 +277,11 @@ public class CCLGameManager : GameManager
     // Reload the current level
     public void RetryLevel()
     {
+        //Hide round end HUD
+        RoundEndGoodHUD.SetActive(false);
+        RoundEndBadHUD.SetActive(false);
+        RoundEndBadHUD.GetComponent<RoundFailController>().ResetFailureDescription();
+
         TileGridObject.GetComponent<TileGrid>().DestroyBoard();
         LoadLevel(levels[currentLevel - 1].GetComponent<Level>());
     }

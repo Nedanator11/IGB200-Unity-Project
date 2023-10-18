@@ -223,10 +223,14 @@ public class LSGameManager : GameManager
     //End current round with correct choice by player
     private void EndRoundGood()
     {
+        //Increment Score
         Score += ScorePerRound;
         Score += Mathf.Ceil(RoundTimer);
         RoundCount++;
         RoundHUD.GetComponent<RoundHUDController>().SetScoreText("Score: " + Score);
+
+        //Write the object description to the RoundEndHUD
+        RoundEndGoodHUD.GetComponent<ZDRoundEndHUD>().SetDescription(SelectedOption.GetComponent<Option>().Description);
 
         RoundHUD.SetActive(false);
         GameState = GameStates.RoundEndGood;
@@ -235,6 +239,9 @@ public class LSGameManager : GameManager
     //End round with incorrect choice by player
     private void EndRoundBad()
     {
+        //Write the object description to the RoundEndHUD
+        RoundEndBadHUD.GetComponent<ZDRoundEndHUD>().SetDescription(SelectedOption.GetComponent<Option>().Description);
+
         RoundHUD.SetActive(false);
         GameState = GameStates.RoundEndBad;
     }

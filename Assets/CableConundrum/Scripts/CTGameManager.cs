@@ -21,7 +21,7 @@ public class CTGameManager : GameManager {
 
     //Reference Variables
     public Camera MainCamera;
-    public GameObject TileGrid;
+    public GameObject TileGridObject;
 
     [Header("Difficulties")]
     public CCDifficulty Easy = new CCDifficulty();
@@ -30,8 +30,6 @@ public class CTGameManager : GameManager {
 
     //Game variables
     private Tile ClickedTile;
-    private bool TestingCircuit;
-    private bool RoundOver;
     private float GameTimer;
     private float GameTimerDuration;
     private float Score;
@@ -75,19 +73,6 @@ public class CTGameManager : GameManager {
 
     private void Update()
     {
-        if (Input.GetKeyDown("space"))
-        {
-            if (GameState == GameStates.Gameplay)
-            {
-                TestCircuitTrigger();
-            }
-
-            else if (GameState == GameStates.RoundEndBad || GameState == GameStates.RoundEndGood)
-            {
-                NextRoundTrigger();
-            }
-        }
-
         //Don't process if game is paused
         if (GameManager.instance.Paused)
             return;
@@ -142,9 +127,11 @@ public class CTGameManager : GameManager {
 
         //Check for mouse button down event
         if (Input.GetMouseButtonDown(0))
-        {
             ClickTile();
-        }
+
+        //Check for space bar down event
+        if (Input.GetKeyDown("space"))
+            TestCircuitTrigger();
     }
 
     private void GameState_TestingCircuit()
@@ -156,12 +143,18 @@ public class CTGameManager : GameManager {
     {
         //Show RoundEndGoodHUD
         if (!RoundEndGoodHUD.activeSelf) RoundEndGoodHUD.SetActive(true);
+
+        if (Input.GetKeyDown("space"))
+            NextRoundTrigger();
     }
 
     private void GameState_RoundEndBad()
     {
         //Show RoundEndBadHUD
         if (!RoundEndBadHUD.activeSelf) RoundEndBadHUD.SetActive(true);
+
+        if (Input.GetKeyDown("space"))
+            NextRoundTrigger();
     }
 
     private void GameState_GameOver()
@@ -206,15 +199,15 @@ public class CTGameManager : GameManager {
     //Apply difficulty settings of specified difficulty
     private void SetDifficulty(CCDifficulty difficulty)
     {
-        TileGrid.GetComponent<TileGrid>().GridDimension = difficulty.GridDimension;
-        TileGrid.GetComponent<TileGrid>().StartTileSettings.GridPosition = new Vector2(0, difficulty.StartTilePosZ);
-        TileGrid.GetComponent<TileGrid>().EndTileSettings.GridPosition = new Vector2(difficulty.GridDimension + 1, difficulty.EndTilePosZ);
+        TileGridObject.GetComponent<TileGrid>().GridDimension = difficulty.GridDimension;
+        TileGridObject.GetComponent<TileGrid>().StartTileSettings.GridPosition = new Vector2(0, difficulty.StartTilePosZ);
+        TileGridObject.GetComponent<TileGrid>().EndTileSettings.GridPosition = new Vector2(difficulty.GridDimension + 1, difficulty.EndTilePosZ);
         GameTimerDuration = difficulty.GameTimerDuration;
-        TileGrid.GetComponent<TileGrid>().Turn90Weight = difficulty.Turn90Weight;
-        TileGrid.GetComponent<TileGrid>().StraightWeight = difficulty.StraightWeight;
-        TileGrid.GetComponent<TileGrid>().TSplitWeight = difficulty.TSplitWeight;
-        TileGrid.GetComponent<TileGrid>().CrossSplitWeight = difficulty.CrossSplitWeight;
-        TileGrid.GetComponent<TileGrid>().HazardTilePercent = difficulty.HazardTilePercent;
+        TileGridObject.GetComponent<TileGrid>().Turn90Weight = difficulty.Turn90Weight;
+        TileGridObject.GetComponent<TileGrid>().StraightWeight = difficulty.StraightWeight;
+        TileGridObject.GetComponent<TileGrid>().TSplitWeight = difficulty.TSplitWeight;
+        TileGridObject.GetComponent<TileGrid>().CrossSplitWeight = difficulty.CrossSplitWeight;
+        TileGridObject.GetComponent<TileGrid>().HazardTilePercent = difficulty.HazardTilePercent;
 
         HiScoresHUD.GetComponent<HiScoresManager>().FileName = "CableConundrum" + difficulty.Name;
     }
@@ -237,7 +230,7 @@ public class CTGameManager : GameManager {
         GameState = GameStates.Gameplay;
 
         //Generate a new tile board
-        TileGrid.GetComponent<TileGrid>().GenerateBoard();
+        TileGridObject.GetComponent<TileGrid>().GenerateBoard();
     }
 
     //End current round with completed circuit
@@ -265,9 +258,10 @@ public class CTGameManager : GameManager {
         //Hide round end HUD
         RoundEndGoodHUD.SetActive(false);
         RoundEndBadHUD.SetActive(false);
+        RoundEndBadHUD.GetComponent<RoundFailController>().ResetFailureDescription();
 
         //Destroy round objects
-        TileGrid.GetComponent<TileGrid>().DestroyBoard();
+        TileGridObject.GetComponent<TileGrid>().DestroyBoard();
 
         //Start a new round
         StartRound();
@@ -280,6 +274,7 @@ public class CTGameManager : GameManager {
         RoundHUD.SetActive(false);
         RoundEndGoodHUD.SetActive(false);
         RoundEndBadHUD.SetActive(false);
+        RoundEndBadHUD.GetComponent<RoundFailController>().ResetFailureDescription();
 
         //Show game over HUD
         GameOverHUD.GetComponent<GameOverHUDController>().SetText(Score);
@@ -347,13 +342,20 @@ public class CTGameManager : GameManager {
     //Tests the circuit to see if win condition is met
     private void TestCircuit()
     {
-        if (!TileGrid.GetComponent<TileGrid>().FinishedAnimating())
+        if (!TileGridObject.GetComponent<TileGrid>().FinishedAnimating())
             return;
 
-        if (TileGrid.GetComponent<TileGrid>().DetectCompleteCircuit())
+        //Detect any failures in the circuit
+        RoundFailController.FailType failure = TileGridObject.GetComponent<TileGrid>().DetectCircuitFailure();
+        if (failure == RoundFailController.FailType.None)
+        {
             EndRoundGood();
+        }
         else
+        {
+            RoundEndBadHUD.GetComponent<RoundFailController>().ShowFailureDescription(failure);
             EndRoundBad();
+        }
     }
 
     #region Button Events

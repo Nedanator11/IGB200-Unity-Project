@@ -640,8 +640,8 @@ public class TileGrid : MonoBehaviour
                     Destroy(Board[i, j]);
     }
 
-    //Detect whether or not the circuit contains a vaild path
-    public bool DetectCompleteCircuit()
+    //Detect whether or not there is a successful circuit connection
+    public RoundFailController.FailType DetectCircuitFailure()
     {
         //Reconstruct graph from tile connections
         ResetNodes();
@@ -650,14 +650,31 @@ public class TileGrid : MonoBehaviour
         //Perform A* search
         DetectedPath = AStarSearch(GetNodeFromTile(StartTile.GetComponent<Tile>()), GetNodeFromTile(EndTile.GetComponent<Tile>()));
 
-        if (DetectedPath == null) return false;
-        if (DetectedPath.Count == 0) return false;
-        if (DetectHazardConnections()) return false;
-        return true;
+        //Check if the circuit is incomplete
+        if (DetectedPath == null) return RoundFailController.FailType.IncompleteCircuit;
+        if (DetectedPath.Count == 0) return RoundFailController.FailType.IncompleteCircuit;
+
+        //Detect any connected hazard tiles
+        Tile detectedHazard = DetectHazardConnections();
+        if (detectedHazard)
+        {
+            if (detectedHazard.gameObject.name.Contains("Water"))
+                return RoundFailController.FailType.HazardWater;
+            if (detectedHazard.gameObject.name.Contains("Fire"))
+                return RoundFailController.FailType.HazardFire;
+            if (detectedHazard.gameObject.name.Contains("Frayed"))
+                return RoundFailController.FailType.HazardFrayed;
+
+            //Temporary case for generic hazard tiles
+            return RoundFailController.FailType.IncompleteCircuit;
+        }
+
+        //Otherwise, circuit success
+        return RoundFailController.FailType.None;
     }
 
     //Search for a path from the start to any of the hazard tiles
-    private bool DetectHazardConnections()
+    private Tile DetectHazardConnections()
     {
         //Initialise lists
         List<Tile> visited = new List<Tile>();
@@ -673,7 +690,7 @@ public class TileGrid : MonoBehaviour
 
             //If connected to any hazard tile, return true (circuit failed)
             if (connectedTiles.Any(ct => HazardTiles.Contains(ct)))
-                return true;
+                return connectedTiles.First(ct => HazardTiles.Contains(ct));
 
             //Add connected tiles to frontier
             frontier.AddRange(connectedTiles.Where(ct => !frontier.Contains(ct) && !visited.Contains(ct)));
@@ -683,8 +700,8 @@ public class TileGrid : MonoBehaviour
             frontier.Remove(tile);
         }
 
-        //If no hazard tiles found, return false (circuit success)
-        return false;
+        //If no hazard tiles found, return null (circuit success)
+        return null;
     }
 
     //Checks if the game has finished animating all objects
