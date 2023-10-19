@@ -196,5 +196,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce3115b13f208284dbb7f6925da2d5da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: Always stay out of water during a storm! Lightning conducts through
-    it easily, and is more likely to strike it than land.
+  Description: Water can conduct a lightning strike as far as 100 metres! Always
+    avoid bodies of water during a storm.

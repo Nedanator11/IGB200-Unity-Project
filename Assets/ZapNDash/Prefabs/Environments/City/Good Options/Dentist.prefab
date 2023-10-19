@@ -112,7 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce3115b13f208284dbb7f6925da2d5da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: 
+  Description: Buildings with plumbing and wiring shield from electricity, making
+    them the safest places to be during an electrial storm.
 --- !u!1 &1921490362007651559
 GameObject:
   m_ObjectHideFlags: 0

@@ -196,5 +196,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce3115b13f208284dbb7f6925da2d5da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: Lightning prefers to strike taller structures like trees. Standing
-    underneath can transfer the electricity through the wet ground and to your body!
+  Description: Lightning usually strikes taller structures like trees. Standing underneath
+    can transfer a deadly shock through the wet ground and to your body!

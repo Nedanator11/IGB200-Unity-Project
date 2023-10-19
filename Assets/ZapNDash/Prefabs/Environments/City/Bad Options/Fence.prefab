@@ -196,4 +196,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce3115b13f208284dbb7f6925da2d5da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: 
+  Description: Power lines and transformers can be damaged during a storm, making
+    them potentially deadly!

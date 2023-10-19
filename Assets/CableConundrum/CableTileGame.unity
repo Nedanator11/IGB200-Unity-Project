@@ -6776,7 +6776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d12c8777a94da47a797e1efdb38e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimerElapsed: {fileID: 0}
+  TimerElapsed: {fileID: 451455711}
   IncompleteCircuit: {fileID: 373944826}
   HazardFire: {fileID: 173373772}
   HazardWater: {fileID: 688800779}
