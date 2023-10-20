@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using UnityEditor;
 using UnityEngine;
 
 public class TileGrid : MonoBehaviour
@@ -16,8 +18,16 @@ public class TileGrid : MonoBehaviour
     private List<GridNode> ClosedList = new List<GridNode>();
     private List<GridNode> GeneratedPath = new List<GridNode>();
     private List<GridNode> DetectedPath = new List<GridNode>();
+    private Tile DetectedHazard;
     public Color GeneratedPathColor = Color.yellow;
     public Color DetectedPathColor = Color.green;
+
+    //Tile Highlighting
+    private List<Tile> HighlightedTiles = new List<Tile>();
+    public float HighlightDelay = 0.25f;
+    public float HighlightFinishDelay = 2f;
+    private float HighlightTimer = -1f;
+    
 
     [Header("Grid Geometry")]
     public int GridDimension = 4;
@@ -42,6 +52,8 @@ public class TileGrid : MonoBehaviour
     {
         if (GeneratedPath != null && GeneratedPath.Count > 0) DebugDrawGeneratedPath();
         if (DetectedPath != null && DetectedPath.Count > 0) DebugDrawDetectedPath();
+
+        if (HighlightedTiles.Count > 0 || HighlightTimer > 0) HighlightTiles();
     }
 
     //Generate a new board of tiles
@@ -626,7 +638,9 @@ public class TileGrid : MonoBehaviour
         ClosedList = new List<GridNode>();
         GeneratedPath = new List<GridNode>();
         DetectedPath = new List<GridNode>();
-
+        DetectedHazard = null;
+        HighlightedTiles = new List<Tile>();
+            
         //Loop over all Graph elements, and destroy each object found
         for (int i = 0; i < Graph.GetLength(0); i++)
             for (int j = 0; j < Graph.GetLength(1); j++)
@@ -650,27 +664,33 @@ public class TileGrid : MonoBehaviour
         //Perform A* search
         DetectedPath = AStarSearch(GetNodeFromTile(StartTile.GetComponent<Tile>()), GetNodeFromTile(EndTile.GetComponent<Tile>()));
 
+        //Initialise failure detection (default: success)
+        RoundFailController.FailType failure = RoundFailController.FailType.None; ;
+
         //Check if the circuit is incomplete
-        if (DetectedPath == null) return RoundFailController.FailType.IncompleteCircuit;
-        if (DetectedPath.Count == 0) return RoundFailController.FailType.IncompleteCircuit;
+        if (DetectedPath == null) failure = RoundFailController.FailType.IncompleteCircuit;
+        if (DetectedPath.Count == 0) failure = RoundFailController.FailType.IncompleteCircuit;
 
         //Detect any connected hazard tiles
-        Tile detectedHazard = DetectHazardConnections();
-        if (detectedHazard)
+        DetectedHazard = DetectHazardConnections();
+        if (DetectedHazard)
         {
-            if (detectedHazard.gameObject.name.Contains("Water"))
-                return RoundFailController.FailType.HazardWater;
-            if (detectedHazard.gameObject.name.Contains("Fire"))
-                return RoundFailController.FailType.HazardFire;
-            if (detectedHazard.gameObject.name.Contains("Frayed"))
-                return RoundFailController.FailType.HazardFrayed;
+            if (DetectedHazard.gameObject.name.Contains("Water"))
+                failure = RoundFailController.FailType.HazardWater;
+            if (DetectedHazard.gameObject.name.Contains("Fire"))
+                failure = RoundFailController.FailType.HazardFire;
+            if (DetectedHazard.gameObject.name.Contains("Frayed"))
+                failure = RoundFailController.FailType.HazardFrayed;
 
             //Temporary case for generic hazard tiles
-            return RoundFailController.FailType.IncompleteCircuit;
+            failure = RoundFailController.FailType.IncompleteCircuit;
         }
 
-        //Otherwise, circuit success
-        return RoundFailController.FailType.None;
+        //Add tiles to be highlighted
+        if (DetectedPath.Count > 0) HighlightedTiles.AddRange(DetectedPath.Select(n => GetTileFromNode(n)));
+        if (DetectedHazard) HighlightedTiles.Add(DetectedHazard);
+
+        return failure;
     }
 
     //Search for a path from the start to any of the hazard tiles
@@ -704,6 +724,31 @@ public class TileGrid : MonoBehaviour
         return null;
     }
 
+    //Animated the highlighting of tiles at the end of the round
+    private void HighlightTiles()
+    {
+        //Decrement timer
+        HighlightTimer -= Time.deltaTime;
+
+        //Timer elapsed
+        if (HighlightTimer <= 0)
+        {
+            if (HighlightedTiles.Count > 0)
+            {
+                //Retrieve the next tile to highlight
+                Tile tile = HighlightedTiles[0];
+                HighlightedTiles.Remove(tile);
+
+                //Highlight the tile
+                tile.gameObject.GetComponent<MeshRenderer>().enabled = true;
+
+                //Set the next timer
+                if (HighlightedTiles.Count > 0) HighlightTimer = HighlightDelay;
+                if (HighlightedTiles.Count == 0) HighlightTimer = HighlightFinishDelay; //last tile highlighted
+            }
+        }
+    }
+
     //Checks if the game has finished animating all objects
     public bool FinishedAnimating()
     {
@@ -713,7 +758,10 @@ public class TileGrid : MonoBehaviour
                 if (Board[i, j] != null)
                     if (Board[i, j].GetComponent<Tile>().Animating) return false;
 
-        //If none are animating, return true
+        //Check if tiles are being highlighted
+        if (HighlightTimer > 0) return false;
+
+        //Otherwise, return true
         return true;
     }
 

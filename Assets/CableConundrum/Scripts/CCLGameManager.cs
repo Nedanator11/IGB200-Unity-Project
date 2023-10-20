@@ -11,6 +11,7 @@ public class CCLGameManager : GameManager
         LevelSelect,
         Gameplay,
         TestingCircuit,
+        HighlightingTiles,
         RoundEndGood,
         RoundEndBad
     }
@@ -27,6 +28,7 @@ public class CCLGameManager : GameManager
     //Game variables
     private Tile ClickedTile;
     private float GameTimer;
+    private RoundFailController.FailType Failure;
 
     public int currentLevel;
 
@@ -85,6 +87,10 @@ public class CCLGameManager : GameManager
                 GameState_TestingCircuit();
                 break;
 
+            case GameStates.HighlightingTiles:
+                GameState_HighlightingTiles();
+                break;
+
             case GameStates.RoundEndGood:
                 GameState_RoundEndGood();
                 break;
@@ -122,6 +128,24 @@ public class CCLGameManager : GameManager
     private void GameState_TestingCircuit()
     {
         TestCircuit();
+    }
+
+    private void GameState_HighlightingTiles()
+    {
+        //Wait for tiles to finish highlighting
+        if (!TileGridObject.GetComponent<TileGrid>().FinishedAnimating())
+            return;
+
+        //Determine round end
+        if (Failure == RoundFailController.FailType.None)
+        {
+            EndRoundGood();
+        }
+        else
+        {
+            RoundEndBadHUD.GetComponent<RoundFailController>().ShowFailureDescription(Failure);
+            EndRoundBad();
+        }
     }
 
     private void GameState_RoundEndGood()
@@ -250,16 +274,10 @@ public class CCLGameManager : GameManager
             return;
 
         //Detect any failures in the circuit
-        RoundFailController.FailType failure = TileGridObject.GetComponent<TileGrid>().DetectCircuitFailure();
-        if (failure == RoundFailController.FailType.None)
-        {
-            EndRoundGood();
-        }
-        else
-        {
-            RoundEndBadHUD.GetComponent<RoundFailController>().ShowFailureDescription(failure);
-            EndRoundBad();
-        }
+        Failure = TileGridObject.GetComponent<TileGrid>().DetectCircuitFailure();
+
+        //Set GameState to HighlightTiles
+        GameState = GameStates.HighlightingTiles;
     }
 
     // Load the next level

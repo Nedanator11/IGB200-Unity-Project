@@ -164,6 +164,11 @@ public class Tile : MonoBehaviour
         }
     }
 
+    public void HighlightTile()
+    {
+        gameObject.GetComponent<MeshRenderer>().enabled = true;
+    }
+
     //Check cable sides for connection to adjacent tiles
     public void CheckConnectedSides()
     {

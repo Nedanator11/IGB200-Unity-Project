@@ -52,7 +52,7 @@ public class RoundFailController : MonoBehaviour
     //Resets (hides) all failure messages
     public void ResetFailureDescription()
     {
-        TimerElapsed.SetActive(false);
+        if (TimerElapsed != null) TimerElapsed.SetActive(false);
         IncompleteCircuit.SetActive(false);
         HazardFire.SetActive(false);
         HazardWater.SetActive(false);

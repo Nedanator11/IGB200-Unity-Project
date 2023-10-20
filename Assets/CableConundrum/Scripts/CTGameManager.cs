@@ -11,6 +11,7 @@ public class CTGameManager : GameManager {
         DifficultyMenu,
         Gameplay,
         TestingCircuit,
+        HighlightingTiles,
         RoundEndGood,
         RoundEndBad,
         GameOver,
@@ -33,6 +34,7 @@ public class CTGameManager : GameManager {
     private float GameTimer;
     private float GameTimerDuration;
     private float Score;
+    private RoundFailController.FailType Failure;
 
     [Header("HUD References")]
     public GameObject GameStartHUD;
@@ -92,6 +94,10 @@ public class CTGameManager : GameManager {
                 GameState_TestingCircuit();
                 break;
 
+            case GameStates.HighlightingTiles:
+                GameState_HighlightingTiles();
+                break;
+
             case GameStates.RoundEndGood:
                 GameState_RoundEndGood();
                 break;
@@ -137,6 +143,24 @@ public class CTGameManager : GameManager {
     private void GameState_TestingCircuit()
     {
         TestCircuit();
+    }
+
+    private void GameState_HighlightingTiles()
+    {
+        //Wait for tiles to finish highlighting
+        if (!TileGridObject.GetComponent<TileGrid>().FinishedAnimating())
+            return;
+
+        //Determine round end
+        if (Failure == RoundFailController.FailType.None)
+        {
+            EndRoundGood();
+        }
+        else
+        {
+            RoundEndBadHUD.GetComponent<RoundFailController>().ShowFailureDescription(Failure);
+            EndRoundBad();
+        }
     }
 
     private void GameState_RoundEndGood()
@@ -299,7 +323,7 @@ public class CTGameManager : GameManager {
         GameTimer = duration;
         RoundHUD.GetComponent<RoundHUDController>().SetTimerText(GameTimer);
     }
-
+    
     //Elapse timer for current update cycle
     private void ElapseRoundTimer()
     {
@@ -346,16 +370,10 @@ public class CTGameManager : GameManager {
             return;
 
         //Detect any failures in the circuit
-        RoundFailController.FailType failure = TileGridObject.GetComponent<TileGrid>().DetectCircuitFailure();
-        if (failure == RoundFailController.FailType.None)
-        {
-            EndRoundGood();
-        }
-        else
-        {
-            RoundEndBadHUD.GetComponent<RoundFailController>().ShowFailureDescription(failure);
-            EndRoundBad();
-        }
+        Failure = TileGridObject.GetComponent<TileGrid>().DetectCircuitFailure();
+
+        //Set GameState to HighlightTiles
+        GameState = GameStates.HighlightingTiles;
     }
 
     #region Button Events

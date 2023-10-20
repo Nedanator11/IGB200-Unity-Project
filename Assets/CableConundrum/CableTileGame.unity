@@ -6776,7 +6776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d12c8777a94da47a797e1efdb38e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimerElapsed: {fileID: 451455711}
+  TimerElapsed: {fileID: 0}
   IncompleteCircuit: {fileID: 373944826}
   HazardFire: {fileID: 173373772}
   HazardWater: {fileID: 688800779}
@@ -8656,6 +8656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Paused: 0
+  GameState: 0
   MainCamera: {fileID: 1294765126}
   TileGridObject: {fileID: 1963071924}
   Easy:
@@ -8691,6 +8692,7 @@ MonoBehaviour:
     TSplitWeight: 10
     CrossSplitWeight: 5
     HazardTilePercent: 15
+  Failure: 0
   GameStartHUD: {fileID: 1562354875}
   RoundHUD: {fileID: 1815183319}
   RoundEndGoodHUD: {fileID: 541056336}
@@ -9549,6 +9551,8 @@ MonoBehaviour:
   HazardTiles: []
   GeneratedPathColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   DetectedPathColor: {r: 0, g: 1, b: 0, a: 1}
+  HighlightDelay: 0.2
+  HighlightFinishDelay: 1.5
   GridDimension: 7
   GridMinBounds: {x: -8, y: -8}
   GridMaxBounds: {x: 8, y: 8}
