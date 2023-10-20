@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class RoundHUDController : MonoBehaviour
 {
+    public float TimerBarMax = 10f;
     public Image TimerBarObject;
     public GameObject TimerHUDObject;
     public GameObject ScoreHUDObject;
@@ -13,7 +14,7 @@ public class RoundHUDController : MonoBehaviour
     //Sets the text of the timer HUD object to given value, rounded up to whole seconds
     public void SetTimerText(float value)
     {
-        TimerHUDObject.GetComponent<TextMeshProUGUI>().text = "Time: " + Mathf.CeilToInt(value).ToString();
+        TimerHUDObject.GetComponent<TextMeshProUGUI>().text = Mathf.CeilToInt(value).ToString();
     }
 
     //Sets the text of the score HUD object to given value, rounded up to next whole number
@@ -22,11 +23,18 @@ public class RoundHUDController : MonoBehaviour
         ScoreHUDObject.GetComponent<TextMeshProUGUI>().text = text;
     }
 
-    public void SetTimerBar(float fill)
+    //Initialised the maximum value of the timer bar
+    public void SetTimerBarMax(float value)
+    {
+        TimerBarMax = value;
+    }
+
+    //Sets the fill of the timer bar to the ratio of time/TimerBarMax
+    public void SetTimerBar(float time)
     {
         if (TimerBarObject != null)
         {
-            TimerBarObject.fillAmount = fill / 10;
+            TimerBarObject.fillAmount = time / TimerBarMax;
         }
     }
 }
