@@ -322,6 +322,7 @@ public class CTGameManager : GameManager {
     {
         GameTimer = duration;
         RoundHUD.GetComponent<RoundHUDController>().SetTimerText(GameTimer);
+        RoundHUD.GetComponent<RoundHUDController>().SetTimerBarMax(GameTimer);
     }
     
     //Elapse timer for current update cycle
@@ -334,6 +335,7 @@ public class CTGameManager : GameManager {
             EndGame();
         }
         RoundHUD.GetComponent<RoundHUDController>().SetTimerText(GameTimer);
+        RoundHUD.GetComponent<RoundHUDController>().SetTimerBar(GameTimer);
     }
 
     //Detects if player has clicked on a tile, and rotates it if true
