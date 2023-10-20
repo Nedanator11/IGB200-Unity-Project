@@ -402,7 +402,7 @@ public class TileGrid : MonoBehaviour
             GridNode node = hazardNodes[i];
 
             //Instantiate a new tile and scale to tile size
-            GameObject tile = Instantiate(HazardTilePrefabs[Random.Range(0, 3)], node.transform.position, node.transform.rotation, node.transform);
+            GameObject tile = Instantiate(HazardTilePrefabs[Random.Range(0, HazardTilePrefabs.Length)], node.transform.position, node.transform.rotation, node.transform);
             tile.transform.localScale = new Vector3(0.1f * tileLengthX, transform.localScale.y, 0.1f * tileLengthZ);
 
             //Add tile to the board

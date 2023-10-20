@@ -42,7 +42,7 @@ public class LSGameManager : GameManager
     public GameObject Cloud;
     public GameObject SelectedOption;
 
-    private GameStates GameState;
+    public GameStates GameState;
 
     [Header("Other")]
     //Score Variables
@@ -239,8 +239,10 @@ public class LSGameManager : GameManager
     //End round with incorrect choice by player
     private void EndRoundBad()
     {
-        //Write the object description to the RoundEndHUD
-        RoundEndBadHUD.GetComponent<ZDRoundEndHUD>().SetDescription(SelectedOption.GetComponent<Option>().Description);
+        //Check if option selected or timer expired
+        if (SelectedOption) //Write the object description to the RoundEndHUD
+            RoundEndBadHUD.GetComponent<ZDRoundEndHUD>().SetDescription(SelectedOption.GetComponent<Option>().Description);
+
 
         RoundHUD.SetActive(false);
         GameState = GameStates.RoundEndBad;
@@ -308,7 +310,7 @@ public class LSGameManager : GameManager
             //If hitObject is an option, set it as the player's destination
             if (hitObject.CompareTag("GoodOption") || hitObject.CompareTag("BadOption"))
             {
-                SelectedOption = hitObject;
+                SelectedOption = hitObject.transform.parent.parent.gameObject;
                 TriggerPlayerAnimation();
             }
         }

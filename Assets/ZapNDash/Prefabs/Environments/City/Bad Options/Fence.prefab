@@ -28,7 +28,8 @@ Transform:
   m_LocalPosition: {x: 1.77, y: 0, z: 0.43}
   m_LocalScale: {x: 0.825, y: 0.825, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7891666649992748357}
   m_Father: {fileID: 3467323777358193499}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -95,7 +96,6 @@ GameObject:
   - component: {fileID: 3467323777358193499}
   - component: {fileID: 3467323777358193496}
   - component: {fileID: 3467323777358193497}
-  - component: {fileID: 3467323777358193498}
   - component: {fileID: 3114655943612814167}
   m_Layer: 0
   m_Name: Fence
@@ -170,20 +170,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3467323777358193498
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3467323777358193492}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &3114655943612814167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,3 +184,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Description: Power lines and transformers can be damaged during a storm, making
     them potentially deadly!
+--- !u!1 &5705774754199533089
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7891666649992748357}
+  - component: {fileID: 2797866513013586752}
+  m_Layer: 0
+  m_Name: HitBox
+  m_TagString: BadOption
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7891666649992748357
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5705774754199533089}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -1, y: -1.87, z: -0}
+  m_LocalScale: {x: 1.2135328, y: 1, z: 0.96093744}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4709470018212087323}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &2797866513013586752
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5705774754199533089}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}

@@ -9569,9 +9569,12 @@ MonoBehaviour:
   CrossSplitTilePrefab: {fileID: 7434009604181900485, guid: 1a7797446f58dab47bed24ab5a7c1680, type: 3}
   CrossSplitWeight: 5
   HazardTilePrefabs:
-  - {fileID: 7434009604181900485, guid: 6528d060c13bd464c8f5d8fe8dab566a, type: 3}
-  - {fileID: 7434009604181900485, guid: f6112e54d3230bf419cda4b5c790d65f, type: 3}
   - {fileID: 7434009604181900485, guid: cdff845098cfe1e4c83cc1371c56c50c, type: 3}
+  - {fileID: 7434009604181900485, guid: 62ff86dcb1a835146b980e8cbc96c53a, type: 3}
+  - {fileID: 7434009604181900485, guid: f6112e54d3230bf419cda4b5c790d65f, type: 3}
+  - {fileID: 7434009604181900485, guid: 6528d060c13bd464c8f5d8fe8dab566a, type: 3}
+  - {fileID: 7434009604181900485, guid: 13373d44aa247e440ac29cb570839a4f, type: 3}
+  - {fileID: 7434009604181900485, guid: f18d16401341c154392c391f7f59fa4e, type: 3}
   HazardTilePercent: 0
 --- !u!4 &1963071926
 Transform:

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 105431196207311973}
   - component: {fileID: 105431196207311974}
   - component: {fileID: 105431196207311975}
-  - component: {fileID: 105431196207311972}
   - component: {fileID: 1341620986853110459}
   m_Layer: 0
   m_Name: CarGreen
@@ -86,20 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &105431196207311972
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105431196207311978}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &1341620986853110459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +99,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Description: Cars transfer electricity through their metal frames and into the
     ground, keeping the people inside safe. Make sure to close the windows!
+--- !u!1 &1426293660860041480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8446744084026429132}
+  - component: {fileID: 1671509347176596226}
+  m_Layer: 0
+  m_Name: HitBox
+  m_TagString: GoodOption
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8446744084026429132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426293660860041480}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.08695652, y: -6.22, z: 0}
+  m_LocalScale: {x: 1.673913, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7651106999919734773}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1671509347176596226
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426293660860041480}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1921490362007651559
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,7 +173,8 @@ Transform:
   m_LocalPosition: {x: -0.05, y: -0, z: -0.82}
   m_LocalScale: {x: 0.575, y: 0.575, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8446744084026429132}
   m_Father: {fileID: 105431196207311973}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
