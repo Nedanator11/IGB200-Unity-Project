@@ -13,6 +13,10 @@ public class Cloud : MonoBehaviour
     public GameObject LightningMarker;
     public float LightningStrikeDuration;
 
+    public GameObject StrikeFaceAnimation;
+    private float StrikeFaceAnimationDuration = 0.25f;
+    private float StrikeFaceAnimationTimer = -1f;
+
     SoundHandler soundHandler;
     Player playerScript;
 
@@ -59,18 +63,39 @@ public class Cloud : MonoBehaviour
             //Move to the destination exactly
             transform.position = Destination.transform.position;
 
-            //If the destination is a bad option, strike it with lightning
-            foreach (Transform child in Destination.transform.parent)
+            if (StrikeFaceAnimationTimer <= 0)
             {
-                if (child.CompareTag("BadOption"))
+                //Begin animation
+                StrikeFaceAnimation.SetActive(true);
+
+                //Start animation timer
+                StrikeFaceAnimationTimer = StrikeFaceAnimationDuration;
+            }
+            else //StrikeFaceAnimationTimer > 0
+            {
+                //Decrement timer
+                StrikeFaceAnimationTimer -= Time.deltaTime;
+
+                //If timer elapses
+                if (StrikeFaceAnimationTimer <= 0)
                 {
-                    StrikeLightning();
-                    break;
+                    //If the destination is a bad option, strike it with lightning
+                    foreach (Transform child in Destination.transform.parent)
+                    {
+                        if (child.CompareTag("BadOption"))
+                        {
+                            StrikeLightning();
+                            break;
+                        }
+                    }
+
+                    //Disable animation
+                    StrikeFaceAnimation.SetActive(false);
+
+                    //Unset the destination
+                    Destination = null;
                 }
             }
-
-            //Unset the destination
-            Destination = null;
         }
         else
         {

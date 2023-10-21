@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 147769138852319989}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 0.925, y: 0.925, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4827047254580162613}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -78385496, guid: 7bff359629f1b6548a17a4840a6be7fc, type: 3}
+  m_Sprite: {fileID: -1687236267, guid: 5375c5cf9e656194dbd814a496291dfe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,7 +95,7 @@ Animator:
   m_GameObject: {fileID: 147769138852319989}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 94f8fa3aafd4b5544abc960c57a1a91f, type: 2}
+  m_Controller: {fileID: 9100000, guid: b8500baff30d49843884d6f1401ab691, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileGrid: {fileID: 0}
   GridPosition: 
-  CableSides: 01010000
+  CableSides: 01000001
   ConnectedSides: 00000000
   ConnectedColour: {r: 0, g: 0.14901961, b: 1, a: 1}
   DisconnectedColour: {r: 1, g: 0, b: 0, a: 1}
