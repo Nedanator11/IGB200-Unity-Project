@@ -41,6 +41,9 @@ public class CCLGameManager : GameManager
     // Animator for round transitions
     public Animator ccAnimator;
 
+    // Animator for hazard feedback
+    public Animator feedbackAnimator;
+
     // Sound Handler
     SoundHandler soundHandler;
     public GameObject audioManager;
@@ -182,6 +185,9 @@ public class CCLGameManager : GameManager
     //Starts the game
     public void LoadLevel(Level level)
     {
+        // Reset hazard feedback to default idle state
+        feedbackAnimator.SetBool("RoundEndIdle", true);
+
         // Current index = currentLevel - 1
         currentLevel = level.levelInt;
 
@@ -200,7 +206,8 @@ public class CCLGameManager : GameManager
     private void EndRoundGood()
     {
         soundHandler.PlaySFX(soundHandler.circuitCorrect);
-        RoundHUD.SetActive(false);
+        feedbackAnimator.SetBool("RoundEndIdle", false);
+        feedbackAnimator.SetTrigger("RoundEndGood");
         GameState = GameStates.RoundEndGood;
     }
 
@@ -208,7 +215,8 @@ public class CCLGameManager : GameManager
     private void EndRoundBad()
     {
         soundHandler.PlaySFX(soundHandler.circuitIncorrect);
-        RoundHUD.SetActive(false);
+        feedbackAnimator.SetBool("RoundEndIdle", false);
+        feedbackAnimator.SetTrigger("RoundEndBad");
         GameState = GameStates.RoundEndBad;
     }
 

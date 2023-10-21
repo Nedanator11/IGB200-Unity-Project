@@ -47,6 +47,9 @@ public class CTGameManager : GameManager {
     // Animator for round transitions
     public Animator ccAnimator;
 
+    // Animator for RoundEnd feedback
+    public Animator feedbackAnimator;
+
     // Sound Handler
     SoundHandler soundHandler;
     public GameObject audioManager;
@@ -126,6 +129,9 @@ public class CTGameManager : GameManager {
 
     private void GameState_Gameplay()
     {
+        // Reset Hazard Feedback to idle state
+        feedbackAnimator.SetBool("RoundEndIdle", true);
+
         //Show RoundHUD
         if (!RoundHUD.activeSelf) RoundHUD.SetActive(true);
 
@@ -166,7 +172,9 @@ public class CTGameManager : GameManager {
     private void GameState_RoundEndGood()
     {
         //Show RoundEndGoodHUD
-        if (!RoundEndGoodHUD.activeSelf) RoundEndGoodHUD.SetActive(true);
+        // if (!RoundEndGoodHUD.activeSelf) RoundEndGoodHUD.SetActive(true);
+        feedbackAnimator.SetBool("RoundEndIdle", false);
+        feedbackAnimator.SetTrigger("RoundEndGood");
 
         if (Input.GetKeyDown("space"))
             NextRoundTrigger();
@@ -175,7 +183,9 @@ public class CTGameManager : GameManager {
     private void GameState_RoundEndBad()
     {
         //Show RoundEndBadHUD
-        if (!RoundEndBadHUD.activeSelf) RoundEndBadHUD.SetActive(true);
+        // if (!RoundEndBadHUD.activeSelf) RoundEndBadHUD.SetActive(true);
+        feedbackAnimator.SetBool("RoundEndIdle", false);
+        feedbackAnimator.SetTrigger("RoundEndBad");
 
         if (Input.GetKeyDown("space"))
             NextRoundTrigger();
