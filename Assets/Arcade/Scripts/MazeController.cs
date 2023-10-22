@@ -65,6 +65,9 @@ public class MazeController : MonoBehaviour
                 {
                     canvas.GetComponent<DisplayText>().disaplyText("Congradulations!\nMaze Complete!", 4);
                     mazeComplete = true;
+                    GameObject arcadeController = GameObject.Find("arcade controller");
+                    arcadeController.GetComponent<NewBehaviourScript>().arcadeCoins += 50;
+                    
                 }
                 else
                 {

@@ -17,6 +17,10 @@ TagManager:
   - HazardCable
   - Maze reset button
   - Ball
+  - RoundTransitions
+  - helpBlock
+  - arcade
+  - toy
   layers:
   - Default
   - TransparentFX

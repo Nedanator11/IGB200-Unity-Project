@@ -18,7 +18,8 @@ public class DisplayText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        text.text = "test";
+        Image.enabled = false;
+        text.enabled = false; 
     }
 
     // Update is called once per frame
