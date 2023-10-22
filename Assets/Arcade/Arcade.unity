@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1.85
+  m_AmbientIntensity: 0
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 1, g: 1, b: 1, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -210,6 +210,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arcade_Machine_Thunder (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
     - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
       propertyPath: playerController
       value: 
@@ -586,6 +590,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
+    - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1241042081}
@@ -625,12 +633,16 @@ PrefabInstance:
       value: Reset Button
       objectReference: {fileID: 0}
     - target: {fileID: 3613126641285426358, guid: 82999a9d5dcd0de48a5fc806023b5435, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
+    - target: {fileID: 3613126641285426358, guid: 82999a9d5dcd0de48a5fc806023b5435, type: 3}
       propertyPath: mazeControllerObject
       value: 
       objectReference: {fileID: 838096168}
     - target: {fileID: 5721008287981875839, guid: 82999a9d5dcd0de48a5fc806023b5435, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5721008287981875839, guid: 82999a9d5dcd0de48a5fc806023b5435, type: 3}
       propertyPath: m_LocalScale.x
@@ -846,6 +858,10 @@ PrefabInstance:
       value: Arcade_Machine_Thunder (4)
       objectReference: {fileID: 0}
     - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
+    - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1241042081}
@@ -907,6 +923,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
     - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
       propertyPath: playerController
       value: 
@@ -1095,7 +1115,7 @@ Transform:
   - {fileID: 617188620}
   - {fileID: 12416342}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &496896666 stripped
 GameObject:
@@ -1115,7 +1135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7192954683874097329, guid: 4e9d3d00c2c01ea4985bcd413da15bfd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.185368
+      value: 16.148058
       objectReference: {fileID: 0}
     - target: {fileID: 7192954683874097329, guid: 4e9d3d00c2c01ea4985bcd413da15bfd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1123,11 +1143,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7192954683874097329, guid: 4e9d3d00c2c01ea4985bcd413da15bfd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -33.68833
+      value: -33.6946
       objectReference: {fileID: 0}
     - target: {fileID: 7192954683874097329, guid: 4e9d3d00c2c01ea4985bcd413da15bfd, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.997176
       objectReference: {fileID: 0}
     - target: {fileID: 7192954683874097329, guid: 4e9d3d00c2c01ea4985bcd413da15bfd, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1135,7 +1155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7192954683874097329, guid: 4e9d3d00c2c01ea4985bcd413da15bfd, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.075100124
       objectReference: {fileID: 0}
     - target: {fileID: 7192954683874097329, guid: 4e9d3d00c2c01ea4985bcd413da15bfd, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1147,7 +1167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7192954683874097329, guid: 4e9d3d00c2c01ea4985bcd413da15bfd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -8.614
       objectReference: {fileID: 0}
     - target: {fileID: 7192954683874097329, guid: 4e9d3d00c2c01ea4985bcd413da15bfd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1318,6 +1338,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arcade_Machine_Thunder (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
     - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
       propertyPath: playerController
       value: 
@@ -1530,6 +1554,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
+    - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1241042081}
@@ -1650,7 +1678,7 @@ RectTransform:
   - {fileID: 1670007594}
   - {fileID: 594089925}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1708,6 +1736,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
     - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
       propertyPath: playerController
       value: 
@@ -2364,6 +2396,10 @@ PrefabInstance:
       value: Arcade_Machine_Thunder
       objectReference: {fileID: 0}
     - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
+    - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
       propertyPath: sceneHandler
       value: 
       objectReference: {fileID: 0}
@@ -2740,7 +2776,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2ad737ad16d60de4781354cfb1a4a30d, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2ad737ad16d60de4781354cfb1a4a30d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2801,6 +2837,100 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: 2ad737ad16d60de4781354cfb1a4a30d, type: 3}
   m_PrefabInstance: {fileID: 1032646343}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1122423327
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1122423329}
+  - component: {fileID: 1122423328}
+  m_Layer: 0
+  m_Name: Area Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!108 &1122423328
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122423327}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 2
+  m_Shape: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.5
+  m_Range: 100
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 1
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 100, y: 100}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &1122423329
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122423327}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.02, y: 3.23, z: -27.77}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &1124826482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2852,6 +2982,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
     - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
       propertyPath: playerController
       value: 
@@ -2963,6 +3097,10 @@ PrefabInstance:
       value: Arcade_Machine_Thunder (2)
       objectReference: {fileID: 0}
     - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
+    - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1241042081}
@@ -3024,6 +3162,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
     - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
       propertyPath: playerController
       value: 
@@ -3198,6 +3340,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
+    - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1241042081}
@@ -3312,6 +3458,67 @@ Transform:
   m_Father: {fileID: 1075386572}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1265426350
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 508291928}
+    m_Modifications:
+    - target: {fileID: 335955564501608537, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: m_Name
+      value: Ball Pit Controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 2228624362853331617, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: numbOfBalls
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929554219430671477, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929554219430671477, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929554219430671477, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929554219430671477, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929554219430671477, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.999933
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929554219430671477, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929554219430671477, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.011574916
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929554219430671477, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929554219430671477, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929554219430671477, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 1.326
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929554219430671477, guid: facca2ca480305442bab9b458c841d34, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: facca2ca480305442bab9b458c841d34, type: 3}
 --- !u!4 &1359533416 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5219835977151824934, guid: 3801b1063ff25de4aae74f2a72d82fb9, type: 3}
@@ -3531,6 +3738,10 @@ PrefabInstance:
       value: Arcade_Machine_Thunder (7)
       objectReference: {fileID: 0}
     - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
+    - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1241042081}
@@ -3629,6 +3840,10 @@ PrefabInstance:
       value: Arcade_Machine_Thunder (5)
       objectReference: {fileID: 0}
     - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
+    - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1241042081}
@@ -3639,6 +3854,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 760428387186418307, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
   m_PrefabInstance: {fileID: 1493158594}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1494459593
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2315607600657911200, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: m_Name
+      value: Boucey Balls
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889280296904194253, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: tempParent
+      value: 
+      objectReference: {fileID: 1241042081}
+    - target: {fileID: 5219835977151824934, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219835977151824934, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219835977151824934, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219835977151824934, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -39.377
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219835977151824934, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219835977151824934, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219835977151824934, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219835977151824934, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219835977151824934, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219835977151824934, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219835977151824934, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a2cbd8b006893594e9a17db652e0273c, type: 3}
 --- !u!114 &1579276736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3760,6 +4036,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arcade_Machine_Thunder (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
     - target: {fileID: 8391761079055962168, guid: 0a3132e14df6aef4e9ffd27783349357, type: 3}
       propertyPath: sceneHandler
       value: 
@@ -4348,7 +4628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3527622397758125261, guid: e710a8472a630c94f84bde2705232533, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3527622397758125261, guid: e710a8472a630c94f84bde2705232533, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4635,6 +4915,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1075709022523770114, guid: 12eb9a3c24563a8459a3eeaa5544c95e, type: 3}
   m_PrefabInstance: {fileID: 1768950865}
   m_PrefabAsset: {fileID: 0}
+--- !u!223 &1773030130 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7621168042120561304, guid: 2ad737ad16d60de4781354cfb1a4a30d, type: 3}
+  m_PrefabInstance: {fileID: 1032646343}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1814594260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5219835977151824934, guid: 3801b1063ff25de4aae74f2a72d82fb9, type: 3}
@@ -4853,7 +5138,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1942362725 stripped
 GameObject:
@@ -4901,7 +5186,7 @@ Transform:
   - {fileID: 1814594260}
   - {fileID: 330724210}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2026896153
 PrefabInstance:
@@ -5260,6 +5545,10 @@ PrefabInstance:
       value: MazeControllerObject
       objectReference: {fileID: 0}
     - target: {fileID: 1870459427099190667, guid: 724607074ce572640b984f7ce09e5798, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
+    - target: {fileID: 1870459427099190667, guid: 724607074ce572640b984f7ce09e5798, type: 3}
       propertyPath: mazeButtons.Array.data[0]
       value: 
       objectReference: {fileID: 51227734}
@@ -5425,6 +5714,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1773030130}
+    - target: {fileID: 2020969569211353576, guid: 4075da73a2fed63478265c6c5806c9bc, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1241042081}
@@ -5472,7 +5765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1560604283961994117, guid: 9f023be832733d344a081c636df5c172, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1560604283961994117, guid: 9f023be832733d344a081c636df5c172, type: 3}
       propertyPath: m_LocalPosition.x

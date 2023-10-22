@@ -13,10 +13,12 @@ public class ResetButton : MonoBehaviour
 
     float timerThresh = 0.5f;
     float numb;
+
+    public Canvas canvas;
     // Start is called before the first frame update
     void Start()
     {
-
+        mazeControllerObject.GetComponent<MazeController>().restMaze();
     }
 
     // Update is called once per frame
@@ -24,6 +26,7 @@ public class ResetButton : MonoBehaviour
     {
         if (pressed)
         {
+            canvas.GetComponent<DisplayText>().disaplyText("Maze Reset!\n Good Luck!", 2);
             numb = numb + (1 * Time.deltaTime);
             if (numb > timerThresh)
             {

@@ -15,6 +15,8 @@ public class LaunchThunderGame : MonoBehaviour
 
     public float distanceThreshold = 10f;
 
+    public Canvas canvas;
+
     // Update is called once per frame
     void Update()
     {
@@ -22,8 +24,8 @@ public class LaunchThunderGame : MonoBehaviour
         
         if (distance <= distanceThreshold)
         {
-            arcadeMachine.GetComponentInChildren<TextMeshPro>().enabled = true;
-            if(Input.GetKeyDown("e"))
+            canvas.GetComponent<DisplayText>().disaplyText("Press 'e' to play\nZap 'N' Dash!");
+            if (Input.GetKeyDown("e"))
             {
 
                 SceneManager.LoadScene(5);

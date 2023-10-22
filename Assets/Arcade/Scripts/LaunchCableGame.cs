@@ -13,6 +13,8 @@ public class LaunchCableGame : MonoBehaviour
 
     public float distanceThreshold = 10f;
 
+    public Canvas canvas;
+
     // Update is called once per frame
     void Update()
     {
@@ -20,8 +22,8 @@ public class LaunchCableGame : MonoBehaviour
         
         if (distance <= distanceThreshold)
         {
-            arcadeMachine.GetComponentInChildren<TextMeshPro>().enabled = true;
-            if(Input.GetKeyDown("e"))
+            canvas.GetComponent<DisplayText>().disaplyText("Press 'e' to play\nCable Conundrum");
+            if (Input.GetKeyDown("e"))
             {
 
                 SceneManager.LoadScene(4);

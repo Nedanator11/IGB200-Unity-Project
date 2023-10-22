@@ -17,6 +17,16 @@ public class PickUpObject : MonoBehaviour
     public float holdDistance = 1.5f;
 
     // Update is called once per frame
+
+    private void Start()
+    {
+        if(tempParent = null)
+        {
+           
+            
+        }
+        tempParent = GameObject.Find("FPSController/FirstPersonCharacter/Guide");
+    }
     void Update()
     {
 

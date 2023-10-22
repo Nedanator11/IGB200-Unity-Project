@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class MazeController : MonoBehaviour
@@ -12,6 +13,8 @@ public class MazeController : MonoBehaviour
     public GameObject[] mazeButtons;
     private int totalCheckedButtons;
 
+    public Canvas canvas;
+
     //variablers for spawning in hazards
 
     public GameObject[] hazardList;
@@ -21,6 +24,8 @@ public class MazeController : MonoBehaviour
     private List<float> hazardNumbAlive = new List<float>();
 
     private bool hazardsAlreadyExist = false;
+
+    private bool mazeComplete;
 
     void Start()
     {
@@ -50,17 +55,26 @@ public class MazeController : MonoBehaviour
         //displayButtonsActive();
         if (totalCheckedButtons > 3 || totalCheckedButtons < 3)
         {
-            Debug.Log("Please make sure only 3 buttons are on");
+            canvas.GetComponent<DisplayText>().disaplyText("Make sure there are only\n 3 buttons highlighted", 4);
         }
         else
         {
             if(testIfOptionsSelectedAreCorrect() == 3)
             {
-                Debug.Log("Maze Correct");
+                if(mazeComplete == false)
+                {
+                    canvas.GetComponent<DisplayText>().disaplyText("Congradulations!\nMaze Complete!", 4);
+                    mazeComplete = true;
+                }
+                else
+                {
+                    canvas.GetComponent<DisplayText>().disaplyText("Reset the maze to have\n another go!", 4);
+                }
+                
             }
             else
             {
-                Debug.Log("Please try again");
+                canvas.GetComponent<DisplayText>().disaplyText("Try Again!", 2); ;
             }
         }
 
@@ -165,5 +179,7 @@ public class MazeController : MonoBehaviour
     {
         spawnHazards();
         resetButtons();
+        mazeComplete = false;
+        
     }
 }
