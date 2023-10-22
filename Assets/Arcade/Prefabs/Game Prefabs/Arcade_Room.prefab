@@ -98,11 +98,11 @@ PrefabInstance:
     - target: {fileID: -4691048982996480664, guid: 8def91653d3d36b46b8e26e010a8ba0f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 138e268d4f765c74baa8aae9cdfceaf8, type: 2}
+      objectReference: {fileID: 2100000, guid: af623cf7f544cca4c97073b2e2916900, type: 2}
     - target: {fileID: -1238760260549050860, guid: 8def91653d3d36b46b8e26e010a8ba0f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 138e268d4f765c74baa8aae9cdfceaf8, type: 2}
+      objectReference: {fileID: 2100000, guid: af623cf7f544cca4c97073b2e2916900, type: 2}
     - target: {fileID: 919132149155446097, guid: 8def91653d3d36b46b8e26e010a8ba0f, type: 3}
       propertyPath: m_Name
       value: Arcade_Building
@@ -110,7 +110,7 @@ PrefabInstance:
     - target: {fileID: 7103043906165625274, guid: 8def91653d3d36b46b8e26e010a8ba0f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 138e268d4f765c74baa8aae9cdfceaf8, type: 2}
+      objectReference: {fileID: 2100000, guid: af623cf7f544cca4c97073b2e2916900, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8def91653d3d36b46b8e26e010a8ba0f, type: 3}
 --- !u!1 &93154618115741695 stripped
