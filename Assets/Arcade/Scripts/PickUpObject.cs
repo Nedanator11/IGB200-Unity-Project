@@ -40,6 +40,7 @@ public class PickUpObject : MonoBehaviour
         {
             item.GetComponent<Rigidbody>().velocity = Vector3.zero;
             item.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            item.transform.rotation = tempParent.transform.rotation;
             item.transform.SetParent(tempParent.transform);
             if (Input.GetMouseButtonDown(1))
             {
