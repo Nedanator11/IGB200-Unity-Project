@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 5116843494251973731}
   m_Layer: 5
   m_Name: RoundTransitions
-  m_TagString: Untagged
+  m_TagString: RoundTransitions
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

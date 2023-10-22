@@ -10,6 +10,7 @@ public class RoundHUDController : MonoBehaviour
     public Image TimerBarObject;
     public GameObject TimerHUDObject;
     public GameObject ScoreHUDObject;
+    public GameObject LevelNumberHUDObject;
 
     //Sets the text of the timer HUD object to given value, rounded up to whole seconds
     public void SetTimerText(float value)
@@ -36,5 +37,10 @@ public class RoundHUDController : MonoBehaviour
         {
             TimerBarObject.fillAmount = time / TimerBarMax;
         }
+    }
+
+    public void SetLevelNumber(int level)
+    {
+        LevelNumberHUDObject.GetComponent<TextMeshProUGUI>().text = "Level " + level.ToString();
     }
 }
