@@ -58,6 +58,8 @@ public class LSGameManager : GameManager
     private float RoundTimer;
     private float RoundTimerDuration;
 
+    // Audio Manager
+    SoundHandler soundHandler;
 
     // Awake Checks - Singleton setup
     private void Awake()
@@ -77,6 +79,8 @@ public class LSGameManager : GameManager
 
     private void Start()
     {
+        soundHandler = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<SoundHandler>();
+
         StartGame();
     }
 
@@ -312,6 +316,9 @@ public class LSGameManager : GameManager
             {
                 SelectedOption = hitObject.transform.parent.parent.gameObject;
                 TriggerPlayerAnimation();
+
+                // Play Click SFX
+                soundHandler.PlaySFX(soundHandler.OptionClick);
             }
         }
     }

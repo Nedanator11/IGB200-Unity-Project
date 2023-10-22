@@ -320,6 +320,8 @@ MonoBehaviour:
   playerElectrocute: {fileID: 8300000, guid: f99c4459cd825d142bffd814dd5351e3, type: 3}
   parkSoundscape: {fileID: 0}
   citySoundscape: {fileID: 0}
+  OptionHover: {fileID: 8300000, guid: 40fb8ea9119541646a1658b970091114, type: 3}
+  OptionClick: {fileID: 8300000, guid: 4acb9f1181adc5c4fbb0e5315ff0ed40, type: 3}
   BGMusicCC: {fileID: 0}
   tileRotate: {fileID: 8300000, guid: 2f0c848c54cec0a41bf78acfa8628394, type: 3}
   circuitCorrect: {fileID: 8300000, guid: 043a40f3aeed4104aaa1e075f9fd5074, type: 3}

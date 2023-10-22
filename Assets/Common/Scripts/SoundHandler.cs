@@ -37,6 +37,8 @@ public class SoundHandler : MonoBehaviour
     public AudioClip playerElectrocute;
     public AudioClip parkSoundscape;
     public AudioClip citySoundscape;
+    public AudioClip OptionHover;
+    public AudioClip OptionClick;
 
     [Header("----- Cable Conundrum ------")]
 

@@ -15,8 +15,15 @@ public class Option : MonoBehaviour
     private float ScaleHoverFactor = 1.1f;
     private float ScaleDuration = 0.5f;
 
+    // Sound Handler
+    public SoundHandler soundHandler;
+
+    private bool hasHovered = false;
+
     private void Start()
     {
+        soundHandler = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<SoundHandler>();
+
         //Retrieve sprite & hitbox objects
         SpriteObject = transform.Find("Sprite").gameObject;
         HitBox = SpriteObject.transform.Find("HitBox").gameObject;
@@ -53,7 +60,17 @@ public class Option : MonoBehaviour
 
             //If hitObject is this option's hitbox, return true
             if (hitObject == HitBox)
+            {
+                // Only play sfx once
+                if (hasHovered == false)
+                {
+                    soundHandler.PlaySFX(soundHandler.OptionHover);
+                    hasHovered = true;
+                }
                 return true;
+            }
+            // Reset on mouse exit
+            else hasHovered = false;
         }
 
         //Otherwise, return false
