@@ -22,4 +22,17 @@ public class LevelUnlockManager : MonoBehaviour
         }
     }
 
+    public void ResetUnlockedLevels()
+    {
+        PlayerPrefs.SetInt("ReachedLevel", 1);
+        PlayerPrefs.SetInt("UnlockedLevel", 1);
+        PlayerPrefs.Save();
+    }
+
+    public void UnlockAllLevels()
+    {
+        PlayerPrefs.SetInt("ReachedLevel", 12);
+        PlayerPrefs.SetInt("UnlockedLevel", 12);
+        PlayerPrefs.Save();
+    }
 }

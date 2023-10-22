@@ -728,7 +728,7 @@ public class TileGrid : MonoBehaviour
     private void HighlightTiles()
     {
         //Decrement timer
-        HighlightTimer -= Time.deltaTime;
+        HighlightTimer -= Time.deltaTime * 2;
 
         //Timer elapsed
         if (HighlightTimer <= 0)
