@@ -200,6 +200,9 @@ public class CCLGameManager : GameManager
 
         //Start game timer
         StartRoundTimer(level.TimeLimit);
+
+        // Set level title HUD
+        RoundHUD.GetComponent<RoundHUDController>().SetLevelNumber(currentLevel);
     }
 
     //End current round with completed circuit
@@ -300,6 +303,8 @@ public class CCLGameManager : GameManager
 
         TileGridObject.GetComponent<TileGrid>().DestroyBoard();
         LoadLevel(levels[currentLevel].GetComponent<Level>());
+
+        UnlockLevel();
     }
 
     // Reload the current level
@@ -312,5 +317,21 @@ public class CCLGameManager : GameManager
 
         TileGridObject.GetComponent<TileGrid>().DestroyBoard();
         LoadLevel(levels[currentLevel - 1].GetComponent<Level>());
+    }
+
+    // Enable next level button
+    public void UnlockLevel()
+    {
+        if (currentLevel - 1 >= PlayerPrefs.GetInt("ReachedLevel"))
+        {
+            PlayerPrefs.SetInt("ReachedLevel", currentLevel);
+            PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel", 1) + 1);
+            PlayerPrefs.Save();
+        }
+
+        else if (currentLevel >= 11)
+        {
+            return;
+        }
     }
 }
