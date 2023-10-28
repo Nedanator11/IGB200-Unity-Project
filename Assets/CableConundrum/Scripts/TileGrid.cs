@@ -668,27 +668,35 @@ public class TileGrid : MonoBehaviour
         RoundFailController.FailType failure = RoundFailController.FailType.None; ;
 
         //Check if the circuit is incomplete
-        if (DetectedPath == null) failure = RoundFailController.FailType.IncompleteCircuit;
-        if (DetectedPath.Count == 0) failure = RoundFailController.FailType.IncompleteCircuit;
-
-        //Detect any connected hazard tiles
-        DetectedHazard = DetectHazardConnections();
-        if (DetectedHazard)
+        if (DetectedPath == null)
         {
-            if (DetectedHazard.gameObject.name.Contains("Water"))
-                failure = RoundFailController.FailType.HazardWater;
-            if (DetectedHazard.gameObject.name.Contains("Fire"))
-                failure = RoundFailController.FailType.HazardFire;
-            if (DetectedHazard.gameObject.name.Contains("Frayed"))
-                failure = RoundFailController.FailType.HazardFrayed;
-
-            //Temporary case for generic hazard tiles
             failure = RoundFailController.FailType.IncompleteCircuit;
         }
+        else if (DetectedPath.Count == 0)
+        {
+            failure = RoundFailController.FailType.IncompleteCircuit;
+        }
+        else
+        {
+            //Detect any connected hazard tiles
+            DetectedHazard = DetectHazardConnections();
+            if (DetectedHazard)
+            {
+                if (DetectedHazard.gameObject.name.Contains("Water"))
+                    failure = RoundFailController.FailType.HazardWater;
+                if (DetectedHazard.gameObject.name.Contains("Fire"))
+                    failure = RoundFailController.FailType.HazardFire;
+                if (DetectedHazard.gameObject.name.Contains("Frayed"))
+                    failure = RoundFailController.FailType.HazardFrayed;
 
-        //Add tiles to be highlighted
-        if (DetectedPath.Count > 0) HighlightedTiles.AddRange(DetectedPath.Select(n => GetTileFromNode(n)));
-        if (DetectedHazard) HighlightedTiles.Add(DetectedHazard);
+                //Temporary case for generic hazard tiles
+                failure = RoundFailController.FailType.IncompleteCircuit;
+            }
+
+            //Add tiles to be highlighted
+            if (DetectedPath.Count > 0) HighlightedTiles.AddRange(DetectedPath.Select(n => GetTileFromNode(n)));
+            if (DetectedHazard) HighlightedTiles.Add(DetectedHazard);
+        }
 
         return failure;
     }
