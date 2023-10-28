@@ -82,6 +82,7 @@ public class LSGameManager : GameManager
         soundHandler = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<SoundHandler>();
 
         StartGame();
+        soundHandler.ZNDMusic();
     }
 
     private void Update()
@@ -168,6 +169,7 @@ public class LSGameManager : GameManager
         {
             HiScoresHUD.GetComponent<HiScoresManager>().LoadHiScores();
             HiScoresHUD.SetActive(true);
+            soundHandler.HiScores();
         }
     }
 
@@ -207,6 +209,9 @@ public class LSGameManager : GameManager
 
         //Start round timer
         StartRoundTimer(RoundTimerDuration);
+
+        //Play SFX
+        soundHandler.ResumeAll();
     }
 
     //Checks if the player has picked the correct option or not, and ends the round accordingly
@@ -238,6 +243,10 @@ public class LSGameManager : GameManager
 
         RoundHUD.SetActive(false);
         GameState = GameStates.RoundEndGood;
+
+        // Play SFX
+        soundHandler.PauseAll();
+        soundHandler.PlaySFX(soundHandler.ZDRoundGood);
     }
 
     //End round with incorrect choice by player
@@ -250,6 +259,10 @@ public class LSGameManager : GameManager
 
         RoundHUD.SetActive(false);
         GameState = GameStates.RoundEndBad;
+
+        // Play SFX
+        soundHandler.PauseAll();
+        soundHandler.PlaySFX(soundHandler.ZDRoundBad);
     }
 
     //Clean up current round and start the next round

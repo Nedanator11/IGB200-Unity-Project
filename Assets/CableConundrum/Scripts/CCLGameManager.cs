@@ -159,11 +159,15 @@ public class CCLGameManager : GameManager
         // Trigger round/level transitions. Functions called as animation events.
         if (Input.GetKeyDown("space"))
         {
-            ccAnimator.SetTrigger("NextLevel");
-            soundHandler.PlaySFX(soundHandler.doorClose);
+            if (currentLevel != 12)
+            {
+                ccAnimator.SetTrigger("NextLevel");
+                soundHandler.PlaySFX(soundHandler.doorClose);
 
-            if (currentLevel == levels.Length)
-                ccAnimator.SetTrigger("Return");
+                if (currentLevel == levels.Length)
+                    ccAnimator.SetTrigger("Return");
+            }
+            else ccAnimator.SetTrigger("Return");
         }
     }
 
@@ -185,6 +189,9 @@ public class CCLGameManager : GameManager
     //Starts the game
     public void LoadLevel(Level level)
     {
+        //Play Music
+        soundHandler.CCLMusic();
+
         // Reset hazard feedback to default idle state
         feedbackAnimator.SetBool("RoundEndIdle", true);
 
@@ -208,18 +215,22 @@ public class CCLGameManager : GameManager
     //End current round with completed circuit
     private void EndRoundGood()
     {
+        // Play SFX and trigger feedback animations.
         soundHandler.PlaySFX(soundHandler.circuitCorrect);
         feedbackAnimator.SetBool("RoundEndIdle", false);
         feedbackAnimator.SetTrigger("RoundEndGood");
+        
         GameState = GameStates.RoundEndGood;
     }
 
     //End round with incorrect circuit
     private void EndRoundBad()
     {
+        // Play SFX and trigger feedback animations.
         soundHandler.PlaySFX(soundHandler.circuitIncorrect);
         feedbackAnimator.SetBool("RoundEndIdle", false);
         feedbackAnimator.SetTrigger("RoundEndBad");
+
         GameState = GameStates.RoundEndBad;
     }
 
@@ -302,8 +313,8 @@ public class CCLGameManager : GameManager
         RoundEndBadHUD.GetComponent<RoundFailController>().ResetFailureDescription();
 
         TileGridObject.GetComponent<TileGrid>().DestroyBoard();
-        LoadLevel(levels[currentLevel].GetComponent<Level>());
 
+        LoadLevel(levels[currentLevel].GetComponent<Level>());
         UnlockLevel();
     }
 

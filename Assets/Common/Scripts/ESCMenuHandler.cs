@@ -55,6 +55,7 @@ public class ESCMenuHandler : MonoBehaviour
 
         if (active)
         {
+            soundHandler.PauseAll();
             escMenu.SetActive(true);
             animator.SetTrigger("ESCOpen");
             soundHandler.PlaySFX(soundHandler.menuOpen);
@@ -65,6 +66,7 @@ public class ESCMenuHandler : MonoBehaviour
             // Sets !active in animation
             animator.SetTrigger("ESCClose");
             soundHandler.PlaySFX(soundHandler.menuClose);
+            soundHandler.ResumeAll();
         }
 
         GameManager.instance.Paused = active;

@@ -204,6 +204,7 @@ public class CTGameManager : GameManager {
         {
             HiScoresHUD.GetComponent<HiScoresManager>().LoadHiScores();
             HiScoresHUD.SetActive(true);
+            soundHandler.HiScores();
         }
     }
 
@@ -249,6 +250,9 @@ public class CTGameManager : GameManager {
     //Starts the game
     private void StartGame()
     {
+        //Play Music
+        soundHandler.CCMusic();
+
         GameStartHUD.SetActive(false);
         Score = 0;
         StartRound();
@@ -271,6 +275,7 @@ public class CTGameManager : GameManager {
     private void EndRoundGood()
     {
         soundHandler.PlaySFX(soundHandler.circuitCorrect);
+
         Score += 1;
         RoundHUD.GetComponent<RoundHUDController>().SetScoreText("Completed: " + Score);
 
@@ -413,7 +418,6 @@ public class CTGameManager : GameManager {
     public void RestartGameTrigger()
     {
         HiScoresHUD.GetComponent<HiScoresManager>().SaveHiScores();
-        soundHandler.PlaySFX(soundHandler.doorClose);
         ccAnimator.SetTrigger("Return");
     }
 

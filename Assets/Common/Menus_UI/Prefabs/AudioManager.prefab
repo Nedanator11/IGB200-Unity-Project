@@ -309,22 +309,24 @@ MonoBehaviour:
   buttonQuit: {fileID: 8300000, guid: 51444560ebeb03e4b8d48eec876572e4, type: 3}
   menuOpen: {fileID: 8300000, guid: 994073ac66f10b14998c49e5f0e53f25, type: 3}
   menuClose: {fileID: 8300000, guid: 350572709dc1d1648ab308c7d8de57ae, type: 3}
-  gameStart: {fileID: 0}
+  gameStart: {fileID: 8300000, guid: ca44feece536cc644beae8cf55c15cc1, type: 3}
+  mousePress: {fileID: 8300000, guid: 461278e59a503764fb2cb084a0b9b6a3, type: 3}
+  mouseRelease: {fileID: 8300000, guid: 5f17227afb30f8648b5dcc6070563666, type: 3}
   BGMusicArcade: {fileID: 8300000, guid: d3fb616593aa1034eacb67e05794a9c3, type: 3}
   machineInteract: {fileID: 8300000, guid: d76fd36d0bda1ac4a8dd8912e06a1fdb, type: 3}
-  machineMusic: {fileID: 0}
-  ballCollide: {fileID: 0}
-  BGMusicZND: {fileID: 0}
-  playerWalk: {fileID: 0}
+  BGMusicZND: {fileID: 8300000, guid: aca729aa1942c1d43a7dc813e5cc1a2c, type: 3}
   lightningStrike: {fileID: 8300000, guid: 9829cdeaed50c2a4db6676a21a7ca1e7, type: 3}
   playerElectrocute: {fileID: 8300000, guid: f99c4459cd825d142bffd814dd5351e3, type: 3}
-  parkSoundscape: {fileID: 0}
-  citySoundscape: {fileID: 0}
   OptionHover: {fileID: 8300000, guid: 40fb8ea9119541646a1658b970091114, type: 3}
   OptionClick: {fileID: 8300000, guid: 4acb9f1181adc5c4fbb0e5315ff0ed40, type: 3}
-  BGMusicCC: {fileID: 0}
+  ZDRoundGood: {fileID: 8300000, guid: 8a467187ef799e743b0fa18fb834b679, type: 3}
+  ZDRoundBad: {fileID: 8300000, guid: 411424d501c8ade4786639be333b4d04, type: 3}
+  BGMusicCC: {fileID: 8300000, guid: a8925ab138d958e419efd8113d3e925a, type: 3}
+  BGMusicCCL: {fileID: 8300000, guid: 971c2f11fc44a334f84b169dbef61c9c, type: 3}
   tileRotate: {fileID: 8300000, guid: 2f0c848c54cec0a41bf78acfa8628394, type: 3}
   circuitCorrect: {fileID: 8300000, guid: 043a40f3aeed4104aaa1e075f9fd5074, type: 3}
   circuitIncorrect: {fileID: 8300000, guid: c477ccc46f9b88e4ba1d045ad31f1ef1, type: 3}
   doorClose: {fileID: 8300000, guid: 2c424e9471ade414a8cce012d39d8a43, type: 3}
   doorOpen: {fileID: 8300000, guid: 40c2876c51f05fc44afe525e124cd65d, type: 3}
+  HiScoresMusic: {fileID: 8300000, guid: c1aa35cc113640544b29a6c7cdee3065, type: 3}
+  NewHiScore: {fileID: 8300000, guid: 3312719d0de98e3448caad8088750b01, type: 3}

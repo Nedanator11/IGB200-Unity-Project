@@ -369,7 +369,7 @@ MonoBehaviour:
         m_MethodName: PlaySFX
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 3faca33628541b94daf41619df119644, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: d76fd36d0bda1ac4a8dd8912e06a1fdb, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -545,7 +545,7 @@ MonoBehaviour:
         m_MethodName: PlaySFX
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 3faca33628541b94daf41619df119644, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: d76fd36d0bda1ac4a8dd8912e06a1fdb, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0

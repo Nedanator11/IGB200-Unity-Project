@@ -21,8 +21,14 @@ public class HiScoresManager : MonoBehaviour
     private string CompareField;
     public int[] NewHiScoreValues;
 
+    //Sound Handler
+    public SoundHandler soundHandler;
+
     private void Awake()
     {
+        //Get Sound Handler
+        soundHandler = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<SoundHandler>();
+
         //Retrieve row objects on start
         Rows = HiScoresObject.transform.Cast<Transform>().Where(t => t.name.Contains("Row"))
             .Select(t => t.gameObject).ToArray();

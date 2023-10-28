@@ -21,33 +21,38 @@ public class SoundHandler : MonoBehaviour
     public AudioClip menuOpen;
     public AudioClip menuClose;
     public AudioClip gameStart;
+    public AudioClip mousePress;
+    public AudioClip mouseRelease;
 
     [Header("------- Arcade --------")]
 
     public AudioClip BGMusicArcade;
     public AudioClip machineInteract;
-    public AudioClip machineMusic;
-    public AudioClip ballCollide;
 
     [Header("------ Zap N' Dash -------")]
 
     public AudioClip BGMusicZND;
-    public AudioClip playerWalk;
     public AudioClip lightningStrike;
     public AudioClip playerElectrocute;
-    public AudioClip parkSoundscape;
-    public AudioClip citySoundscape;
     public AudioClip OptionHover;
     public AudioClip OptionClick;
+    public AudioClip ZDRoundGood;
+    public AudioClip ZDRoundBad;
 
     [Header("----- Cable Conundrum ------")]
 
     public AudioClip BGMusicCC;
+    public AudioClip BGMusicCCL;
     public AudioClip tileRotate;
     public AudioClip circuitCorrect;
     public AudioClip circuitIncorrect;
     public AudioClip doorClose;
     public AudioClip doorOpen;
+
+    [Header("----- Common -----")]
+
+    public AudioClip HiScoresMusic;
+    public AudioClip NewHiScore;
 
 
     void Start()
@@ -57,16 +62,6 @@ public class SoundHandler : MonoBehaviour
         if (currentScene == 3)
         {
             musicSource.clip = BGMusicArcade;
-        }
-
-        else if (currentScene == 2)
-        {
-            musicSource.clip = BGMusicZND;
-        }
-
-        else if (currentScene == 1)
-        {
-            musicSource.clip = BGMusicCC;
         }
 
         if (musicSource.clip != null) 
@@ -79,5 +74,45 @@ public class SoundHandler : MonoBehaviour
     public void PlaySFX(AudioClip clip)
     {
         sfxSource.PlayOneShot(clip);
+    }
+
+    public void PauseAll()
+    {
+        musicSource.Pause();
+        sfxSource.Pause();
+    }
+
+    public void ResumeAll()
+    {
+        musicSource.Play();
+        sfxSource.Play();
+    }
+
+    public void HiScores()
+    {
+        musicSource.Stop();
+        musicSource.clip = HiScoresMusic;
+        musicSource.Play();
+    }
+
+    public void ZNDMusic()
+    {
+        musicSource.Stop();
+        musicSource.clip = BGMusicZND;
+        musicSource.Play();
+    }
+
+    public void CCMusic()
+    {
+        musicSource.Stop();
+        musicSource.clip = BGMusicCC;
+        musicSource.Play();
+    }
+
+    public void CCLMusic()
+    {
+        musicSource.Stop();
+        musicSource.clip = BGMusicCCL;
+        musicSource.Play();
     }
 }
