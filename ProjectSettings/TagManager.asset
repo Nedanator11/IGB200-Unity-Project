@@ -6,6 +6,21 @@ TagManager:
   tags:
   - GoodOption
   - BadOption
+  - GameManager
+  - CinemachineTarget
+  - SceneTransitions
+  - AudioManager
+  - LSPlayer
+  - aMazeButton
+  - mazeConfirmButton
+  - mazeHazard
+  - HazardCable
+  - Maze reset button
+  - Ball
+  - RoundTransitions
+  - helpBlock
+  - arcade
+  - toy
   layers:
   - Default
   - TransparentFX
@@ -40,6 +55,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Text Layer
+    uniqueID: 269552649
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
